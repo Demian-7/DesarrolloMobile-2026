@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.Foundation;
 
 public struct CellCoord : IEquatable<CellCoord>
 {
@@ -97,9 +98,9 @@ public interface ICardBehavior
 
 public class FlatGenerationBehavior : ICardBehavior
 {
-    public double BaseAmount;
+    public readonly CurrencyValue BaseAmount;
 
-    public FlatGenerationBehavior(double amount)
+    public FlatGenerationBehavior(CurrencyValue amount)
     {
         BaseAmount = amount;
     }
@@ -107,7 +108,7 @@ public class FlatGenerationBehavior : ICardBehavior
 
 public class PercentageGenerationBehavior : ICardBehavior
 {
-    public double Percentage; //1.5 for 150%
+    public readonly double Percentage; //1.5 for 150%
 
     public PercentageGenerationBehavior(double percent)
     {
@@ -117,9 +118,7 @@ public class PercentageGenerationBehavior : ICardBehavior
 
 public class ModifierBehavior : ICardBehavior
 {
-    //TODO: Figure out how to represent Modifier cards
-    
-    public double Multiplier;
+    public readonly double Multiplier;
     
     public ModifierBehavior(double amount)
     {
@@ -134,8 +133,8 @@ public class CardInstance
     public Cell CurrentCell;
     
     //Runtime state calculated by the Evaluation Service
-    public double BaseValue;
-    public double EffectiveValue;
+    public CurrencyValue BaseValue;
+    public CurrencyValue EffectiveValue;
     public bool IsResolved;
 
     public CardInstance(string id, params ICardBehavior[] behaviors)
