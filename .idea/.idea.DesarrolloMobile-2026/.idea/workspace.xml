@@ -11,14 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CellCoord.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Prototype/CoreTypes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Prototype/CoreTypes.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CellCoord.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/BoardChangedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/BoardChangedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/GenerationRateChangedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/GenerationRateChangedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/BoardEvaluationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/BoardEvaluationService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +22,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbc08120ee784c78aed4664a9876c083a200/cb/c6625c1a/Input.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Prototype/PrototypeDriver.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardPlacedEvent.cs" root0="FORCE_HIGHLIGHTING" />
@@ -41,6 +35,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/CurrencyAccrualService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ZoneService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Zone.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/4. Input/Desktop/DesktopInputProvider.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7,
@@ -118,7 +113,8 @@
       <workItem from="1787407393653" duration="2834000" />
       <workItem from="1787595283786" duration="1074000" />
       <workItem from="1788719300091" duration="4851000" />
-      <workItem from="1788835023897" duration="4238000" />
+      <workItem from="1788835023897" duration="4943000" />
+      <workItem from="1788873415594" duration="1065000" />
     </task>
     <servers />
   </component>
