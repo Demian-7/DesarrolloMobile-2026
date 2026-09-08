@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 
 namespace Game.Foundation
 {
@@ -58,6 +59,30 @@ namespace Game.Foundation
             else
             {
                 return new CurrencyValue(a.Mantissa * Math.Pow(10, expDiff) + b.Mantissa, b.Exponent);
+            }
+        }
+
+        public static CurrencyValue operator -(CurrencyValue a, CurrencyValue b)
+        {
+            if (b.Mantissa == 0)
+                return a;
+
+            if (a.Mantissa == 0)
+                return new CurrencyValue(-b.Mantissa, b.Exponent);
+
+            int expDiff = a.Exponent - b.Exponent;
+            if (expDiff > 15) 
+                return a; //B is negligible
+            if (expDiff < -15)
+                return new CurrencyValue(-b.Mantissa, b.Exponent); //A is negligible
+            
+            if (expDiff >= 0)
+            {
+                return new CurrencyValue(a.Mantissa - b.Mantissa * Math.Pow(10, -expDiff), a.Exponent);
+            }
+            else
+            {
+                return new CurrencyValue(a.Mantissa * Math.Pow(10, expDiff) - b.Mantissa, b.Exponent);
             }
         }
 

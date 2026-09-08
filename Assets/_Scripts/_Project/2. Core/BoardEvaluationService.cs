@@ -1,25 +1,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Foundation;
+using UnityEngine;
 
 namespace Game.Core
 {
     public class BoardEvaluationService
     {
         private readonly IEventBus _eventBus;
-
+        private readonly ZoneService _zoneService;
+        
         public bool IsMultiplicativeStackingUnlocked { get; set; } = false;
 
-        public BoardEvaluationService(IEventBus eventBus)
+        public BoardEvaluationService(IEventBus eventBus, ZoneService zoneService)
         {
             _eventBus = eventBus;
+            _zoneService = zoneService;
+            
             _eventBus.Subscribe<BoardChangedEvent>(OnBoardChanged);
         }
 
         private void OnBoardChanged(BoardChangedEvent evt)
         {
-            CurrencyValue totalRate = EvaluateBoard(evt.Board);
-            _eventBus.Publish(new GenerationRateChangedEvent { NewRate = totalRate });
+            Zone targetZone = _zoneService.GetZone(evt.ZoneId);
+            if (targetZone == null)
+                return;
+            
+            CurrencyValue totalRate = EvaluateBoard(targetZone.Board);
+            
+            _eventBus.Publish(new GenerationRateChangedEvent {ZoneId = evt.ZoneId, NewRate = totalRate });
         }
 
         public CurrencyValue EvaluateBoard(Board board)
