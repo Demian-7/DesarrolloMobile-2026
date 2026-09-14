@@ -9,13 +9,13 @@ namespace Game.Core
     {
         private readonly IEventBus _eventBus;
         private readonly ZoneService _zoneService;
-        
-        public bool IsMultiplicativeStackingUnlocked { get; set; } = false;
+        private readonly GlobalUpgradeService _globalUpgrades;
 
-        public BoardEvaluationService(IEventBus eventBus, ZoneService zoneService)
+        public BoardEvaluationService(IEventBus eventBus, ZoneService zoneService, GlobalUpgradeService globalUpgrades)
         {
             _eventBus = eventBus;
             _zoneService = zoneService;
+            _globalUpgrades = globalUpgrades;
             
             _eventBus.Subscribe<BoardChangedEvent>(OnBoardChanged);
         }
@@ -26,19 +26,18 @@ namespace Game.Core
             if (targetZone == null)
                 return;
             
-            CurrencyValue totalRate = EvaluateBoard(targetZone.Board);
+            BoardGenerationResult result = EvaluateBoard(targetZone.Board);
             
-            _eventBus.Publish(new GenerationRateChangedEvent {ZoneId = evt.ZoneId, NewRate = totalRate });
+            _eventBus.Publish(new GenerationRateChangedEvent(evt.ZoneId, result.TotalRate));
         }
 
-        public CurrencyValue EvaluateBoard(Board board)
+        public BoardGenerationResult EvaluateBoard(Board board)
         {
             var allCards = board.Cells.Values
                 .Where(c => c.OccupiedCard != null)
                 .Select(c => c.OccupiedCard)
                 .ToList();
 
-            //Reset State
             foreach (var card in allCards)
             {
                 card.BaseValue = CurrencyValue.Zero;
@@ -46,52 +45,64 @@ namespace Game.Core
                 card.IsResolved = false;
             }
 
+            var context = new BoardEvaluationContext(board, _globalUpgrades);
             var resolvedCards = new HashSet<CardInstance>();
 
-            //Flat Phase
             foreach (var card in allCards)
             {
-                var flat = card.GetBehavior<FlatGenerationBehavior>();
-                if (flat != null)
+                var flatEffects = card.GetEffects<FlatGenerationEffect>().ToList();
+                if (flatEffects.Count > 0)
                 {
-                    card.BaseValue = flat.BaseAmount;
-                    double multiplier = CalculateModifierMultiplier(board, card.CurrentCell);
-                    card.EffectiveValue = card.BaseValue * multiplier;
+                    CurrencyValue totalBase = CurrencyValue.Zero;
+                    foreach(var flat in flatEffects)
+                        totalBase += flat.Evaluate(context, card.CurrentCell.Coordinate);
+
+                    card.BaseValue = totalBase;
+                    
+                    // context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
+                    // context.TryGetEffectiveValue(card.CurrentCell.Coordinate, out card.EffectiveValue);
+                    card.EffectiveValue = context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
 
                     card.IsResolved = true;
                     resolvedCards.Add(card);
                 }
             }
 
-            //Percentage Phase (Iterative Wavefront)
             bool changed = true;
             while (changed)
             {
                 changed = false;
-                var snapshot = new HashSet<CardInstance>(resolvedCards);
+                
+                context.SnapshotForNextPass(); 
 
-                foreach (var card in allCards.Where(c => !snapshot.Contains(c)))
+                foreach (var card in allCards.Where(c => !c.IsResolved))
                 {
-                    var percent = card.GetBehavior<PercentageGenerationBehavior>();
-                    if (percent != null)
+                    var percentageEffects = card.GetEffects<PercentageGenerationEffect>().ToList();
+                    if (percentageEffects.Count > 0)
                     {
-                        var neighbors = board.GetNeighbors(card.CurrentCell.Coordinate);
-                        var resolvedNeighbors = neighbors
-                            .Where(n => n.OccupiedCard != null && snapshot.Contains(n.OccupiedCard))
-                            .ToList();
+                        bool canResolve = false;
+                        CurrencyValue totalBase = CurrencyValue.Zero;
 
-                        if (resolvedNeighbors.Count > 0)
+                        foreach (var percent in percentageEffects)
                         {
-                            CurrencyValue neighborSum = CurrencyValue.Zero;
+                            var targets = board.ResolveInteraction(percent.Interaction, card.CurrentCell.Coordinate);
+                            
+                            bool hasResolvedTarget = targets.Any(t => context.TryGetEffectiveValue(t.Coordinate, out _));
 
-                            foreach (var n in resolvedNeighbors)
+                            if (hasResolvedTarget)
                             {
-                                neighborSum += n.OccupiedCard.EffectiveValue;
+                                canResolve = true;
+                                totalBase += percent.Evaluate(context, card.CurrentCell.Coordinate);
                             }
+                        }
 
-                            card.BaseValue = neighborSum * percent.Percentage;
-                            double multiplier = CalculateModifierMultiplier(board, card.CurrentCell);
-                            card.EffectiveValue = card.BaseValue * multiplier;
+                        if (canResolve)
+                        {
+                            card.BaseValue = totalBase;
+                            
+                            // context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
+                            // context.TryGetEffectiveValue(card.CurrentCell.Coordinate, out card.EffectiveValue);
+                            card.EffectiveValue = context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
 
                             card.IsResolved = true;
                             resolvedCards.Add(card);
@@ -100,51 +111,28 @@ namespace Game.Core
                     }
                 }
             }
+            
+            foreach (var card in allCards.Where(c => !c.IsResolved))
+            {
+                // context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, CurrencyValue.Zero);
+                // context.TryGetEffectiveValue(card.CurrentCell.Coordinate, out card.EffectiveValue);
+                card.EffectiveValue = context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
+            }
 
-            CurrencyValue total = CurrencyValue.Zero;
+            CurrencyValue totalRate = CurrencyValue.Zero;
+            var perCellValues = new Dictionary<CellCoord, CurrencyValue>();
+                    
             foreach (var card in allCards)
             {
-                total += card.EffectiveValue;
+                totalRate += card.EffectiveValue;
+                perCellValues[card.CurrentCell.Coordinate] = card.EffectiveValue;
             }
 
-            return total;
-        }
-
-        private double CalculateModifierMultiplier(Board board, Cell cell)
-        {
-            var neighbors = board.GetNeighbors(cell.Coordinate);
-            var modifiers = neighbors
-                .Where(n => n.OccupiedCard != null)
-                .Select(n => n.OccupiedCard.GetBehavior<ModifierBehavior>())
-                .Where(m => m != null)
-                .ToList();
-
-            if (modifiers.Count == 0)
-                return 1.0;
-
-            if (IsMultiplicativeStackingUnlocked)
-            {
-                //Exponential: 2x and 3x = 6.0x
-                double total = 1.0;
-                foreach (var mod in modifiers)
-                {
-                    total *= mod.Multiplier;
-                }
-
-                return total;
-            }
-
-            else
-            {
-                //Additive: 2x (+100%) and 3x (+200%) = 4.0x (+300%)
-                double bonusSum = 0;
-                foreach (var mod in modifiers)
-                {
-                    bonusSum += (mod.Multiplier - 1.0);
-                }
-                
-                return 1.0 + bonusSum;
-            }
+            return new BoardGenerationResult 
+            { 
+                TotalRate = totalRate,
+                PerCellEffectiveValues = perCellValues
+            };
         }
     }
 }

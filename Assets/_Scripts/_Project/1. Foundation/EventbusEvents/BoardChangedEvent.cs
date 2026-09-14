@@ -1,7 +1,12 @@
 namespace Game.Foundation
 {
-    public struct BoardChangedEvent
+    public readonly struct BoardChangedEvent
     {
-        public string ZoneId;
+        public readonly string ZoneId;
+
+        public BoardChangedEvent(string zoneId)
+        {
+            ZoneId = zoneId;
+        }
     }
 }

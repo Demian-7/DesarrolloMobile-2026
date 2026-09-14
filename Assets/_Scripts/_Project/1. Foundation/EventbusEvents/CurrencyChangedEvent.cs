@@ -1,8 +1,14 @@
 namespace Game.Foundation
 {
-    public struct CurrencyChangedEvent
+    public readonly struct CurrencyChangedEvent
     {
-        public string ZoneId;
-        public CurrencyValue NewBalance;
+        public readonly string ZoneId;
+        public readonly CurrencyValue NewBalance;
+
+        public CurrencyChangedEvent(string zoneId, CurrencyValue newBalance)
+        {
+            ZoneId = zoneId;
+            NewBalance = newBalance;
+        }
     }
 }

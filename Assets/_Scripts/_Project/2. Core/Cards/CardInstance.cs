@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Foundation;
 
@@ -5,28 +6,26 @@ namespace Game.Core
 {
     public class CardInstance
     {
-        public string Id;
-        public List<ICardBehavior> Behaviors = new();
+        public Guid InstanceId = Guid.NewGuid();
+        public CardDefinition Definition;
         public Cell CurrentCell;
     
-        //Runtime state calculated by the Evaluation Service
         public CurrencyValue BaseValue;
         public CurrencyValue EffectiveValue;
         public bool IsResolved;
 
-        public CardInstance(string id, params ICardBehavior[] behaviors)
+        public CardInstance(CardDefinition definition)
         {
-            Id = id;
-            Behaviors.AddRange(behaviors);
+            Definition = definition;
         }
 
-        public T GetBehavior<T>() where T : class, ICardBehavior
+        public IEnumerable<T> GetEffects<T>() where T : class, ICardEffect
         {
-            foreach (var b in Behaviors)
-                if (b is T match)
-                    return match;
-
-            return null;
+            foreach (var effect in Definition.Effects)
+            {
+                if (effect is T match)
+                    yield return match;
+            }
         }
     }
 }
