@@ -1,7 +1,12 @@
 namespace Game.Foundation
 {
-    public struct ZoneUnlockedEvent
+    public readonly struct ZoneUnlockedEvent
     {
-        public string ZoneId;
+        public readonly string NewZoneId;
+
+        public ZoneUnlockedEvent(string newZoneId)
+        {
+            NewZoneId = newZoneId;
+        }
     }
 }

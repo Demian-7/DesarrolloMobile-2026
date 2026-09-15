@@ -1,8 +1,14 @@
 namespace Game.Foundation
 {
-    public class GenerationRateChangedEvent
+    public readonly struct GenerationRateChangedEvent
     {
-        public string ZoneId;
-        public CurrencyValue NewRate;
+        public readonly string ZoneId;
+        public readonly CurrencyValue NewRate;
+
+        public GenerationRateChangedEvent(string zoneId, CurrencyValue newRate)
+        {
+            ZoneId = zoneId;
+            NewRate = newRate;
+        }
     }
 }

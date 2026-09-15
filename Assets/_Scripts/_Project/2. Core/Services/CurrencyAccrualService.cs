@@ -28,7 +28,7 @@ namespace Game.Core
                     changed = true;
                     
                     //TODO: debounce this event, so it fires ~10 times/second instead of every single frame to save UI updates.
-                    _eventBus.Publish(new CurrencyChangedEvent {ZoneId = zone.ZoneId, NewBalance = zone.Wallet.Balance});
+                    _eventBus.Publish(new CurrencyChangedEvent(zone.ZoneId, zone.Wallet.Balance));
                 }
             }
         }

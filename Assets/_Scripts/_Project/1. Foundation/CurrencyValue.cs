@@ -1,5 +1,4 @@
 using System;
-using Unity.Mathematics;
 
 namespace Game.Foundation
 {
@@ -8,7 +7,7 @@ namespace Game.Foundation
         public double Mantissa { get; private set; }
         public int Exponent { get; private set; }
 
-        public static readonly CurrencyValue Zero = new CurrencyValue(0, 0);
+        public static readonly CurrencyValue Zero = new(0);
 
         public CurrencyValue(double mantissa, int exponent = 0)
         {
@@ -92,6 +91,11 @@ namespace Game.Foundation
                 return Zero;
             
             return new CurrencyValue(a.Mantissa * multiplier, a.Exponent);
+        }
+
+        public static CurrencyValue Max(CurrencyValue a, CurrencyValue b)
+        {
+            return a >= b ? a : b;
         }
 
         public static bool operator >=(CurrencyValue a, CurrencyValue b) => a.CompareTo(b) >= 0;

@@ -6,7 +6,7 @@ namespace Game.Foundation
     public interface IInputProvider
     {
         event Action<Vector2> OnScreenTapped;
-        event Action<Guid, Vector2> OnCardDropped;
+        event Func<Guid, Vector2, bool> OnCardDropped;
         event Action<float> OnPinchZoom;
         event Action<Vector2> OnPanDelta;
     }

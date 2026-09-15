@@ -5,36 +5,54 @@ namespace Game.Core
     public class ShopService
     {
         private readonly IEventBus _eventBus;
-        
-        public ShopService(IEventBus eventBus)
+        private readonly ISlotPricingStrategy _pricingStrategy;
+        private readonly PackOpeningService _packOpeningService;
+        private readonly ZoneService _zoneService;
+
+        public ShopService(IEventBus eventBus, ISlotPricingStrategy pricingStrategy,
+            PackOpeningService packOpeningService, ZoneService zoneService)
         {
             _eventBus = eventBus;
+            _pricingStrategy = pricingStrategy;
+            _packOpeningService = packOpeningService;
+            _zoneService = zoneService;
         }
 
-        public bool TryPurchaseSlot(Zone zone, CellCoord coord, ISlotPricingStrategy pricingStrategy)
+        public bool TryPurchaseSlot(Zone zone, CellCoord coord)
         {
             if (!zone.Board.Cells.TryGetValue(coord, out Cell cell) || cell.IsUnlocked)
                 return false;
+            
+            var price = _pricingStrategy.GetPrice(zone.Board, coord);
+            if (!zone.Wallet.TrySpend(price))
+                return false;
 
-            CurrencyValue price = pricingStrategy.GetPrice(zone.Board, coord);
-
-            if (zone.Wallet.TrySpend(price))
-            {
-                cell.IsUnlocked = true;
-                
-                //UI needs to know wallet changed and the board changed
-                _eventBus.Publish(new CurrencyChangedEvent {ZoneId = zone.ZoneId, NewBalance = zone.Wallet.Balance});
-                _eventBus.Publish(new BoardChangedEvent {ZoneId = zone.ZoneId});
-                
-                return true;
-            }
-
-            return false;
+            zone.Board.UnlockCell(coord);
+            _pricingStrategy.OnPurchase(coord);
+            _eventBus.Publish(new SlotUnlockedEvent(zone.ZoneId, coord));
+            return true;
         }
-        
-        //TryOpenPack and TryUnlockZone are stubbed.
-        //they require the ScriptableObject definitions to be made.
-        public void TryOpenPack() { }
-        public void TryUnlockZone() { }
+
+        public bool TryOpenPack(Zone zone, CardPackDefinition pack)
+        {
+            if (!zone.Wallet.TrySpend(pack.Price))
+                return false;
+
+            var drawnCards = _packOpeningService.Draw(pack);
+            foreach (var cardDef in drawnCards)
+                zone.CardInventory.Add(new CardInstance(cardDef));
+
+            _eventBus.Publish(new PackOpenedEvent(zone.ZoneId, drawnCards));
+            return true;
+        }
+
+        public bool TryUnlockZone(Zone currentZone, ZoneDefinition nextZoneDefinition)
+        {
+            if (!currentZone.Wallet.TrySpend(nextZoneDefinition.UnlockPrice))
+                return false;
+
+            _zoneService.CreateAndActivateZone(nextZoneDefinition);
+            return true;
+        }
     }
 }

@@ -2,9 +2,17 @@ using System;
 
 namespace Game.Foundation
 {
-    public struct CardPlacedEvent
+    public readonly struct CardPlacedEvent
     {
-        public Guid CardInstanceId;
-        public CellCoord TargetCell;
+        public readonly string ZoneId;
+        public readonly Guid CardInstanceId;
+        public readonly CellCoord Coord;
+
+        public CardPlacedEvent(string zoneId, Guid cardInstanceId, CellCoord coord)
+        {
+            ZoneId = zoneId;
+            CardInstanceId = cardInstanceId;
+            Coord = coord;
+        }
     }
 }
