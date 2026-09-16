@@ -1,7 +1,7 @@
 using System;
-using Game.Core;
-using Game.Foundation;
 using UnityEngine;
+using Game.Foundation;
+using Game.Core;
 
 namespace Game.Presentation
 {
@@ -14,12 +14,14 @@ namespace Game.Presentation
 
         private readonly float _cellSpacing = 1.2f;
         private readonly Vector2 _boardOrigin = Vector2.zero;
+        private string _activeZoneId;
 
-        public void Initialize(IInputProvider input, ZoneService zoneService, ShopService shopService)
+        public void Initialize(IInputProvider input, ZoneService zoneService, ShopService shopService, string activeZoneId)
         {
             _input = input;
             _zoneService = zoneService;
             _shopService = shopService;
+            _activeZoneId = activeZoneId;
             _mainCamera = Camera.main;
 
             _input.OnCardDropped += HandleCardDropped;
@@ -35,82 +37,43 @@ namespace Game.Presentation
             }
         }
 
-        private void HandleScreenTapped(Vector2 screenPos)
+        private CellCoord GetCoordFromScreenPosition(Vector2 screenPosition)
         {
-            if (TryGetCellCoordFromScreen(screenPos, out CellCoord coord))
+            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, _mainCamera.nearClipPlane));
+            
+            int x = Mathf.RoundToInt((worldPos.x - _boardOrigin.x) / _cellSpacing);
+            int y = Mathf.RoundToInt((worldPos.y - _boardOrigin.y) / _cellSpacing);
+            
+            return new CellCoord(x, y);
+        }
+
+        private bool HandleCardDropped(Guid cardId, Vector2 screenPosition)
+        {
+            CellCoord targetCoord = GetCoordFromScreenPosition(screenPosition);
+            Zone activeZone = _zoneService.GetZone(_activeZoneId);
+            
+            return _zoneService.TryPlaceCardFromInventory(activeZone, cardId, targetCoord);
+        }
+
+        private void HandleScreenTapped(Vector2 screenPosition)
+        {
+            CellCoord targetCoord = GetCoordFromScreenPosition(screenPosition);
+            Zone activeZone = _zoneService.GetZone(_activeZoneId);
+            
+            if (activeZone.Board.Cells.TryGetValue(targetCoord, out Cell cell))
             {
-                Zone activeZone = _zoneService.GetZonesToSimulate()[0];
-                
-                if (_shopService.TryPurchaseSlot(activeZone, coord))
+                if (!cell.IsUnlocked)
                 {
-                    Debug.Log($"Successfully purchased cell at {coord}!");
-                }
-            }
-        }
-
-        private bool HandleCardDropped(Guid cardId, Vector2 screenPos)
-        {
-            if (TryGetCellCoordFromScreen(screenPos, out CellCoord coord))
-            {
-                Zone activeZone = _zoneService.GetZonesToSimulate()[0];
-                
-                bool success = _zoneService.TryPlaceCardFromInventory(activeZone, cardId, coord);
-                Debug.Log(success ? $"Placed {cardId} at {coord}" : $"Failed to place {cardId}");
-                return success;
-            }
-            return false;
-        }
-
-        private bool TryGetCellCoordFromScreen(Vector2 screenPos, out CellCoord coord)
-        {
-            Ray ray = _mainCamera.ScreenPointToRay(screenPos);
-            Plane gridPlane = new Plane(Vector3.back, Vector3.zero);
-
-            if (gridPlane.Raycast(ray, out float distance))
-            {
-                Vector3 worldPos = ray.GetPoint(distance);
-                
-                int x = Mathf.RoundToInt((worldPos.x - _boardOrigin.x) / _cellSpacing);
-                int y = Mathf.RoundToInt((worldPos.y - _boardOrigin.y) / _cellSpacing);
-                
-                coord = new CellCoord(x, y);
-                return true;
-            }
-
-            coord = default;
-            return false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (!Application.isPlaying || _zoneService == null) return;
-            var zones = _zoneService.GetZonesToSimulate();
-            if (zones == null || zones.Count == 0) return;
-            Zone activeZone = zones[0];
-            if (activeZone.Board == null) return;
-
-            foreach (var cell in activeZone.Board.GetAllCells())
-            {
-                Vector3 worldPos = new Vector3(
-                    _boardOrigin.x + cell.Coordinate.X * _cellSpacing,
-                    _boardOrigin.y + cell.Coordinate.Y * _cellSpacing, 0);
+                    bool purchaseSuccessful = _shopService.TryPurchaseSlot(activeZone, targetCoord);
                     
-                Vector3 size = new Vector3(_cellSpacing * 0.9f, _cellSpacing * 0.9f, 0);
-
-                if (cell.OccupiedCard != null)
-                {
-                    Gizmos.color = new Color(0.2f, 0.6f, 1f, 0.8f); 
-                    Gizmos.DrawCube(worldPos, size);
-                }
-                else if (cell.IsUnlocked)
-                {
-                    Gizmos.color = Color.green; 
-                    Gizmos.DrawWireCube(worldPos, size);
-                }
-                else
-                {
-                    Gizmos.color = Color.red; 
-                    Gizmos.DrawWireCube(worldPos, size);
+                    if (purchaseSuccessful)
+                    {
+                        Debug.Log($"Successfully purchased cell at {targetCoord}!");
+                    }
+                    else
+                    {
+                        Debug.Log($"Failed to purchase cell at {targetCoord}. Not enough currency or not next in sequence.");
+                    }
                 }
             }
         }

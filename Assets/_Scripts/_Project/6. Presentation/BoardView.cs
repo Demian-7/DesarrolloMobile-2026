@@ -9,14 +9,16 @@ namespace Game.Presentation
     {
         private IEventBus _eventBus;
         private ZoneService _zoneService;
+        private string _activeZoneId;
 
-        [SerializeField] private GameObject _cellPrefab;
-        [SerializeField] private GameObject _cardPrefab;
+        [SerializeField] private CellView _cellPrefab;
+        [SerializeField] private CardView _cardPrefab;
 
-        private Dictionary<CellCoord, GameObject> _activeVisuals = new();
+        private Dictionary<CellCoord, CellView> _activeCells = new();
+        private Dictionary<CellCoord, CardView> _activeCards = new();
+        
         private readonly float _cellSpacing = 1.2f;
         private readonly Vector2 _boardOrigin = Vector2.zero;
-        private string _activeZoneId;
 
         public void Initialize(IEventBus eventBus, ZoneService zoneService, string activeZoneId)
         {
@@ -24,40 +26,85 @@ namespace Game.Presentation
             _zoneService = zoneService;
             _activeZoneId = activeZoneId;
 
-            _eventBus.Subscribe<BoardChangedEvent>(OnBoardChanged);
+            _eventBus.Subscribe<SlotUnlockedEvent>(OnSlotUnlocked);
+            _eventBus.Subscribe<CardPlacedEvent>(OnCardPlaced);
+            
             RenderFullBoard();
         }
 
-        private void OnBoardChanged(BoardChangedEvent evt)
+        private void OnDestroy()
         {
-            if (evt.ZoneId == _activeZoneId)
-                RenderFullBoard();
+            if (_eventBus == null) return;
+            _eventBus.Unsubscribe<SlotUnlockedEvent>(OnSlotUnlocked);
+            _eventBus.Unsubscribe<CardPlacedEvent>(OnCardPlaced);
         }
 
         private void RenderFullBoard()
         {
             Zone zone = _zoneService.GetZone(_activeZoneId);
-            if (zone == null)
-                return;
+            if (zone == null) return;
 
-            foreach (var go in _activeVisuals.Values)
-            {
-                Destroy(go);
-            }
-            _activeVisuals.Clear();
+            foreach (var cell in _activeCells.Values) Destroy(cell.gameObject);
+            foreach (var card in _activeCards.Values) Destroy(card.gameObject);
+            _activeCells.Clear();
+            _activeCards.Clear();
 
             foreach (var kvp in zone.Board.Cells)
             {
                 Cell cell = kvp.Value;
-
-                Vector3 worldPos = new Vector3(
-                    _boardOrigin.x + cell.Coordinate.X * _cellSpacing,
-                    _boardOrigin.y + cell.Coordinate.Y * _cellSpacing,
-                    0);
+                Vector3 worldPos = GetWorldPosition(cell.Coordinate);
                 
-                GameObject instance = Instantiate(cell.OccupiedCard != null ? _cardPrefab : _cellPrefab, worldPos, Quaternion.identity, transform);
-                _activeVisuals.Add(cell.Coordinate, instance);
+                CellView cellInstance = Instantiate(_cellPrefab, worldPos, Quaternion.identity, transform);
+                cellInstance.Setup(cell.IsUnlocked);
+                _activeCells.Add(cell.Coordinate, cellInstance);
+
+                if (cell.OccupiedCard != null)
+                {
+                    SpawnCardVisual(cell.OccupiedCard, cell.Coordinate);
+                }
             }
+        }
+
+        private void OnSlotUnlocked(SlotUnlockedEvent evt)
+        {
+            if (evt.ZoneId != _activeZoneId) return;
+            if (_activeCells.TryGetValue(evt.Coord, out CellView cellView))
+            {
+                cellView.Setup(true);
+            }
+        }
+
+        private void OnCardPlaced(CardPlacedEvent evt)
+        {
+            if (evt.ZoneId != _activeZoneId) return;
+            
+            Zone zone = _zoneService.GetZone(_activeZoneId);
+            if (zone == null) return;
+
+            if (zone.Board.Cells.TryGetValue(evt.Coord, out Cell cell) && cell.OccupiedCard != null)
+            {
+                SpawnCardVisual(cell.OccupiedCard, evt.Coord);
+            }
+        }
+
+        private void SpawnCardVisual(CardInstance card, CellCoord coord)
+        {
+            Vector3 worldPos = GetWorldPosition(coord);
+            
+            // Slight Z-offset so cards render in front of cells
+            worldPos.z -= 0.1f; 
+
+            CardView cardInstance = Instantiate(_cardPrefab, worldPos, Quaternion.identity, transform);
+            cardInstance.Setup(card.Definition);
+            _activeCards[coord] = cardInstance;
+        }
+
+        private Vector3 GetWorldPosition(CellCoord coord)
+        {
+            return new Vector3(
+                _boardOrigin.x + coord.X * _cellSpacing,
+                _boardOrigin.y + coord.Y * _cellSpacing,
+                0);
         }
     }
 }

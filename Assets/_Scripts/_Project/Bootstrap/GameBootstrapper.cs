@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Game.Foundation;
 using Game.Core;
+using Game.Foundation;
 using Game.Input.Desktop;
 using Game.Presentation;
+using UnityEngine;
 
 namespace Game.Bootstrap
 {
@@ -13,6 +12,10 @@ namespace Game.Bootstrap
         [Header("Views & Controllers")]
         [SerializeField] private BoardInputController _boardInputController;
         [SerializeField] private BoardView _boardView;
+        
+        [Header("New Phase 2 References")]
+        [SerializeField] private BoardCameraController _cameraController;
+        [SerializeField] private InventoryView _inventoryView;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
@@ -54,10 +57,13 @@ namespace Game.Bootstrap
             activeZone.Wallet.Add(new CurrencyValue(200));
 
             List<CardInstance> starterCards = SeedStarterInventory(activeZone);
-            desktopInput.SetMockCardQueue(starterCards);
 
-            _boardInputController.Initialize(inputProvider, _zoneService, shopService);
+            _cameraController.Initialize(inputProvider);
+            _boardInputController.Initialize(inputProvider, _zoneService, shopService, activeZone.ZoneId);
+            
             _boardView.Initialize(eventBus, _zoneService, activeZone.ZoneId);
+            
+            _inventoryView.Initialize(eventBus, _zoneService, activeZone.ZoneId, desktopInput);
             
             eventBus.Subscribe<GenerationRateChangedEvent>(evt =>
             {
@@ -68,24 +74,22 @@ namespace Game.Bootstrap
                     Debug.Log($"Zone {evt.ZoneId} New Generation Rate: {evt.NewRate}");
                 }
             });
-
-            eventBus.Subscribe<CurrencyChangedEvent>(evt => 
-            {
-                // Comment this out if it spams the console too much!
-                Debug.Log($"Balance: {evt.NewBalance}"); 
-            });
             
-            Debug.Log("Game Bootstrapped Successfully! Right-click to place cards, Left-click red cells to buy them.");
+            Debug.Log("Game Bootstrapped Successfully! Drag cards from the bottom UI onto the board.");
         }
 
         private List<CardInstance> SeedStarterInventory(Zone targetZone)
         {
             var flatDef = ScriptableObject.CreateInstance<CardDefinition>();
             flatDef.Id = "Gen_Flat_1";
+            flatDef.DisplayName = "Basic";
+            flatDef.IconColor = new Color(0.2f, 0.6f, 1f);
             flatDef.Effects.Add(new FlatGenerationEffect { BaseAmount = new CurrencyValue(10) });
 
             var percDef = ScriptableObject.CreateInstance<CardDefinition>();
             percDef.Id = "Gen_Perc_1";
+            percDef.DisplayName = "Multiplier";
+            percDef.IconColor = new Color(1f, 0.4f, 0.2f);
             percDef.Effects.Add(new PercentageGenerationEffect
             {
                 Interaction = new CardInteraction { Type = InteractionType.Adjacent, Range = 1 },
@@ -94,6 +98,8 @@ namespace Game.Bootstrap
 
             var modDef = ScriptableObject.CreateInstance<CardDefinition>();
             modDef.Id = "Mod_Multi_1";
+            modDef.DisplayName = "Buffer";
+            modDef.IconColor = new Color(0.4f, 0.8f, 0.4f);
             modDef.Effects.Add(new BuffEffect
             {
                 Interaction = new CardInteraction { Type = InteractionType.Adjacent, Range = 1 },

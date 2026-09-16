@@ -10,39 +10,7 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Map/CardSlot.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Map/CardSlot.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/BoardChangedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/BoardChangedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardPlacedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardPlacedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CurrencyChangedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CurrencyChangedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/GenerationRateChangedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/GenerationRateChangedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/ZoneUnlockedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/ZoneUnlockedEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/IInputProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/IInputProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Board.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/BoardEvaluationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/BoardEvaluationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/FlatGenerationBehavior.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/FlatGenerationBehavior.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/ModifierBehavior.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/ModifierBehavior.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/PercentageGenerationBehavior.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/PercentageGenerationBehavior.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/ICardBehavior.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/ICardBehavior.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cell.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/PricingStrategies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/PricingStrategies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/CurrencyAccrualService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/CurrencyAccrualService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ShopService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ShopService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ZoneService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ZoneService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Zone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Zone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/4. Input/Desktop/DesktopInputProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/4. Input/Desktop/DesktopInputProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" afterDir="false" />
-    </list>
+    <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +129,7 @@
       <workItem from="1788835023897" duration="4943000" />
       <workItem from="1788873415594" duration="5035000" />
       <workItem from="1789342052434" duration="3325000" />
-      <workItem from="1789386683230" duration="11683000" />
+      <workItem from="1789386683230" duration="12383000" />
     </task>
     <servers />
   </component>

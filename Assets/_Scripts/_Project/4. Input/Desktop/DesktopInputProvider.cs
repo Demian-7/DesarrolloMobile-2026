@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using Game.Foundation;
-using Game.Core;
 using UnityEngine;
 
 namespace Game.Input.Desktop
@@ -9,47 +7,39 @@ namespace Game.Input.Desktop
     public class DesktopInputProvider : MonoBehaviour, IInputProvider
     {
         public event Action<Vector2> OnScreenTapped;
-        
         public event Func<Guid, Vector2, bool> OnCardDropped; 
-        
         public event Action<float> OnPinchZoom;
         public event Action<Vector2> OnPanDelta;
 
-        private Queue<Guid> _mockCardQueue = new Queue<Guid>();
-
-        public void SetMockCardQueue(List<CardInstance> cards)
+        public bool NotifyCardDroppedUI(Guid cardId, Vector2 screenPos)
         {
-            _mockCardQueue.Clear();
-            foreach (var card in cards)
-            {
-                _mockCardQueue.Enqueue(card.InstanceId);
-            }
+            return OnCardDropped?.Invoke(cardId, screenPos) ?? false;
         }
 
         private void Update()
         {
+            // Left Click - Tapping cells/board
             if (UnityEngine.Input.GetMouseButtonDown(0))
             {
                 OnScreenTapped?.Invoke(UnityEngine.Input.mousePosition);
             }
 
-            if (UnityEngine.Input.GetMouseButtonDown(1))
+            // Right Click Hold & Drag - Camera Panning
+            if (UnityEngine.Input.GetMouseButton(1)) 
             {
-                if (_mockCardQueue.Count > 0)
+                float moveX = UnityEngine.Input.GetAxis("Mouse X");
+                float moveY = UnityEngine.Input.GetAxis("Mouse Y");
+                if (moveX != 0 || moveY != 0)
                 {
-                    Guid nextCardId = _mockCardQueue.Peek();
-                    
-                    bool wasPlaced = OnCardDropped?.Invoke(nextCardId, UnityEngine.Input.mousePosition) ?? false;
-                    
-                    if (wasPlaced)
-                    {
-                        _mockCardQueue.Dequeue();
-                    }
+                    OnPanDelta?.Invoke(new Vector2(moveX, moveY));
                 }
-                else
-                {
-                    Debug.LogWarning("Mock inventory empty! No more cards to drop.");
-                }
+            }
+
+            // Mouse Scroll - Camera Zoom
+            float scroll = UnityEngine.Input.mouseScrollDelta.y;
+            if (scroll != 0)
+            {
+                OnPinchZoom?.Invoke(scroll);
             }
         }
     }

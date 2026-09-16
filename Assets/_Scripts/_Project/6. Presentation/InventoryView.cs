@@ -11,27 +11,40 @@ namespace Game.Presentation
         private ZoneService _zoneService;
         private string _activeZoneId;
 
-        [SerializeField] private GameObject _inventoryItemPrefab; // A UI Prefab with an Image/Text
-        [SerializeField] private Transform _scrollRectContent;    // The Content transform of the ScrollRect
+        [SerializeField] private InventoryCardView _inventoryItemPrefab; 
+        [SerializeField] private Transform _scrollRectContent;    
 
-        private List<GameObject> _activeUIItems = new List<GameObject>();
-
-        public void Initialize(IEventBus eventBus, ZoneService zoneService, string activeZoneId)
+        private List<InventoryCardView> _activeUIItems = new();
+        private IInputProvider _inputProvider;
+        
+        public void Initialize(IEventBus eventBus, ZoneService zoneService, string activeZoneId, IInputProvider inputProvider)
         {
             _eventBus = eventBus;
             _zoneService = zoneService;
             _activeZoneId = activeZoneId;
+            _inputProvider = inputProvider;
 
-            // The inventory changes when a card is placed, or (later) when a pack is opened
             _eventBus.Subscribe<CardPlacedEvent>(OnCardPlaced);
+            _eventBus.Subscribe<PackOpenedEvent>(OnPackOpened);
             
             RenderInventory();
         }
 
+        private void OnDestroy()
+        {
+            if (_eventBus == null) return;
+            _eventBus.Unsubscribe<CardPlacedEvent>(OnCardPlaced);
+            _eventBus.Unsubscribe<PackOpenedEvent>(OnPackOpened);
+        }
+
         private void OnCardPlaced(CardPlacedEvent evt)
         {
-            // Re-render the inventory to reflect the removed card
-            RenderInventory();
+            if (evt.ZoneId == _activeZoneId) RenderInventory();
+        }
+        
+        private void OnPackOpened(PackOpenedEvent evt)
+        {
+            if (evt.ZoneId == _activeZoneId) RenderInventory();
         }
 
         private void RenderInventory()
@@ -39,15 +52,13 @@ namespace Game.Presentation
             Zone zone = _zoneService.GetZone(_activeZoneId);
             if (zone == null) return;
 
-            // Clear old UI items
-            foreach (var item in _activeUIItems) Destroy(item);
+            foreach (var item in _activeUIItems) Destroy(item.gameObject);
             _activeUIItems.Clear();
 
-            // Populate from the logical CardInventory
             foreach (var card in zone.CardInventory)
             {
-                GameObject uiInstance = Instantiate(_inventoryItemPrefab, _scrollRectContent);
-                // TODO: Get InventoryCardView component and call Setup(card.Id, card.InstanceId)
+                InventoryCardView uiInstance = Instantiate(_inventoryItemPrefab, _scrollRectContent);
+                uiInstance.Setup(card, _inputProvider);
                 _activeUIItems.Add(uiInstance);
             }
         }
