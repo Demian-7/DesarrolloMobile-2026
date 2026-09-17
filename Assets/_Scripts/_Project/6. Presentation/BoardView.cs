@@ -30,6 +30,7 @@ namespace Game.Presentation
 
             _eventBus.Subscribe<SlotUnlockedEvent>(OnSlotUnlocked);
             _eventBus.Subscribe<CardPlacedEvent>(OnCardPlaced);
+            _eventBus.Subscribe<CardRemovedFromBoardEvent>(OnCardRemoved);
             
             RenderFullBoard();
         }
@@ -39,6 +40,7 @@ namespace Game.Presentation
             if (_eventBus == null) return;
             _eventBus.Unsubscribe<SlotUnlockedEvent>(OnSlotUnlocked);
             _eventBus.Unsubscribe<CardPlacedEvent>(OnCardPlaced);
+            _eventBus.Unsubscribe<CardRemovedFromBoardEvent>(OnCardRemoved);
         }
 
         private void RenderFullBoard()
@@ -100,6 +102,17 @@ namespace Game.Presentation
             if (zone.Board.Cells.TryGetValue(evt.Coord, out Cell cell) && cell.OccupiedCard != null)
             {
                 SpawnCardVisual(cell.OccupiedCard, evt.Coord);
+            }
+        }
+        
+        private void OnCardRemoved(CardRemovedFromBoardEvent evt)
+        {
+            if (evt.ZoneId != _activeZoneId) return;
+    
+            if (_activeCards.TryGetValue(evt.Coord, out CardView cardView))
+            {
+                Destroy(cardView.gameObject);
+                _activeCards.Remove(evt.Coord);
             }
         }
 

@@ -26,6 +26,7 @@ namespace Game.Presentation
 
             _eventBus.Subscribe<CardPlacedEvent>(OnCardPlaced);
             _eventBus.Subscribe<PackOpenedEvent>(OnPackOpened);
+            _eventBus.Subscribe<CardRemovedFromBoardEvent>(OnCardRemovedFromBoard);
             
             RenderInventory();
         }
@@ -35,11 +36,20 @@ namespace Game.Presentation
             if (_eventBus == null) return;
             _eventBus.Unsubscribe<CardPlacedEvent>(OnCardPlaced);
             _eventBus.Unsubscribe<PackOpenedEvent>(OnPackOpened);
+            _eventBus.Unsubscribe<CardRemovedFromBoardEvent>(OnCardRemovedFromBoard);
         }
 
         private void OnCardPlaced(CardPlacedEvent evt)
         {
             if (evt.ZoneId == _activeZoneId) RenderInventory();
+        }
+        
+        private void OnCardRemovedFromBoard(CardRemovedFromBoardEvent evt)
+        {
+            if (evt.ZoneId == _activeZoneId)
+            {
+                RenderInventory();
+            }
         }
         
         private void OnPackOpened(PackOpenedEvent evt)

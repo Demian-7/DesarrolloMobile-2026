@@ -36,7 +36,6 @@ namespace Game.Core
                     zone.Board.AddCell(entry.Coordinate.X, entry.Coordinate.Y);
                 zone.Board.UnlockCell(definition.Layout.UnlockSequence[0].Coordinate);
             }
-            // InfiniteFrontier (Endless Board) setup is a separate path, not modeled here yet
 
             foreach (var cardDef in definition.StartingCards)
                 zone.CardInventory.Add(new CardInstance(cardDef));
@@ -56,13 +55,76 @@ namespace Game.Core
         public bool TryPlaceCardFromInventory(Zone zone, Guid cardInstanceId, CellCoord coord)
         {
             var card = zone.CardInventory.Find(c => c.InstanceId == cardInstanceId);
-            if (card == null || !zone.Board.TryPlaceCard(card, coord))
+            if (card == null || !zone.Board.Cells.TryGetValue(coord, out Cell cell) || !cell.IsUnlocked)
                 return false;
 
+            if (cell.OccupiedCard != null)
+            {
+                CardInstance oldCard = cell.OccupiedCard;
+        
+                cell.OccupiedCard = null;
+                oldCard.CurrentCell = null;
+        
+                zone.CardInventory.Add(oldCard);
+        
+                _eventBus.Publish(new CardRemovedFromBoardEvent(zone.ZoneId, oldCard.InstanceId, coord));
+            }
+
             zone.CardInventory.Remove(card);
+    
+            cell.OccupiedCard = card;
+            card.CurrentCell = cell;
+
             _eventBus.Publish(new CardPlacedEvent(zone.ZoneId, cardInstanceId, coord));
             _eventBus.Publish(new BoardChangedEvent(zone.ZoneId));
-            
+    
+            return true;
+        }
+        
+        public bool TryMoveCardOnBoard(Zone zone, CellCoord fromCoord, CellCoord toCoord)
+        {
+            if (!zone.Board.Cells.TryGetValue(fromCoord, out Cell fromCell) || fromCell.OccupiedCard == null) 
+                return false;
+    
+            if (!zone.Board.Cells.TryGetValue(toCoord, out Cell toCell) || !toCell.IsUnlocked) 
+                return false;
+
+            CardInstance movingCard = fromCell.OccupiedCard;
+            CardInstance targetCard = toCell.OccupiedCard;
+
+            _eventBus.Publish(new CardRemovedFromBoardEvent(zone.ZoneId, movingCard.InstanceId, fromCoord));
+            if (targetCard != null)
+                _eventBus.Publish(new CardRemovedFromBoardEvent(zone.ZoneId, targetCard.InstanceId, toCoord));
+
+            fromCell.OccupiedCard = targetCard;
+            if (targetCard != null) targetCard.CurrentCell = fromCell;
+
+            toCell.OccupiedCard = movingCard;
+            movingCard.CurrentCell = toCell;
+
+            _eventBus.Publish(new CardPlacedEvent(zone.ZoneId, movingCard.InstanceId, toCoord));
+            if (targetCard != null)
+                _eventBus.Publish(new CardPlacedEvent(zone.ZoneId, targetCard.InstanceId, fromCoord));
+
+            _eventBus.Publish(new BoardChangedEvent(zone.ZoneId));
+            return true;
+        }
+        
+        public bool TryPickUpCard(Zone zone, CellCoord coord)
+        {
+            if (!zone.Board.Cells.TryGetValue(coord, out Cell cell) || cell.OccupiedCard == null)
+                return false;
+
+            CardInstance card = cell.OccupiedCard;
+
+            cell.OccupiedCard = null;
+            card.CurrentCell = null;
+
+            zone.CardInventory.Add(card);
+
+            _eventBus.Publish(new CardRemovedFromBoardEvent(zone.ZoneId, card.InstanceId, coord));
+            _eventBus.Publish(new BoardChangedEvent(zone.ZoneId));
+
             return true;
         }
     }

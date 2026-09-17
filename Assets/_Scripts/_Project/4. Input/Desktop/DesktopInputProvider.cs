@@ -6,10 +6,16 @@ namespace Game.Input.Desktop
 {
     public class DesktopInputProvider : MonoBehaviour, IInputProvider
     {
-        public event Action<Vector2> OnScreenTapped;
+        public event Action<Vector2> OnInteractBegan;
+        public event Action<Vector2> OnInteractMoved;
+        public event Action<Vector2> OnInteractEnded;
+        
         public event Func<Guid, Vector2, bool> OnCardDropped; 
         public event Action<float> OnPinchZoom;
         public event Action<Vector2> OnPanDelta;
+
+        private bool _isInteracting;
+        private Vector2 _lastInteractPos;
 
         public bool NotifyCardDroppedUI(Guid cardId, Vector2 screenPos)
         {
@@ -18,13 +24,27 @@ namespace Game.Input.Desktop
 
         private void Update()
         {
-            // Left Click - Tapping cells/board
             if (UnityEngine.Input.GetMouseButtonDown(0))
             {
-                OnScreenTapped?.Invoke(UnityEngine.Input.mousePosition);
+                _isInteracting = true;
+                _lastInteractPos = UnityEngine.Input.mousePosition;
+                OnInteractBegan?.Invoke(_lastInteractPos);
+            }
+            else if (UnityEngine.Input.GetMouseButtonUp(0))
+            {
+                _isInteracting = false;
+                OnInteractEnded?.Invoke(UnityEngine.Input.mousePosition);
+            }
+            else if (_isInteracting)
+            {
+                Vector2 currentPos = UnityEngine.Input.mousePosition;
+                if (currentPos != _lastInteractPos)
+                {
+                    _lastInteractPos = currentPos;
+                    OnInteractMoved?.Invoke(currentPos);
+                }
             }
 
-            // Right Click Hold & Drag - Camera Panning
             if (UnityEngine.Input.GetMouseButton(1)) 
             {
                 float moveX = UnityEngine.Input.GetAxis("Mouse X");
@@ -35,7 +55,6 @@ namespace Game.Input.Desktop
                 }
             }
 
-            // Mouse Scroll - Camera Zoom
             float scroll = UnityEngine.Input.mouseScrollDelta.y;
             if (scroll != 0)
             {
