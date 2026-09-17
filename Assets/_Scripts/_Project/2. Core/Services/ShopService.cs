@@ -29,7 +29,12 @@ namespace Game.Core
 
             zone.Board.UnlockCell(coord);
             _pricingStrategy.OnPurchase(coord);
+            
+            
             _eventBus.Publish(new SlotUnlockedEvent(zone.ZoneId, coord));
+            _eventBus.Publish(new CurrencyChangedEvent(zone.ZoneId, zone.Wallet.Balance));
+            _eventBus.Publish(new BoardChangedEvent(zone.ZoneId));
+            
             return true;
         }
 
@@ -53,6 +58,11 @@ namespace Game.Core
 
             _zoneService.CreateAndActivateZone(nextZoneDefinition);
             return true;
+        }
+        
+        public CurrencyValue GetSlotPrice(Zone zone, CellCoord coord)
+        {
+            return _pricingStrategy.GetPrice(zone.Board, coord);
         }
     }
 }

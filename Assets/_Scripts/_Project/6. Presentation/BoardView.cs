@@ -9,6 +9,7 @@ namespace Game.Presentation
     {
         private IEventBus _eventBus;
         private ZoneService _zoneService;
+        private ShopService _shopService;
         private string _activeZoneId;
 
         [SerializeField] private CellView _cellPrefab;
@@ -20,10 +21,11 @@ namespace Game.Presentation
         private readonly float _cellSpacing = 1.2f;
         private readonly Vector2 _boardOrigin = Vector2.zero;
 
-        public void Initialize(IEventBus eventBus, ZoneService zoneService, string activeZoneId)
+        public void Initialize(IEventBus eventBus, ZoneService zoneService, ShopService shopService, string activeZoneId)
         {
             _eventBus = eventBus;
             _zoneService = zoneService;
+            _shopService = shopService;
             _activeZoneId = activeZoneId;
 
             _eventBus.Subscribe<SlotUnlockedEvent>(OnSlotUnlocked);
@@ -44,8 +46,12 @@ namespace Game.Presentation
             Zone zone = _zoneService.GetZone(_activeZoneId);
             if (zone == null) return;
 
-            foreach (var cell in _activeCells.Values) Destroy(cell.gameObject);
-            foreach (var card in _activeCards.Values) Destroy(card.gameObject);
+            foreach (var cell in _activeCells.Values) 
+                Destroy(cell.gameObject);
+            
+            foreach (var card in _activeCards.Values) 
+                Destroy(card.gameObject);
+            
             _activeCells.Clear();
             _activeCards.Clear();
 
@@ -55,7 +61,15 @@ namespace Game.Presentation
                 Vector3 worldPos = GetWorldPosition(cell.Coordinate);
                 
                 CellView cellInstance = Instantiate(_cellPrefab, worldPos, Quaternion.identity, transform);
-                cellInstance.Setup(cell.IsUnlocked);
+
+                string priceStr = "";
+                if (!cell.IsUnlocked)
+                {
+                    CurrencyValue price = _shopService.GetSlotPrice(zone, cell.Coordinate);
+                    priceStr = $"${price}";
+                }
+                
+                cellInstance.Setup(cell.IsUnlocked, priceStr);
                 _activeCells.Add(cell.Coordinate, cellInstance);
 
                 if (cell.OccupiedCard != null)
@@ -67,10 +81,12 @@ namespace Game.Presentation
 
         private void OnSlotUnlocked(SlotUnlockedEvent evt)
         {
-            if (evt.ZoneId != _activeZoneId) return;
+            if (evt.ZoneId != _activeZoneId) 
+                return;
+            
             if (_activeCells.TryGetValue(evt.Coord, out CellView cellView))
             {
-                cellView.Setup(true);
+                cellView.Setup(true, "");
             }
         }
 
