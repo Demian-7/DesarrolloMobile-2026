@@ -10,7 +10,16 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="" />
+    <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/View/CardPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/View/CardPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/View/CellPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/View/CellPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +59,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/4. Input/Desktop/DesktopInputProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7,
   &quot;fromUser&quot;: false
@@ -136,6 +146,7 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />

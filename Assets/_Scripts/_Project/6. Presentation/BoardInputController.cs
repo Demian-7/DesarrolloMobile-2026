@@ -11,6 +11,7 @@ namespace Game.Presentation
 
         [Header("Drag Visuals")]
         [SerializeField] private CardView _dragGhostPrefab;
+        [SerializeField] private BoardView _boardView;
 
         private IInputProvider _input;
         private ZoneService _zoneService;
@@ -20,6 +21,7 @@ namespace Game.Presentation
 
         private InputState _currentState = InputState.Idle;
         private CellCoord _dragOrigin;
+        private CellCoord _lastHoveredCoord;
         private CardView _activeGhost;
 
         private readonly float _cellSpacing = 1.2f;
@@ -79,6 +81,16 @@ namespace Game.Presentation
             if (_currentState == InputState.DraggingBoardCard && _activeGhost != null)
             {
                 UpdateGhostPosition(screenPosition);
+
+                CellCoord currentHoverCoord = GetCoordFromScreenPosition(screenPosition);
+        
+                if (!currentHoverCoord.Equals(_lastHoveredCoord))
+                {
+                    _lastHoveredCoord = currentHoverCoord;
+                    Zone zone = _zoneService.GetZone(_activeZoneId);
+            
+                    _boardView.ShowDragPreview(zone, zone.Board.Cells[_dragOrigin].OccupiedCard.Definition, currentHoverCoord);
+                }
             }
         }
 
@@ -89,6 +101,8 @@ namespace Game.Presentation
 
             if (_currentState == InputState.DraggingBoardCard)
             {
+                _boardView.ClearDragPreview();
+                
                 _currentState = InputState.Idle;
                 if (_activeGhost != null) Destroy(_activeGhost.gameObject);
 

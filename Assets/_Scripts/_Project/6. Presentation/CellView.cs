@@ -7,6 +7,7 @@ namespace Game.Presentation
     {
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private TextMeshPro _priceText;
+        [SerializeField] private SpriteRenderer _highlightRenderer;
         
         [SerializeField] private Color _lockedColor = new Color(0.3f, 0.3f, 0.3f, 0.5f);
         [SerializeField] private Color _unlockedColor = Color.white;
@@ -19,6 +20,14 @@ namespace Game.Presentation
             {
                 _priceText.gameObject.SetActive(!isUnlocked);
                 _priceText.text = priceString;
+            }
+        }
+
+        public void SetHighlight(bool active)
+        {
+            if (_highlightRenderer != null)
+            {
+                _highlightRenderer.gameObject.SetActive(active);
             }
         }
     }
