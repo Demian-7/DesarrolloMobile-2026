@@ -34,15 +34,21 @@ namespace Game.Presentation
             _originalPosition = transform.position;
             
             transform.SetParent(GetComponentInParent<Canvas>().transform, true);
+
+            _inputProvider.NotifyUICardDragBegan(CardInstanceId, eventData.position);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             transform.position = eventData.position;
+            
+            _inputProvider.NotifyUICardDragMoved(CardInstanceId, eventData.position);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            _inputProvider.NotifyUICardDragEnded(CardInstanceId);
+            
             bool wasPlaced = _inputProvider.NotifyCardDroppedUI(CardInstanceId, eventData.position);
 
             if (!wasPlaced)

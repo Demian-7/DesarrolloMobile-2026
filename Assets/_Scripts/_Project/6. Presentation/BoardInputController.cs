@@ -23,6 +23,7 @@ namespace Game.Presentation
         private CellCoord _dragOrigin;
         private CellCoord _lastHoveredCoord;
         private CardView _activeGhost;
+        private Guid _draggingUICardId;
 
         private readonly float _cellSpacing = 1.2f;
         private readonly Vector2 _boardOrigin = Vector2.zero;
@@ -40,6 +41,9 @@ namespace Game.Presentation
             _input.OnInteractBegan += HandleInteractBegan;
             _input.OnInteractMoved += HandleInteractMoved;
             _input.OnInteractEnded += HandleInteractEnded;
+            _input.OnUICardDragBegan += HandleUICardDragBegan;
+            _input.OnUICardDragMoved += HandleUICardDragMoved;
+            _input.OnUICardDragEnded += HandleUICardDragEnded;
         }
 
         private void OnDestroy()
@@ -50,6 +54,9 @@ namespace Game.Presentation
                 _input.OnInteractBegan -= HandleInteractBegan;
                 _input.OnInteractMoved -= HandleInteractMoved;
                 _input.OnInteractEnded -= HandleInteractEnded;
+                _input.OnUICardDragBegan -= HandleUICardDragBegan;
+                _input.OnUICardDragMoved -= HandleUICardDragMoved;
+                _input.OnUICardDragEnded -= HandleUICardDragEnded;
             }
         }
 
@@ -148,6 +155,44 @@ namespace Game.Presentation
             int x = Mathf.RoundToInt((worldPos.x - _boardOrigin.x) / _cellSpacing);
             int y = Mathf.RoundToInt((worldPos.y - _boardOrigin.y) / _cellSpacing);
             return new CellCoord(x, y);
+        }
+
+        private void HandleUICardDragBegan(Guid cardId, Vector2 screenPosition)
+        {
+            if (_currentState != InputState.Idle)
+                return;
+
+            _draggingUICardId = cardId;
+            _lastHoveredCoord = GetCoordFromScreenPosition(screenPosition);
+        }
+
+        private void HandleUICardDragMoved(Guid cardId, Vector2 screenPosition)
+        {
+            if (cardId != _draggingUICardId)
+                return;
+            
+            CellCoord currentHoverCoord = GetCoordFromScreenPosition(screenPosition);
+
+            if (!currentHoverCoord.Equals(_lastHoveredCoord))
+            {
+                _lastHoveredCoord = currentHoverCoord;
+                Zone zone = _zoneService.GetZone(_activeZoneId);
+
+                CardInstance inventoryCard = zone.CardInventory.Find(c => c.InstanceId == cardId);
+                if (inventoryCard != null)
+                {
+                    _boardView.ShowDragPreview(zone, inventoryCard.Definition, currentHoverCoord);
+                }
+            }
+        }
+
+        private void HandleUICardDragEnded(Guid cardId)
+        {
+            if (cardId == _draggingUICardId)
+            {
+                _draggingUICardId = Guid.Empty;
+                _boardView.ClearDragPreview();
+            }
         }
     }
 }

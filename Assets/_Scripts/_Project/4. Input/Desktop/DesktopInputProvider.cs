@@ -10,6 +10,10 @@ namespace Game.Input.Desktop
         public event Action<Vector2> OnInteractMoved;
         public event Action<Vector2> OnInteractEnded;
         
+        public event Action<Guid, Vector2> OnUICardDragBegan;
+        public event Action<Guid, Vector2> OnUICardDragMoved;
+        public event Action<Guid> OnUICardDragEnded;
+        
         public event Func<Guid, Vector2, bool> OnCardDropped; 
         public event Action<float> OnPinchZoom;
         public event Action<Vector2> OnPanDelta;
@@ -61,5 +65,9 @@ namespace Game.Input.Desktop
                 OnPinchZoom?.Invoke(scroll);
             }
         }
+        
+        public void NotifyUICardDragBegan(Guid cardId, Vector2 screenPos) => OnUICardDragBegan?.Invoke(cardId, screenPos);
+        public void NotifyUICardDragMoved(Guid cardId, Vector2 screenPos) => OnUICardDragMoved?.Invoke(cardId, screenPos);
+        public void NotifyUICardDragEnded(Guid cardId) => OnUICardDragEnded?.Invoke(cardId);
     }
 }
