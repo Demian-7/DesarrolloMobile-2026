@@ -9,8 +9,7 @@ namespace Game.Presentation
         private IInputProvider _input;
         private Camera _cam;
 
-        [Header("Settings")]
-        [SerializeField] private float _panSpeed = 1.0f;
+        [Header("Settings")] [SerializeField] private float _panSpeed = 1.0f;
         [SerializeField] private float _zoomSpeed = 1.5f;
         [SerializeField] private float _minZoom = 3f;
         [SerializeField] private float _maxZoom = 15f;
@@ -19,7 +18,7 @@ namespace Game.Presentation
         {
             _input = input;
             _cam = GetComponent<Camera>();
-            
+
             _input.OnPanDelta += HandlePan;
             _input.OnPinchZoom += HandleZoom;
         }
@@ -35,7 +34,7 @@ namespace Game.Presentation
 
         private void HandlePan(Vector2 delta)
         {
-            float zoomScaledSpeed = _panSpeed * _cam.orthographicSize * 0.05f; 
+            float zoomScaledSpeed = _panSpeed * _cam.orthographicSize * 0.05f;
 
             Vector3 movement = new Vector3(-delta.x, -delta.y, 0) * zoomScaledSpeed;
             transform.Translate(movement, Space.World);

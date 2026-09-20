@@ -179,7 +179,9 @@ namespace Game.Presentation
             worldPos.z -= 0.1f;
 
             CardView cardInstance = Instantiate(_cardPrefab, worldPos, Quaternion.identity, transform);
-            cardInstance.Setup(card.Definition);
+            
+            cardInstance.Setup(card, _eventBus);
+            
             _activeCards[coord] = cardInstance;
         }
 

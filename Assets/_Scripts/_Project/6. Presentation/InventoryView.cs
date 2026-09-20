@@ -68,7 +68,7 @@ namespace Game.Presentation
             foreach (var card in zone.CardInventory)
             {
                 InventoryCardView uiInstance = Instantiate(_inventoryItemPrefab, _scrollRectContent);
-                uiInstance.Setup(card, _inputProvider);
+                uiInstance.Setup(card, _inputProvider, _eventBus);
                 _activeUIItems.Add(uiInstance);
             }
         }
