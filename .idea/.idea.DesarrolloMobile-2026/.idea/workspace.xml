@@ -13,6 +13,7 @@
     <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/GameStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/GameStats.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,6 +60,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryCardView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/MockShopController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -144,7 +146,7 @@
       <workItem from="1789386683230" duration="12383000" />
       <workItem from="1789863900395" duration="43000" />
       <workItem from="1789863976288" duration="4000" />
-      <workItem from="1790548162679" duration="805000" />
+      <workItem from="1790548162679" duration="3219000" />
     </task>
     <servers />
   </component>

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Core;
 using Game.Foundation;
-using Game.Input.Desktop;
 using Game.Input.Mobile;
 using Game.Presentation;
 using UnityEngine;
@@ -10,14 +9,13 @@ namespace Game.Bootstrap
 {
     public class GameBootstrapper : MonoBehaviour
     {
-        [Header("Views & Controllers")] [SerializeField]
-        private BoardInputController _boardInputController;
-
+        [Header("Views & Controllers")] 
+        [SerializeField] private BoardInputController _boardInputController;
+        [SerializeField] private MockShopController _mockShopController;
         [SerializeField] private BoardView _boardView;
 
-        [Header("New Phase 2 References")] [SerializeField]
-        private BoardCameraController _cameraController;
-
+        [Header("New Phase 2 References")] 
+        [SerializeField] private BoardCameraController _cameraController;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private HUDView _hudView;
         
@@ -27,11 +25,13 @@ namespace Game.Bootstrap
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
 
+        private CardDefinition _flatDef;
+        private CardDefinition _percDef;
+        private CardDefinition _modDef;
+
         private void Awake()
         {
             var eventBus = new EventBus();
-
-            // var desktopInput = gameObject.AddComponent<DesktopInputProvider>();
             var mobileInput = gameObject.AddComponent<MobileTouchInputProvider>();
             IInputProvider inputProvider = mobileInput;
 
@@ -40,6 +40,8 @@ namespace Game.Bootstrap
             var boardEvaluationService = new BoardEvaluationService(eventBus, _zoneService, globalUpgradeService);
             _currencyAccrualService = new CurrencyAccrualService(_zoneService, eventBus);
             var packOpeningService = new PackOpeningService();
+
+            CreateCardDefinitions();
 
             var startingZoneDef = ScriptableObject.CreateInstance<ZoneDefinition>();
             startingZoneDef.Id = "Test_Zone_01";
@@ -64,59 +66,50 @@ namespace Game.Bootstrap
 
             activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
 
-            List<CardInstance> starterCards = SeedStarterInventory(activeZone);
+            activeZone.CardInventory.Add(new CardInstance(_flatDef));
 
             _cameraController.Initialize(inputProvider);
             _boardInputController.Initialize(eventBus, inputProvider, _zoneService, shopService, activeZone.ZoneId);
             _boardView.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId);
             _inventoryView.Initialize(eventBus, _zoneService, activeZone.ZoneId, inputProvider);
-
             _hudView.Initialize(eventBus, _zoneService, activeZone.ZoneId);
+            
+            _mockShopController.Initialize(eventBus, _zoneService, activeZone.ZoneId, _gameStats, _flatDef, _percDef, _modDef);
 
             eventBus.Subscribe<GenerationRateChangedEvent>(evt =>
             {
                 var zone = _zoneService.GetZone(evt.ZoneId);
-                if (zone != null)
-                {
-                    zone.GenerationRate = evt.NewRate;
-                }
+                if (zone != null) zone.GenerationRate = evt.NewRate;
             });
         }
 
-        private List<CardInstance> SeedStarterInventory(Zone targetZone)
+        private void CreateCardDefinitions()
         {
-            var flatDef = ScriptableObject.CreateInstance<CardDefinition>();
-            flatDef.Id = "Gen_Flat_1";
-            flatDef.DisplayName = "Basic";
-            flatDef.IconColor = new Color(0.2f, 0.6f, 1f);
-            flatDef.Effects.Add(new FlatGenerationEffect { BaseAmount = new CurrencyValue(10) });
+            _flatDef = ScriptableObject.CreateInstance<CardDefinition>();
+            _flatDef.Id = "Gen_Flat_1";
+            _flatDef.DisplayName = "Basic";
+            _flatDef.IconColor = new Color(0.2f, 0.6f, 1f);
+            _flatDef.Effects.Add(new FlatGenerationEffect { BaseAmount = new CurrencyValue(10) });
 
-            var percDef = ScriptableObject.CreateInstance<CardDefinition>();
-            percDef.Id = "Gen_Perc_1";
-            percDef.DisplayName = "Multiplier";
-
-            percDef.IconColor = new Color(0.6f, 0.2f, 0.8f);
-
-            percDef.Effects.Add(new PercentageGenerationEffect
+            _percDef = ScriptableObject.CreateInstance<CardDefinition>();
+            _percDef.Id = "Gen_Perc_1";
+            _percDef.DisplayName = "Multiplier";
+            _percDef.IconColor = new Color(0.6f, 0.2f, 0.8f);
+            _percDef.Effects.Add(new PercentageGenerationEffect
             {
                 Interaction = new CardInteraction { Type = InteractionType.Adjacent, Range = 1 },
                 Percentage = 2.0f
             });
 
-            var modDef = ScriptableObject.CreateInstance<CardDefinition>();
-            modDef.Id = "Mod_Multi_1";
-            modDef.DisplayName = "Buffer";
-            modDef.IconColor = new Color(0.4f, 0.8f, 0.4f);
-            modDef.Effects.Add(new BuffEffect
+            _modDef = ScriptableObject.CreateInstance<CardDefinition>();
+            _modDef.Id = "Mod_Multi_1";
+            _modDef.DisplayName = "Buffer";
+            _modDef.IconColor = new Color(0.4f, 0.8f, 0.4f);
+            _modDef.Effects.Add(new BuffEffect
             {
                 Interaction = new CardInteraction { Type = InteractionType.Adjacent, Range = 1 },
                 Magnitude = 2.0f
             });
-
-            var starterCards = new List<CardInstance>
-                { new CardInstance(flatDef), new CardInstance(percDef), new CardInstance(modDef) };
-            targetZone.CardInventory.AddRange(starterCards);
-            return starterCards;
         }
 
         private void Update()

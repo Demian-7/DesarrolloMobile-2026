@@ -11,5 +11,10 @@ namespace Game.Foundation
 
         [Tooltip("The amount of money that each cell costs progressively")]
         public int[] CellCost;
+        
+        [Header("Mock Shop Prices")]
+        public int BasicCardCost = 10;
+        public int MultiplierCardCost = 50;
+        public int BufferCardCost = 100;
     }
 }
