@@ -20,6 +20,9 @@ namespace Game.Bootstrap
 
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private HUDView _hudView;
+        
+        [Header("Game Stats")]
+        [SerializeField] private GameStats _gameStats;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
@@ -46,10 +49,10 @@ namespace Game.Bootstrap
             startingZoneDef.Layout.UnlockSequence = new List<CellUnlockEntry>
             {
                 new CellUnlockEntry { Coordinate = new CellCoord(0, 0), Price = CurrencyValue.Zero },
-                new CellUnlockEntry { Coordinate = new CellCoord(1, 0), Price = new CurrencyValue(10) },
-                new CellUnlockEntry { Coordinate = new CellCoord(-1, 0), Price = new CurrencyValue(20) },
-                new CellUnlockEntry { Coordinate = new CellCoord(0, 1), Price = new CurrencyValue(50) },
-                new CellUnlockEntry { Coordinate = new CellCoord(0, -1), Price = new CurrencyValue(100) }
+                new CellUnlockEntry { Coordinate = new CellCoord(1, 0), Price = new CurrencyValue(_gameStats.CellCost[0]) },
+                new CellUnlockEntry { Coordinate = new CellCoord(-1, 0), Price = new CurrencyValue(_gameStats.CellCost[1]) },
+                new CellUnlockEntry { Coordinate = new CellCoord(0, 1), Price = new CurrencyValue(_gameStats.CellCost[2]) },
+                new CellUnlockEntry { Coordinate = new CellCoord(0, -1), Price = new CurrencyValue(_gameStats.CellCost[3]) },
             };
             startingZoneDef.StartingCards = new List<CardDefinition>();
 
@@ -59,7 +62,7 @@ namespace Game.Bootstrap
             _zoneService.CreateAndActivateZone(startingZoneDef);
             Zone activeZone = _zoneService.GetZone("Test_Zone_01");
 
-            activeZone.Wallet.Add(new CurrencyValue(200));
+            activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
 
             List<CardInstance> starterCards = SeedStarterInventory(activeZone);
 
