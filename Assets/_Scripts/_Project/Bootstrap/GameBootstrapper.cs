@@ -89,7 +89,7 @@ namespace Game.Bootstrap
             _flatDef.Id = "Gen_Flat_1";
             _flatDef.DisplayName = "Basic";
             _flatDef.IconColor = new Color(0.2f, 0.6f, 1f);
-            _flatDef.Effects.Add(new FlatGenerationEffect { BaseAmount = new CurrencyValue(10) });
+            _flatDef.Effects.Add(new FlatGenerationEffect { BaseAmount = new CurrencyValue(1) });
 
             _percDef = ScriptableObject.CreateInstance<CardDefinition>();
             _percDef.Id = "Gen_Perc_1";

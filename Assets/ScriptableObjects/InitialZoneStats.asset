@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2174e569e426de47b486944d935bf6c, type: 3}
   m_Name: InitialZoneStats
   m_EditorClassIdentifier: Assembly-CSharp::Game.Foundation.GameStats
-  InitialMoney: 10000
-  CellCost: 64000000fa000000f4010000e8030000
+  InitialMoney: 0
+  CellCost: 0a0000001e00000064000000e8030000
+  BasicCardCost: 10
+  MultiplierCardCost: 50
+  BufferCardCost: 100
