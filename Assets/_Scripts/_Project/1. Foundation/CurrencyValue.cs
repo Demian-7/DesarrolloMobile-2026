@@ -9,6 +9,12 @@ namespace Game.Foundation
 
         public static readonly CurrencyValue Zero = new(0);
 
+        private static readonly string[] Suffixes =
+        {
+            "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd",
+            "Spd", "Ocd", "Nod", "Vg"
+        };
+
         public CurrencyValue(double mantissa, int exponent = 0)
         {
             if (mantissa == 0)
@@ -126,6 +132,46 @@ namespace Game.Foundation
                 return (Mantissa * Math.Pow(10, Exponent)).ToString("F0");
 
             return $"{Mantissa:F2}e{Exponent}";
+        }
+
+        public string ToString(NotationType notation)
+        {
+            if (Mantissa == 0)
+                return "0";
+
+            if (Exponent < 3 && notation != NotationType.OoM)
+            {
+                return (Mantissa * Math.Pow(10, Exponent)).ToString("F0");
+            }
+
+            switch (notation)
+            {
+                case NotationType.Standard:
+                    int suffixIndex = Exponent / 3;
+                    int shift = Exponent % 3;
+                    double displayMantissa = Mantissa * Math.Pow(10, shift);
+
+                    if (suffixIndex < Suffixes.Length)
+                    {
+                        return $"{displayMantissa:F2}{Suffixes[suffixIndex]}";
+                    }
+
+                    return $"{Mantissa:F2}e{Exponent}"; //Fallback if out of suffixes
+                
+                case NotationType.Engineering:
+                    int engShift = Exponent % 3;
+                    double engMantissa = Mantissa * Math.Pow(10, engShift);
+                    int engExponent = Exponent - engShift;
+                    return $"{engMantissa:F2}e{engExponent}";
+                
+                case NotationType.OoM:
+                    double logValue = Exponent + Math.Log10(Mantissa);
+                    return $"e{logValue:F3}";
+
+                case NotationType.Scientific:
+                default:
+                    return $"{Mantissa:F2}e{Exponent}";
+            }
         }
     }
 }
