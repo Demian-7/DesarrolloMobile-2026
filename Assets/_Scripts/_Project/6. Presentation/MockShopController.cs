@@ -85,6 +85,8 @@ namespace Game.Presentation
             {
                 zone.CardInventory.Add(new CardInstance(def));
                 
+                _eventBus.Publish(new CurrencyChangedEvent(_activeZoneId, zone.Wallet.Balance));
+                
                 _eventBus.Publish(new PackOpenedEvent(_activeZoneId, new List<CardDefinition> { def }));
             }
         }

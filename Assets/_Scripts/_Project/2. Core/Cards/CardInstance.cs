@@ -19,7 +19,7 @@ namespace Game.Core
             Definition = definition;
         }
 
-        public IEnumerable<T> GetEffects<T>() where T : class, ICardEffect
+        public IEnumerable<T> GetEffects<T>() where T : CardEffect
         {
             foreach (var effect in Definition.Effects)
             {

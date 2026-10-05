@@ -1,11 +1,13 @@
 using System;
+using UnityEngine;
 
 namespace Game.Foundation
 {
+    [Serializable]
     public struct CurrencyValue : IComparable<CurrencyValue>, IEquatable<CurrencyValue>
     {
-        public double Mantissa { get; private set; }
-        public int Exponent { get; private set; }
+        [field: SerializeField] public double Mantissa { get; private set; }
+        [field: SerializeField] public int Exponent { get; private set; }
 
         public static readonly CurrencyValue Zero = new(0);
 

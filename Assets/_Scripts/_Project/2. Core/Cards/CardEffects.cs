@@ -1,33 +1,53 @@
 using System;
-using Game.Core;
 using Game.Foundation;
 using UnityEngine;
 
-public interface ICardEffect { }  // marker
-
-public interface IGeneratingEffect : ICardEffect
+namespace Game.Core
 {
-    CurrencyValue Evaluate(BoardEvaluationContext ctx, CellCoord ownerCell);
-}
+    [Serializable]
 
-public interface IModifyingEffect : ICardEffect
-{
-    CardInteraction Interaction { get; }
-    float SignedMagnitude { get; } // positive for Buff, negative for Debuff. e.g. +3.0 = "+300%", -1.0 = "-100%" (disables)
-}
+    public abstract class CardEffect
+    {
+    }
 
-[Serializable]
-public class BuffEffect : IModifyingEffect
-{
-    [field: SerializeField] public CardInteraction Interaction { get; set; } // [field:SerializeField] so the auto-property still serializes like a normal field
-    public float Magnitude; // e.g. 3.0 = "+300%"
-    public float SignedMagnitude => Magnitude;
-}
+    [Serializable]
+    public abstract class GeneratingEffect : CardEffect
+    {
+        public abstract CurrencyValue Evaluate(BoardEvaluationContext ctx, CellCoord ownerCell);
+    }
 
-[Serializable]
-public class DebuffEffect : IModifyingEffect
-{
-    [field: SerializeField] public CardInteraction Interaction { get; set; }
-    public float Magnitude; // e.g. 1.0 = "-100%", i.e. disables
-    public float SignedMagnitude => -Magnitude;
+    [Serializable]
+    public abstract class ModifyingEffect : CardEffect
+    {
+        public abstract CardInteraction Interaction { get; }
+        public abstract float SignedMagnitude { get; }
+    }
+
+    [Serializable]
+    public class BuffEffect : ModifyingEffect
+    {
+        [Tooltip("Defines which cards receive this buff.")]
+        public CardInteraction TargetInteraction;
+
+        [Tooltip(
+            "The magnitude of the buff applied to the target's effective value (always positive). E.g. 3.0 = +300%")]
+        public float Magnitude;
+
+        public override CardInteraction Interaction => TargetInteraction;
+        public override float SignedMagnitude => Mathf.Abs(Magnitude);
+    }
+
+    [Serializable]
+    public class DebuffEffect : ModifyingEffect
+    {
+        [Tooltip("Defines which cards are affected by this debuff.")]
+        public CardInteraction TargetInteraction;
+
+        [Tooltip(
+            "The magnitude of the debuff subtracted from the target's effective value (automatically negative). E.g. 1.0 = -100% (disables)")]
+        public float Magnitude;
+
+        public override CardInteraction Interaction => TargetInteraction;
+        public override float SignedMagnitude => -Mathf.Abs(Magnitude);
+    }
 }

@@ -2138,9 +2138,9 @@ MonoBehaviour:
   _buyBasicButton: {fileID: 760098362}
   _buyMultiplierButton: {fileID: 645113740}
   _buyBufferButton: {fileID: 649323783}
-  _basicPriceText: {fileID: 945098110}
-  _multiplierPriceText: {fileID: 275967265}
-  _bufferPriceText: {fileID: 1405294400}
+  _basicPriceText: {fileID: 2011808821}
+  _multiplierPriceText: {fileID: 2890528}
+  _bufferPriceText: {fileID: 1948407684}
 --- !u!224 &535746841 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4419972768887484359, guid: 55c2c773d819c4c4e9fd35cf4b88f855, type: 3}
@@ -5382,6 +5382,9 @@ MonoBehaviour:
   _inventoryView: {fileID: 876074203}
   _hudView: {fileID: 108573961}
   _gameStats: {fileID: 11400000, guid: f3aead5dc0202b34d99792012fc0aeb9, type: 2}
+  _flatDef: {fileID: 11400000, guid: bdc6c6214fecb974ba9c76c5010de117, type: 2}
+  _percDef: {fileID: 11400000, guid: 3875f02f37b51b540b7453e1ccc4f8d2, type: 2}
+  _modDef: {fileID: 11400000, guid: 0c2a5146318f4564cbb6558766333578, type: 2}
 --- !u!1 &1297852419
 GameObject:
   m_ObjectHideFlags: 0

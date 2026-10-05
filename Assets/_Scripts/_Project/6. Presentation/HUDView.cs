@@ -94,7 +94,7 @@ namespace Game.Presentation
                         baseDesc += $"{flat.BaseAmount} ";
                     else if (effect is PercentageGenerationEffect perc)
                         baseDesc += $"+{perc.Percentage * 100}% ";
-                    else if (effect is IModifyingEffect mod)
+                    else if (effect is ModifyingEffect mod)
                         baseDesc += $"{(mod.SignedMagnitude > 0 ? "+" : "")}{mod.SignedMagnitude} ";
                 }
                 

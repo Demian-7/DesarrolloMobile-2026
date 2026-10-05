@@ -62,12 +62,21 @@ namespace Game.Presentation
             Zone zone = _zoneService.GetZone(_activeZoneId);
             if (zone == null) return;
 
-            foreach (var item in _activeUIItems) Destroy(item.gameObject);
+            foreach (var item in _activeUIItems) 
+            {
+                item.gameObject.SetActive(false); 
+                Destroy(item.gameObject);
+            }
             _activeUIItems.Clear();
 
             foreach (var card in zone.CardInventory)
             {
                 InventoryCardView uiInstance = Instantiate(_inventoryItemPrefab, _scrollRectContent);
+        
+                uiInstance.gameObject.SetActive(true);
+        
+                uiInstance.transform.localScale = Vector3.one; 
+        
                 uiInstance.Setup(card, _inputProvider, _eventBus);
                 _activeUIItems.Add(uiInstance);
             }

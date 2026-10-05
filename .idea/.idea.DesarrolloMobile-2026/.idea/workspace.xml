@@ -12,7 +12,23 @@
   <component name="ChangeListManager">
     <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScreen.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Cards/a.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Cards/a.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/InitialZoneStats.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/InitialZoneStats.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/TargetingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/TargetingData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Boards/BoardEvaluationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Boards/BoardEvaluationContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/GenerationCards.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/Behaviors/GenerationCards.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardDefinition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardDefinition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardEffects.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardEffects.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardTiers.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardTiers.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/MockShopController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/MockShopController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +42,12 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbc08120ee784c78aed4664a9876c083a200/cb/c6625c1a/Input.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CardFamilyDefinition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/Enums/CardTier.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/Enums/Directions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/Enums/GenerationAggregationMode.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/Enums/InteractionFilterType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/Enums/InteractionType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardPlacedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardRemovedFromBoardEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardSelectedEvent.cs" root0="FORCE_HIGHLIGHTING" />
@@ -36,6 +58,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/ZoneUnlockedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/GameStats.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/NotationType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/SubclassSelectorAttribute.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/TargetingData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Board.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Boards/BoardEvaluationContext.cs" root0="FORCE_HIGHLIGHTING" />
@@ -43,7 +66,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardDefinition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardEffects.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardTiers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cell.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/GlobalUpgradeDefinition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Packs/CardPackDefinition.cs" root0="FORCE_HIGHLIGHTING" />
@@ -61,6 +83,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryCardView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/MockShopController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Editor/SubclassSelectorDrawer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -148,6 +171,7 @@
       <workItem from="1790548162679" duration="3219000" />
       <workItem from="1790610042892" duration="2813000" />
       <workItem from="1790803989545" duration="1946000" />
+      <workItem from="1791143359990" duration="13848000" />
     </task>
     <servers />
   </component>

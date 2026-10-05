@@ -21,13 +21,14 @@ namespace Game.Bootstrap
         
         [Header("Game Stats")]
         [SerializeField] private GameStats _gameStats;
+        
+        [Header("Cards")]
+        [SerializeField] private CardDefinition _flatDef;
+        [SerializeField] private CardDefinition _percDef;
+        [SerializeField] private CardDefinition _modDef;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
-
-        private CardDefinition _flatDef;
-        private CardDefinition _percDef;
-        private CardDefinition _modDef;
 
         private void Awake()
         {
@@ -40,8 +41,6 @@ namespace Game.Bootstrap
             var boardEvaluationService = new BoardEvaluationService(eventBus, _zoneService, globalUpgradeService);
             _currencyAccrualService = new CurrencyAccrualService(_zoneService, eventBus);
             var packOpeningService = new PackOpeningService();
-
-            CreateCardDefinitions();
 
             var startingZoneDef = ScriptableObject.CreateInstance<ZoneDefinition>();
             startingZoneDef.Id = "Test_Zone_01";
@@ -56,7 +55,8 @@ namespace Game.Bootstrap
                 new CellUnlockEntry { Coordinate = new CellCoord(0, 1), Price = new CurrencyValue(_gameStats.CellCost[2]) },
                 new CellUnlockEntry { Coordinate = new CellCoord(0, -1), Price = new CurrencyValue(_gameStats.CellCost[3]) },
             };
-            startingZoneDef.StartingCards = new List<CardDefinition>();
+            
+            startingZoneDef.StartingCards = new List<CardDefinition> { _flatDef };
 
             var pricingStrategy = new SequentialPricingStrategy(startingZoneDef.Layout);
             var shopService = new ShopService(eventBus, pricingStrategy, packOpeningService, _zoneService);
@@ -65,7 +65,6 @@ namespace Game.Bootstrap
             Zone activeZone = _zoneService.GetZone("Test_Zone_01");
 
             activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
-
             activeZone.CardInventory.Add(new CardInstance(_flatDef));
 
             _cameraController.Initialize(inputProvider);
@@ -80,35 +79,6 @@ namespace Game.Bootstrap
             {
                 var zone = _zoneService.GetZone(evt.ZoneId);
                 if (zone != null) zone.GenerationRate = evt.NewRate;
-            });
-        }
-
-        private void CreateCardDefinitions()
-        {
-            _flatDef = ScriptableObject.CreateInstance<CardDefinition>();
-            _flatDef.Id = "Gen_Flat_1";
-            _flatDef.DisplayName = "Basic";
-            _flatDef.IconColor = new Color(0.2f, 0.6f, 1f);
-            _flatDef.Effects.Add(new FlatGenerationEffect { BaseAmount = new CurrencyValue(1) });
-
-            _percDef = ScriptableObject.CreateInstance<CardDefinition>();
-            _percDef.Id = "Gen_Perc_1";
-            _percDef.DisplayName = "Multiplier";
-            _percDef.IconColor = new Color(0.6f, 0.2f, 0.8f);
-            _percDef.Effects.Add(new PercentageGenerationEffect
-            {
-                Interaction = new CardInteraction { Type = InteractionType.Adjacent, Range = 1 },
-                Percentage = 2.0f
-            });
-
-            _modDef = ScriptableObject.CreateInstance<CardDefinition>();
-            _modDef.Id = "Mod_Multi_1";
-            _modDef.DisplayName = "Buffer";
-            _modDef.IconColor = new Color(0.4f, 0.8f, 0.4f);
-            _modDef.Effects.Add(new BuffEffect
-            {
-                Interaction = new CardInteraction { Type = InteractionType.Adjacent, Range = 1 },
-                Magnitude = 2.0f
             });
         }
 

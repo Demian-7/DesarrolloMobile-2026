@@ -10,7 +10,7 @@ namespace Game.Core
 
         private readonly Dictionary<CellCoord, CurrencyValue> _effectiveValues = new();
         private Dictionary<CellCoord, CurrencyValue> _previousPassSnapshot = new();
-        private readonly Dictionary<CellCoord, List<IModifyingEffect>> _modifiersByTarget = new();
+        private readonly Dictionary<CellCoord, List<ModifyingEffect>> _modifiersByTarget = new();
         private readonly GlobalUpgradeService _globalUpgrades;
 
         public BoardEvaluationContext(Board board, GlobalUpgradeService globalUpgrades)
@@ -48,9 +48,9 @@ namespace Game.Core
         public void SnapshotForNextPass()
         => _previousPassSnapshot = new Dictionary<CellCoord, CurrencyValue>(_effectiveValues);
         
-        private Dictionary<CellCoord, List<IModifyingEffect>> BuildModifierTargetMap(Board board)
+        private Dictionary<CellCoord, List<ModifyingEffect>> BuildModifierTargetMap(Board board)
         {
-            var map = new Dictionary<CellCoord, List<IModifyingEffect>>();
+            var map = new Dictionary<CellCoord, List<ModifyingEffect>>();
 
             foreach (var cell in board.GetAllCells())
             {
@@ -58,7 +58,7 @@ namespace Game.Core
 
                 foreach (var behavior in cell.OccupiedCard.Definition.Effects)
                 {
-                    if (behavior is IModifyingEffect modifier)
+                    if (behavior is ModifyingEffect modifier)
                     {
                         var targetCells = board.ResolveInteraction(modifier.Interaction, cell.Coordinate);
 
@@ -66,7 +66,7 @@ namespace Game.Core
                         {
                             if (!map.TryGetValue(targetCell.Coordinate, out var modifierList))
                             {
-                                modifierList = new List<IModifyingEffect>();
+                                modifierList = new List<ModifyingEffect>();
                                 map[targetCell.Coordinate] = modifierList;
                             }
                     
