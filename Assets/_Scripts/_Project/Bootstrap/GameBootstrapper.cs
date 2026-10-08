@@ -11,7 +11,7 @@ namespace Game.Bootstrap
     {
         [Header("Views & Controllers")] 
         [SerializeField] private BoardInputController _boardInputController;
-        [SerializeField] private MockShopController _mockShopController;
+        [SerializeField] private ShopController _shopController;
         [SerializeField] private BoardView _boardView;
 
         [Header("New Phase 2 References")] 
@@ -22,10 +22,10 @@ namespace Game.Bootstrap
         [Header("Game Stats")]
         [SerializeField] private GameStats _gameStats;
         
-        [Header("Cards")]
-        [SerializeField] private CardDefinition _flatDef;
-        [SerializeField] private CardDefinition _percDef;
-        [SerializeField] private CardDefinition _modDef;
+        [Header("Packs")]
+        [SerializeField] private CardPackDefinition _basicPack;
+        [SerializeField] private CardPackDefinition _multiplierPack;
+        [SerializeField] private CardPackDefinition _bufferPack;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
@@ -55,8 +55,6 @@ namespace Game.Bootstrap
                 new CellUnlockEntry { Coordinate = new CellCoord(0, 1), Price = new CurrencyValue(_gameStats.CellCost[2]) },
                 new CellUnlockEntry { Coordinate = new CellCoord(0, -1), Price = new CurrencyValue(_gameStats.CellCost[3]) },
             };
-            
-            startingZoneDef.StartingCards = new List<CardDefinition> { _flatDef };
 
             var pricingStrategy = new SequentialPricingStrategy(startingZoneDef.Layout);
             var shopService = new ShopService(eventBus, pricingStrategy, packOpeningService, _zoneService);
@@ -65,7 +63,6 @@ namespace Game.Bootstrap
             Zone activeZone = _zoneService.GetZone("Test_Zone_01");
 
             activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
-            activeZone.CardInventory.Add(new CardInstance(_flatDef));
 
             _cameraController.Initialize(inputProvider);
             _boardInputController.Initialize(eventBus, inputProvider, _zoneService, shopService, activeZone.ZoneId);
@@ -73,7 +70,7 @@ namespace Game.Bootstrap
             _inventoryView.Initialize(eventBus, _zoneService, activeZone.ZoneId, inputProvider);
             _hudView.Initialize(eventBus, _zoneService, activeZone.ZoneId);
             
-            _mockShopController.Initialize(eventBus, _zoneService, activeZone.ZoneId, _gameStats, _flatDef, _percDef, _modDef);
+            _shopController.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId, _basicPack, _multiplierPack, _bufferPack);
 
             eventBus.Subscribe<GenerationRateChangedEvent>(evt =>
             {

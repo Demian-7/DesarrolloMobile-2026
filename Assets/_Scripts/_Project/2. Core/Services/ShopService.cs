@@ -48,6 +48,9 @@ namespace Game.Core
                 zone.CardInventory.Add(new CardInstance(cardDef));
 
             _eventBus.Publish(new PackOpenedEvent(zone.ZoneId, drawnCards));
+    
+            _eventBus.Publish(new CurrencyChangedEvent(zone.ZoneId, zone.Wallet.Balance));
+    
             return true;
         }
 

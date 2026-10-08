@@ -2102,7 +2102,7 @@ GameObject:
   - component: {fileID: 499175213}
   - component: {fileID: 499175214}
   m_Layer: 0
-  m_Name: Mock Shop
+  m_Name: Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5376,15 +5376,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Bootstrap.GameBootstrapper
   _boardInputController: {fileID: 426563756}
-  _mockShopController: {fileID: 499175214}
+  _shopController: {fileID: 499175214}
   _boardView: {fileID: 426563755}
   _cameraController: {fileID: 182194765}
   _inventoryView: {fileID: 876074203}
   _hudView: {fileID: 108573961}
   _gameStats: {fileID: 11400000, guid: f3aead5dc0202b34d99792012fc0aeb9, type: 2}
-  _flatDef: {fileID: 11400000, guid: bdc6c6214fecb974ba9c76c5010de117, type: 2}
-  _percDef: {fileID: 11400000, guid: 3875f02f37b51b540b7453e1ccc4f8d2, type: 2}
-  _modDef: {fileID: 11400000, guid: 0c2a5146318f4564cbb6558766333578, type: 2}
+  _basicPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
+  _multiplierPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
+  _bufferPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
 --- !u!1 &1297852419
 GameObject:
   m_ObjectHideFlags: 0

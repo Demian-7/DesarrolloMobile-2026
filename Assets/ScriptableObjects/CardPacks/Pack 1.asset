@@ -15,11 +15,11 @@ MonoBehaviour:
   Id: 
   DisplayName: 
   Price:
-    <Mantissa>k__BackingField: 0
+    <Mantissa>k__BackingField: 10
     <Exponent>k__BackingField: 0
-  MinCards: 3
-  MaxCards: 5
-  CardSet: {fileID: 0}
+  MinCards: 1
+  MaxCards: 3
+  CardSet: {fileID: 11400000, guid: f1a57a07577128f4aa7cac2d20de4427, type: 2}
   FilterType: 0
   FilterByType: {fileID: 0}
   FilterByTier: 0

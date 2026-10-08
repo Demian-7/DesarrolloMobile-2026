@@ -37,8 +37,11 @@ namespace Game.Core
                 zone.Board.UnlockCell(definition.Layout.UnlockSequence[0].Coordinate);
             }
 
-            foreach (var cardDef in definition.StartingCards)
-                zone.CardInventory.Add(new CardInstance(cardDef));
+            if (definition.StartingCards != null && definition.StartingCards.Count > 0)
+            {
+                foreach (var cardDef in definition.StartingCards)
+                    zone.CardInventory.Add(new CardInstance(cardDef));
+            }
 
             _unlockedZones[zone.ZoneId] = zone;
             _activeZoneId = zone.ZoneId;
