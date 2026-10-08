@@ -20,7 +20,7 @@ namespace Game.Core
         [Tooltip("If assigned, the pack draws exclusively from this weighted set. If left None, it searches Resources/Cards/ using the filters below.")]
         public CardSetDefinition CardSet;
 
-        [Header("Dynamic Filter (Used if Card Set is None)")]
+        [Header("Dynamic Filter")]
         public InteractionFilterType FilterType = InteractionFilterType.None;
         public CardDefinition FilterByType;
         public CardTier FilterByTier;
