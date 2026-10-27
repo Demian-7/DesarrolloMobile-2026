@@ -16,8 +16,21 @@ MonoBehaviour:
   DisplayName: 
   Tier: 0
   Family: {fileID: 0}
-  Effects: []
+  Effects:
+  - rid: 8319706029854031944
   IconColor: {r: 0, g: 0.10293555, b: 1, a: 1}
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8319706029854031944
+      type: {class: BuffEffect, ns: Game.Core, asm: Assembly-CSharp}
+      data:
+        TargetInteraction:
+          Type: 0
+          Directions: 1
+          Range: 1
+          FilterType: 0
+          FilterByType: {fileID: 0}
+          FilterByTier: 0
+          FilterByFamily: {fileID: 0}
+        Magnitude: 2

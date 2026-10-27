@@ -5383,8 +5383,8 @@ MonoBehaviour:
   _hudView: {fileID: 108573961}
   _gameStats: {fileID: 11400000, guid: f3aead5dc0202b34d99792012fc0aeb9, type: 2}
   _basicPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
-  _multiplierPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
-  _bufferPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
+  _multiplierPack: {fileID: 11400000, guid: b78a9b832e373dc40acc9cc1c95dd54d, type: 2}
+  _bufferPack: {fileID: 11400000, guid: f8b159adf14a31242b030edab60b6f32, type: 2}
 --- !u!1 &1297852419
 GameObject:
   m_ObjectHideFlags: 0
