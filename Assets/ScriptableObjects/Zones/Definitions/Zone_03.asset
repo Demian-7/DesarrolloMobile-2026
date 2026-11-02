@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: Zone_03
   DisplayName: 
   Mode: 0
-  Layout: {fileID: 11400000, guid: 423d573fa051a75488dd9315e6f62a25, type: 2}
+  Layout: {fileID: 11400000, guid: cc03ee93764946e4fafa593046037414, type: 2}
   EndlessBasePrice:
     <Mantissa>k__BackingField: 0
     <Exponent>k__BackingField: 0

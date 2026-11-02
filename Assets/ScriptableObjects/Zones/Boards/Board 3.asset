@@ -26,20 +26,68 @@ MonoBehaviour:
       <Mantissa>k__BackingField: 1
       <Exponent>k__BackingField: 1
   - Coordinate:
-      X: 0
-      Y: 1
+      X: 2
+      Y: 0
     Price:
       <Mantissa>k__BackingField: 5
       <Exponent>k__BackingField: 1
   - Coordinate:
-      X: -1
+      X: 3
       Y: 0
     Price:
       <Mantissa>k__BackingField: 1
       <Exponent>k__BackingField: 2
   - Coordinate:
-      X: 0
-      Y: -1
+      X: 4
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 5
+      <Exponent>k__BackingField: 2
+  - Coordinate:
+      X: 5
+      Y: 0
     Price:
       <Mantissa>k__BackingField: 1
       <Exponent>k__BackingField: 3
+  - Coordinate:
+      X: 6
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 2
+      <Exponent>k__BackingField: 3
+  - Coordinate:
+      X: 7
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 5
+      <Exponent>k__BackingField: 3
+  - Coordinate:
+      X: 8
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 4
+  - Coordinate:
+      X: 9
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 2.5
+      <Exponent>k__BackingField: 4
+  - Coordinate:
+      X: 10
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 5
+      <Exponent>k__BackingField: 4
+  - Coordinate:
+      X: 11
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 5
+  - Coordinate:
+      X: 12
+      Y: 0
+    Price:
+      <Mantissa>k__BackingField: 2
+      <Exponent>k__BackingField: 5
