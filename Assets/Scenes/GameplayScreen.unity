@@ -5385,6 +5385,9 @@ MonoBehaviour:
   _hudView: {fileID: 108573961}
   _gameStats: {fileID: 11400000, guid: f3aead5dc0202b34d99792012fc0aeb9, type: 2}
   _zones:
+  - {fileID: 11400000, guid: 83aa5353251f2494d92e92fbdb605bb6, type: 2}
+  - {fileID: 11400000, guid: 999a454d75dd89240a2e255704b2249d, type: 2}
+  - {fileID: 11400000, guid: 999a454d75dd89240a2e255704b2249d, type: 2}
   - {fileID: 11400000, guid: 999a454d75dd89240a2e255704b2249d, type: 2}
 --- !u!1 &1297852419
 GameObject:

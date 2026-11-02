@@ -130,6 +130,7 @@ namespace Game.Foundation
 
         public override string ToString()
         {
+            return ToString(NotationType.Standard);
             if (Exponent < 3)
                 return (Mantissa * Math.Pow(10, Exponent)).ToString("F0");
 

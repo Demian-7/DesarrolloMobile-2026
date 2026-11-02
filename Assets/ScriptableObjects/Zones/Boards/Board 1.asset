@@ -23,23 +23,23 @@ MonoBehaviour:
       X: 1
       Y: 0
     Price:
-      <Mantissa>k__BackingField: 100
-      <Exponent>k__BackingField: 0
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 1
   - Coordinate:
       X: 0
       Y: 1
     Price:
-      <Mantissa>k__BackingField: 0
-      <Exponent>k__BackingField: 3
+      <Mantissa>k__BackingField: 5
+      <Exponent>k__BackingField: 1
   - Coordinate:
       X: -1
       Y: 0
     Price:
-      <Mantissa>k__BackingField: 0
-      <Exponent>k__BackingField: 4
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 2
   - Coordinate:
       X: 0
       Y: -1
     Price:
-      <Mantissa>k__BackingField: 0
-      <Exponent>k__BackingField: 5
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 3
