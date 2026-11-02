@@ -18,41 +18,66 @@ namespace Game.Core
             _eventBus = eventBus;
             _globalUpgrades = globalUpgrades;
         }
+        
+        public bool IsZoneUnlocked(string zoneId) => _unlockedZones.ContainsKey(zoneId);
 
-        public Zone GetZone(string zoneId) => _unlockedZones[zoneId];
+        public Zone GetZone(string zoneId) => _unlockedZones.TryGetValue(zoneId, out var zone) ? zone : null;
 
         public List<Zone> GetZonesToSimulate() 
         => _globalUpgrades.HasEffect<ConcurrentZoneSimulationEffect>()
         ? _unlockedZones.Values.ToList()
-        : new List<Zone> { _unlockedZones[_activeZoneId] };
+        : _unlockedZones.TryGetValue(_activeZoneId, out var active) ? new List<Zone> { active } : new List<Zone>();
         
         public void CreateAndActivateZone(ZoneDefinition definition)
         {
-            var zone = new Zone { ZoneId = definition.Id };
+            ISlotPricingStrategy pricingStrategy = definition.Mode == BoardGenerationMode.Fixed
+                ? new SequentialPricingStrategy(definition.Layout)
+                : new DoublingPricingStrategy(definition.EndlessBasePrice);
+
+            var zone = new Zone
+            {
+                ZoneId = definition.Id,
+                Definition = definition,
+                PricingStrategy = pricingStrategy
+            };
 
             if (definition.Mode == BoardGenerationMode.Fixed)
             {
+                if (definition.Layout == null || definition.Layout.UnlockSequence == null || definition.Layout.UnlockSequence.Count == 0)
+                {
+                    Debug.LogError($"[ZoneService] Zone '{definition.Id}' is Fixed mode but has an empty or null Layout.");
+                    return;
+                }
+
                 foreach (var entry in definition.Layout.UnlockSequence)
                     zone.Board.AddCell(entry.Coordinate.X, entry.Coordinate.Y);
+
                 zone.Board.UnlockCell(definition.Layout.UnlockSequence[0].Coordinate);
             }
 
             if (definition.StartingCards != null && definition.StartingCards.Count > 0)
             {
                 foreach (var cardDef in definition.StartingCards)
-                    zone.CardInventory.Add(new CardInstance(cardDef));
+                {
+                    if (cardDef != null)
+                        zone.CardInventory.Add(new CardInstance(cardDef));
+                }
             }
 
             _unlockedZones[zone.ZoneId] = zone;
-            _activeZoneId = zone.ZoneId;
             _eventBus.Publish(new ZoneUnlockedEvent(zone.ZoneId));
+
+            TrySetActiveZone(zone.ZoneId);
         }
 
-        private void OnGenerationRateChanged(GenerationRateChangedEvent evt)
+        public bool TrySetActiveZone(string zoneId)
         {
-            //In multi-zone setup, evt should carry the ZoneId.
-            //For now, just applied to ActiveZone.
-            // ActiveZone.GenerationRate = evt.NewRate;
+            if (!_unlockedZones.ContainsKey(zoneId) || _activeZoneId == zoneId)
+                return false;
+
+            _activeZoneId = zoneId;
+            _eventBus.Publish(new ActiveZoneChangedEvent(_activeZoneId));
+            return true;
         }
 
         public bool TryPlaceCardFromInventory(Zone zone, Guid cardInstanceId, CellCoord coord)

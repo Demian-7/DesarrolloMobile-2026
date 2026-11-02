@@ -28,6 +28,7 @@ namespace Game.Presentation
             _eventBus.Subscribe<CurrencyChangedEvent>(OnCurrencyChanged);
             _eventBus.Subscribe<GenerationRateChangedEvent>(OnGenerationRateChanged);
             _eventBus.Subscribe<CardSelectedEvent>(OnCardSelected);
+            _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
 
             RefreshUI();
         }
@@ -39,7 +40,15 @@ namespace Game.Presentation
                 _eventBus.Unsubscribe<CurrencyChangedEvent>(OnCurrencyChanged);
                 _eventBus.Unsubscribe<GenerationRateChangedEvent>(OnGenerationRateChanged);
                 _eventBus.Unsubscribe<CardSelectedEvent>(OnCardSelected);
+                _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             }
+        }
+
+        private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
+        {
+            _activeZoneId = evt.ActiveZoneId;
+            _selectedCardId = Guid.Empty;
+            RefreshUI();
         }
 
         private void OnCurrencyChanged(CurrencyChangedEvent evt)

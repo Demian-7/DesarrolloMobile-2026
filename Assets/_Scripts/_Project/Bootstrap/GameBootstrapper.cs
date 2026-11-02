@@ -12,26 +12,27 @@ namespace Game.Bootstrap
         [Header("Views & Controllers")] 
         [SerializeField] private BoardInputController _boardInputController;
         [SerializeField] private ShopController _shopController;
+        [SerializeField] private ZoneSelectorController _zoneSelectorController;
         [SerializeField] private BoardView _boardView;
-
-        [Header("New Phase 2 References")] 
         [SerializeField] private BoardCameraController _cameraController;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private HUDView _hudView;
         
-        [Header("Game Stats")]
+        [Header("Game Config & Zones")]
         [SerializeField] private GameStats _gameStats;
-        
-        [Header("Packs")]
-        [SerializeField] private CardPackDefinition _basicPack;
-        [SerializeField] private CardPackDefinition _multiplierPack;
-        [SerializeField] private CardPackDefinition _bufferPack;
+        [SerializeField] private List<ZoneDefinition> _zones;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
 
         private void Awake()
         {
+            if (_zones == null || _zones.Count == 0 || _zones[0] == null)
+            {
+                Debug.LogError("[GameBootstrapper] Please assign at least Zone 1 in the _zones list in the Inspector.");
+                return;
+            }
+
             var eventBus = new EventBus();
             var mobileInput = gameObject.AddComponent<MobileTouchInputProvider>();
             IInputProvider inputProvider = mobileInput;
@@ -41,36 +42,29 @@ namespace Game.Bootstrap
             var boardEvaluationService = new BoardEvaluationService(eventBus, _zoneService, globalUpgradeService);
             _currencyAccrualService = new CurrencyAccrualService(_zoneService, eventBus);
             var packOpeningService = new PackOpeningService();
+            var shopService = new ShopService(eventBus, packOpeningService, _zoneService);
 
-            var startingZoneDef = ScriptableObject.CreateInstance<ZoneDefinition>();
-            startingZoneDef.Id = "Test_Zone_01";
-            startingZoneDef.Mode = BoardGenerationMode.Fixed;
-            startingZoneDef.Layout = ScriptableObject.CreateInstance<BoardLayoutDefinition>();
-
-            startingZoneDef.Layout.UnlockSequence = new List<CellUnlockEntry>
-            {
-                new CellUnlockEntry { Coordinate = new CellCoord(0, 0), Price = CurrencyValue.Zero },
-                new CellUnlockEntry { Coordinate = new CellCoord(1, 0), Price = new CurrencyValue(_gameStats.CellCost[0]) },
-                new CellUnlockEntry { Coordinate = new CellCoord(-1, 0), Price = new CurrencyValue(_gameStats.CellCost[1]) },
-                new CellUnlockEntry { Coordinate = new CellCoord(0, 1), Price = new CurrencyValue(_gameStats.CellCost[2]) },
-                new CellUnlockEntry { Coordinate = new CellCoord(0, -1), Price = new CurrencyValue(_gameStats.CellCost[3]) },
-            };
-
-            var pricingStrategy = new SequentialPricingStrategy(startingZoneDef.Layout);
-            var shopService = new ShopService(eventBus, pricingStrategy, packOpeningService, _zoneService);
-
+            ZoneDefinition startingZoneDef = _zones[0];
             _zoneService.CreateAndActivateZone(startingZoneDef);
-            Zone activeZone = _zoneService.GetZone("Test_Zone_01");
+            Zone activeZone = _zoneService.GetZone(startingZoneDef.Id);
 
-            activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
+            if (_gameStats != null && _gameStats.InitialMoney > 0)
+            {
+                activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
+                eventBus.Publish(new CurrencyChangedEvent(activeZone.ZoneId, activeZone.Wallet.Balance));
+            }
 
             _cameraController.Initialize(inputProvider);
             _boardInputController.Initialize(eventBus, inputProvider, _zoneService, shopService, activeZone.ZoneId);
             _boardView.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId);
             _inventoryView.Initialize(eventBus, _zoneService, activeZone.ZoneId, inputProvider);
             _hudView.Initialize(eventBus, _zoneService, activeZone.ZoneId);
-            
-            _shopController.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId, _basicPack, _multiplierPack, _bufferPack);
+            _shopController.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId);
+
+            if (_zoneSelectorController != null)
+            {
+                _zoneSelectorController.Initialize(eventBus, _zoneService, shopService, _zones, activeZone.ZoneId);
+            }
 
             eventBus.Subscribe<GenerationRateChangedEvent>(evt =>
             {
@@ -81,7 +75,7 @@ namespace Game.Bootstrap
 
         private void Update()
         {
-            _currencyAccrualService.Tick(Time.deltaTime);
+            _currencyAccrualService?.Tick(Time.deltaTime);
         }
     }
 }

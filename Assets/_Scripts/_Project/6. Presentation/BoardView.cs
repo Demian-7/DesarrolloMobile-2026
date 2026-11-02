@@ -33,6 +33,7 @@ namespace Game.Presentation
             _eventBus.Subscribe<CardPlacedEvent>(OnCardPlaced);
             _eventBus.Subscribe<CardRemovedFromBoardEvent>(OnCardRemoved);
             _eventBus.Subscribe<BoardChangedEvent>(OnBoardChanged);
+            _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
 
             RenderFullBoard();
         }
@@ -46,6 +47,14 @@ namespace Game.Presentation
             _eventBus.Unsubscribe<CardPlacedEvent>(OnCardPlaced);
             _eventBus.Unsubscribe<CardRemovedFromBoardEvent>(OnCardRemoved);
             _eventBus.Unsubscribe<BoardChangedEvent>(OnBoardChanged);
+            _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+        }
+
+        private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
+        {
+            _activeZoneId = evt.ActiveZoneId;
+            ClearDragPreview();
+            RenderFullBoard();
         }
 
         public void ShowDragPreview(Zone zone, CardDefinition cardDef, CellCoord hoverCoord)
@@ -133,6 +142,8 @@ namespace Game.Presentation
                     SpawnCardVisual(cell.OccupiedCard, cell.Coordinate);
                 }
             }
+
+            RefreshAllCardVisualizers();
         }
 
         private void OnSlotUnlocked(SlotUnlockedEvent evt)
@@ -179,9 +190,7 @@ namespace Game.Presentation
             worldPos.z -= 0.1f;
 
             CardView cardInstance = Instantiate(_cardPrefab, worldPos, Quaternion.identity, transform);
-            
             cardInstance.Setup(card, _eventBus);
-            
             _activeCards[coord] = cardInstance;
         }
 
@@ -230,7 +239,7 @@ namespace Game.Presentation
             }
 
             Vector3 cardWorldPos = GetWorldPosition(coord);
-            cardWorldPos.z -= 0.1f; // Keep lines at the card's Z-depth
+            cardWorldPos.z -= 0.1f;
 
             List<Vector3> validTargetPositions = new List<Vector3>();
             foreach (var targetCell in targets)

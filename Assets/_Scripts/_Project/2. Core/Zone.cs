@@ -6,8 +6,10 @@ namespace Game.Core
     public class Zone
     {
         public string ZoneId;
-        public Board Board = new Board();
-        public CurrencyWallet Wallet = new CurrencyWallet();
+        public ZoneDefinition Definition;
+        public ISlotPricingStrategy PricingStrategy;
+        public Board Board = new();
+        public CurrencyWallet Wallet = new();
 
         public List<CardInstance> CardInventory = new();
         

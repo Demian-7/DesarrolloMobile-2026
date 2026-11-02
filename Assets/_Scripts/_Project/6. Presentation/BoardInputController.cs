@@ -14,14 +14,12 @@ namespace Game.Presentation
             DraggingBoardCard
         }
 
-        [Header("Drag Visuals")] [SerializeField]
-        private CardView _dragGhostPrefab;
-
+        [Header("Drag Visuals")]
+        [SerializeField] private CardView _dragGhostPrefab;
         [SerializeField] private BoardView _boardView;
 
-        [Header("Thresholds")] [SerializeField]
-        private float _dragDistanceThreshold = 15f;
-
+        [Header("Thresholds")]
+        [SerializeField] private float _dragDistanceThreshold = 15f;
         [SerializeField] private float _holdTimeThreshold = 0.2f;
 
         private IEventBus _eventBus;
@@ -54,6 +52,8 @@ namespace Game.Presentation
             _activeZoneId = activeZoneId;
             _mainCamera = Camera.main;
 
+            _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+
             _input.OnCardDropped += HandleUIInventoryDrop;
             _input.OnUICardTapped += HandleUICardTapped;
 
@@ -68,6 +68,11 @@ namespace Game.Presentation
 
         private void OnDestroy()
         {
+            if (_eventBus != null)
+            {
+                _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+            }
+
             if (_input != null)
             {
                 _input.OnCardDropped -= HandleUIInventoryDrop;
@@ -79,6 +84,15 @@ namespace Game.Presentation
                 _input.OnUICardDragMoved -= HandleUICardDragMoved;
                 _input.OnUICardDragEnded -= HandleUICardDragEnded;
             }
+        }
+
+        private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
+        {
+            _activeZoneId = evt.ActiveZoneId;
+            _currentState = InputState.Idle;
+            _draggingUICardId = Guid.Empty;
+            if (_activeGhost != null) Destroy(_activeGhost.gameObject);
+            _boardView.ClearDragPreview();
         }
 
         private void Update()
@@ -99,7 +113,7 @@ namespace Game.Presentation
             CellCoord tapCoord = GetCoordFromScreenPosition(screenPosition);
             Zone zone = _zoneService.GetZone(_activeZoneId);
 
-            if (zone.Board.Cells.TryGetValue(tapCoord, out Cell cell))
+            if (zone != null && zone.Board.Cells.TryGetValue(tapCoord, out Cell cell))
             {
                 _currentState = InputState.PointerDown;
                 _dragOrigin = tapCoord;
@@ -157,6 +171,7 @@ namespace Game.Presentation
         {
             CellCoord targetCoord = GetCoordFromScreenPosition(screenPosition);
             Zone zone = _zoneService.GetZone(_activeZoneId);
+            Debug.Assert(zone != null);
 
             if (_currentState == InputState.PointerDown)
             {
@@ -167,7 +182,6 @@ namespace Game.Presentation
                     if (!cell.IsUnlocked)
                     {
                         _shopService.TryPurchaseSlot(zone, targetCoord);
-
                         _eventBus.Publish(new CardSelectedEvent(Guid.Empty));
                     }
                     else if (cell.OccupiedCard != null)
