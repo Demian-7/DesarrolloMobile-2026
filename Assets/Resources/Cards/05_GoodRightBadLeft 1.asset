@@ -34,7 +34,7 @@ MonoBehaviour:
           FilterByType: {fileID: 0}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
-        Magnitude: 3
+        Magnitude: 5
     - rid: 8208896145699110914
       type: {class: DebuffEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:

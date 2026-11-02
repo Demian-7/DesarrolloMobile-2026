@@ -33,8 +33,8 @@ MonoBehaviour:
           FilterByType: {fileID: 11400000, guid: bdc6c6214fecb974ba9c76c5010de117, type: 2}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
-        Mode: 1
-        Percentage: 3
+        Mode: 0
+        Percentage: 10
         FlatPerMatch:
           <Mantissa>k__BackingField: 0
           <Exponent>k__BackingField: 0
