@@ -10,36 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e853982a459c4eaea673848ae0c6afa7, type: 3}
-  m_Name: Board 1
+  m_Name: Board 3
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.BoardLayoutDefinition
   UnlockSequence:
   - Coordinate:
       X: 0
       Y: 0
     Price:
-      <Mantissa>k__BackingField: 1
+      <Mantissa>k__BackingField: 0
       <Exponent>k__BackingField: 1
   - Coordinate:
       X: 1
       Y: 0
     Price:
-      <Mantissa>k__BackingField: 100
-      <Exponent>k__BackingField: 0
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 1
   - Coordinate:
       X: 0
       Y: 1
     Price:
-      <Mantissa>k__BackingField: 1
-      <Exponent>k__BackingField: 3
+      <Mantissa>k__BackingField: 5
+      <Exponent>k__BackingField: 1
   - Coordinate:
       X: -1
       Y: 0
     Price:
-      <Mantissa>k__BackingField: 0
-      <Exponent>k__BackingField: 4
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 2
   - Coordinate:
       X: 0
       Y: -1
     Price:
-      <Mantissa>k__BackingField: 0
-      <Exponent>k__BackingField: 5
+      <Mantissa>k__BackingField: 1
+      <Exponent>k__BackingField: 3

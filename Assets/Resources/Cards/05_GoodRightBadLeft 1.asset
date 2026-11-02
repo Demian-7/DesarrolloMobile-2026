@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
-  m_Name: 05_Test
+  m_Name: 05_GoodRightBadLeft 1
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: Test
+  DisplayName: GoodRightBadLeft
   Tier: 0
   Family: {fileID: 0}
   Effects:
   - rid: 8208896145699110913
   - rid: 8208896145699110914
-  IconColor: {r: 0, g: 0, b: 0, a: 0}
+  IconColor: {r: 0.8037735, g: 0.43147305, b: 0.16227125, a: 0}
   references:
     version: 2
     RefIds:
@@ -34,7 +34,7 @@ MonoBehaviour:
           FilterByType: {fileID: 0}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
-        Magnitude: 2
+        Magnitude: 5
     - rid: 8208896145699110914
       type: {class: DebuffEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:

@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2481a08884ea4e8d9adf3938383175cf, type: 3}
-  m_Name: Set 3
+  m_Name: 02_Set_StarterSet
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardSetDefinition
   Pool:
   - Card: {fileID: 11400000, guid: 3875f02f37b51b540b7453e1ccc4f8d2, type: 2}
-    Weight: 0
+    Weight: 40
+  - Card: {fileID: 11400000, guid: 0c2a5146318f4564cbb6558766333578, type: 2}
+    Weight: 40
+  - Card: {fileID: 11400000, guid: 548e40d210ddf1a4db8dd674b0367aab, type: 2}
+    Weight: 60

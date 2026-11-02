@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Pack 2
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardPackDefinition
   Id: 
-  DisplayName: 
+  DisplayName: Starter Pack
   Price:
-    <Mantissa>k__BackingField: 10
+    <Mantissa>k__BackingField: 100
     <Exponent>k__BackingField: 0
-  MinCards: 1
-  MaxCards: 3
-  CardSet: {fileID: 0}
+  MinCards: 2
+  MaxCards: 4
+  CardSet: {fileID: 11400000, guid: 1c3bbc5d3b42b1047bbdcd6e1de25a51, type: 2}
   FilterType: 3
   FilterByType: {fileID: 0}
   FilterByTier: 1
   FilterByFamily: {fileID: 0}
   MinimumGuaranteedTier: 0
-  MinimumGuaranteedCount: 1
+  MinimumGuaranteedCount: 2

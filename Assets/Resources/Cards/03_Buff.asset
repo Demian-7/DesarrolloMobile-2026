@@ -10,21 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
-  m_Name: Flat
+  m_Name: 03_Buff
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
-  Id: 0
-  DisplayName: Flat
+  Id: 
+  DisplayName: X2 Buff
   Tier: 0
   Family: {fileID: 0}
   Effects:
-  - rid: 7572652255065669632
-  IconColor: {r: 1, g: 0, b: 0, a: 1}
+  - rid: 8319706029854031944
+  IconColor: {r: 0.06996775, g: 1, b: 0, a: 1}
   references:
     version: 2
     RefIds:
-    - rid: 7572652255065669632
-      type: {class: FlatGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
+    - rid: 8319706029854031944
+      type: {class: BuffEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:
-        BaseAmount:
-          <Mantissa>k__BackingField: 10
-          <Exponent>k__BackingField: 0
+        TargetInteraction:
+          Type: 0
+          Directions: 2
+          Range: 1
+          FilterType: 0
+          FilterByType: {fileID: 0}
+          FilterByTier: 0
+          FilterByFamily: {fileID: 0}
+        Magnitude: 2

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
-  m_Name: Percentage
+  m_Name: 02_Percentage
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: 
+  DisplayName: Percent
   Tier: 0
   Family: {fileID: 0}
   Effects:
@@ -26,8 +26,8 @@ MonoBehaviour:
       type: {class: PercentageGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:
         Interaction:
-          Type: 0
-          Directions: 33
+          Type: 1
+          Directions: -1
           Range: 1
           FilterType: 0
           FilterByType: {fileID: 0}
