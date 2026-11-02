@@ -9,6 +9,14 @@ namespace Game.Presentation
 {
     public class ZoneSelectorController : MonoBehaviour
     {
+        [Header("Zone Panel & Navigation")]
+        [Tooltip("The parent GameObject containing the zone selection background and buttons.")]
+        [SerializeField] private GameObject _zonePanel;
+        [Tooltip("The always-visible HUD button that toggles the zone panel open/closed.")]
+        [SerializeField] private Button _openZoneButton;
+        [Tooltip("The 'X' button inside the zone panel that closes it.")]
+        [SerializeField] private Button _closeZoneButton;
+
         [Header("Zone Buttons (Ordered: Zone 1, Zone 2, Zone 3...)")]
         [SerializeField] private List<Button> _zoneButtons;
         [SerializeField] private List<TextMeshProUGUI> _zoneButtonTexts;
@@ -34,6 +42,15 @@ namespace Game.Presentation
                 _zoneButtons[i].onClick.AddListener(() => OnZoneButtonClicked(zoneIndex));
             }
 
+            if (_openZoneButton != null)
+                _openZoneButton.onClick.AddListener(ToggleZonePanel);
+
+            if (_closeZoneButton != null)
+                _closeZoneButton.onClick.AddListener(CloseZonePanel);
+
+            if (_zonePanel != null)
+                _zonePanel.SetActive(false);
+
             _eventBus.Subscribe<CurrencyChangedEvent>(OnCurrencyChanged);
             _eventBus.Subscribe<ZoneUnlockedEvent>(OnZoneUnlocked);
             _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
@@ -47,6 +64,25 @@ namespace Game.Presentation
             _eventBus.Unsubscribe<CurrencyChangedEvent>(OnCurrencyChanged);
             _eventBus.Unsubscribe<ZoneUnlockedEvent>(OnZoneUnlocked);
             _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+        }
+
+        private void ToggleZonePanel()
+        {
+            if (_zonePanel == null) return;
+            
+            bool newState = !_zonePanel.activeSelf;
+            _zonePanel.SetActive(newState);
+            
+            if (newState)
+            {
+                RefreshButtons();
+            }
+        }
+
+        private void CloseZonePanel()
+        {
+            if (_zonePanel != null)
+                _zonePanel.SetActive(false);
         }
 
         private void OnCurrencyChanged(CurrencyChangedEvent evt)
@@ -74,7 +110,10 @@ namespace Game.Presentation
 
             if (_zoneService.IsZoneUnlocked(targetDef.Id))
             {
-                _zoneService.TrySetActiveZone(targetDef.Id);
+                if (_zoneService.TrySetActiveZone(targetDef.Id))
+                {
+                    CloseZonePanel();
+                }
                 return;
             }
 
@@ -84,7 +123,10 @@ namespace Game.Presentation
                 if (_activeZoneId == previousZoneDef.Id)
                 {
                     Zone currentZone = _zoneService.GetZone(_activeZoneId);
-                    _shopService.TryUnlockZone(currentZone, targetDef);
+                    if (_shopService.TryUnlockZone(currentZone, targetDef))
+                    {
+                        CloseZonePanel();
+                    }
                 }
             }
         }

@@ -10,13 +10,13 @@ namespace Game.Presentation
 {
     public class CardView : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer _backgroundRenderer;
+        [SerializeField] private SpriteRenderer _iconRenderer;
         [SerializeField] private TextMeshPro _nameText;
         [SerializeField] private GameObject _warningIcon;
         [SerializeField] private LineRenderer _lineRendererPrefab;
 
         private List<LineRenderer> _activeLines = new();
-        
+
         private IEventBus _eventBus;
         private bool _isSelected;
         private Vector3 _originalLocalPos;
@@ -26,9 +26,9 @@ namespace Game.Presentation
         public void Setup(CardInstance card, IEventBus eventBus)
         {
             CardInstanceId = card.InstanceId;
+            _iconRenderer.sprite = card.Definition.Icon;
             _eventBus = eventBus;
-            
-            _backgroundRenderer.color = card.Definition.IconColor;
+
             _nameText.text = card.Definition.DisplayName;
             _warningIcon.SetActive(false);
 
@@ -42,7 +42,7 @@ namespace Game.Presentation
         public void Setup(CardDefinition definition)
         {
             CardInstanceId = Guid.Empty;
-            _backgroundRenderer.color = definition.IconColor;
+            _iconRenderer.sprite = definition.Icon;
             _nameText.text = definition.DisplayName;
             _warningIcon.SetActive(false);
         }
@@ -53,29 +53,31 @@ namespace Game.Presentation
             {
                 _eventBus.Unsubscribe<CardSelectedEvent>(OnSelectionChanged);
             }
+
             transform.DOKill();
         }
 
         private void OnSelectionChanged(CardSelectedEvent evt)
         {
             bool isMe = evt.CardInstanceId == CardInstanceId;
-            
+
             if (isMe && !_isSelected)
             {
                 _isSelected = true;
                 transform.DOKill();
-                
+
                 // Scale up
                 transform.DOScale(Vector3.one * 1.15f, 0.2f).SetEase(Ease.OutBack);
-                
-                Vector3 targetPos = new Vector3(_originalLocalPos.x, _originalLocalPos.y + 0.1f, _originalLocalPos.z - 0.5f);
+
+                Vector3 targetPos = new Vector3(_originalLocalPos.x, _originalLocalPos.y + 0.1f,
+                    _originalLocalPos.z - 0.5f);
                 transform.DOLocalMove(targetPos, 0.2f).SetEase(Ease.OutBack);
             }
             else if (!isMe && _isSelected)
             {
                 _isSelected = false;
                 transform.DOKill();
-                
+
                 transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutQuad);
                 transform.DOLocalMove(_originalLocalPos, 0.2f).SetEase(Ease.OutQuad);
             }
@@ -99,7 +101,7 @@ namespace Game.Presentation
             {
                 LineRenderer line = Instantiate(_lineRendererPrefab, transform);
                 Vector3 offsetTarget = new Vector3(targetPos.x, targetPos.y, targetPos.z + 0.5f);
-                
+
                 line.SetPosition(0, offsetOrigin);
                 line.SetPosition(1, offsetTarget);
                 _activeLines.Add(line);
