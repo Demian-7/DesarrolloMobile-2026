@@ -96,6 +96,10 @@ namespace Game.Presentation
 
             if (selectedCard != null)
             {
+                _infoText.enabled = true;
+                _currencyText.enabled = false;
+                _rateText.enabled = false;
+                
                 string baseDesc = "";
                 foreach (var effect in selectedCard.Definition.Effects)
                 {
@@ -115,7 +119,10 @@ namespace Game.Presentation
             }
             else
             {
-                _infoText.text = "Select a card...";
+                // _infoText.text = "Select a card...";
+                _infoText.enabled = false;
+                _currencyText.enabled = true;
+                _rateText.enabled = true;
             }
         }
 

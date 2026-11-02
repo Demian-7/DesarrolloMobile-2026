@@ -17,7 +17,7 @@ MonoBehaviour:
       X: 0
       Y: 0
     Price:
-      <Mantissa>k__BackingField: 0
+      <Mantissa>k__BackingField: 1
       <Exponent>k__BackingField: 1
   - Coordinate:
       X: 1
