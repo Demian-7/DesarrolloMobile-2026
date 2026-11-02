@@ -1,19 +1,18 @@
 using Game.Foundation;
+using UnityEngine;
 
 namespace Game.Core
 {
     public class ShopService
     {
         private readonly IEventBus _eventBus;
-        private readonly ISlotPricingStrategy _pricingStrategy;
         private readonly PackOpeningService _packOpeningService;
         private readonly ZoneService _zoneService;
 
-        public ShopService(IEventBus eventBus, ISlotPricingStrategy pricingStrategy,
-            PackOpeningService packOpeningService, ZoneService zoneService)
+        public ShopService(IEventBus eventBus, PackOpeningService packOpeningService,
+            ZoneService zoneService)
         {
             _eventBus = eventBus;
-            _pricingStrategy = pricingStrategy;
             _packOpeningService = packOpeningService;
             _zoneService = zoneService;
         }
@@ -23,12 +22,12 @@ namespace Game.Core
             if (!zone.Board.Cells.TryGetValue(coord, out Cell cell) || cell.IsUnlocked)
                 return false;
             
-            var price = _pricingStrategy.GetPrice(zone.Board, coord);
+            var price = zone.PricingStrategy.GetPrice(zone.Board, coord);
             if (!zone.Wallet.TrySpend(price))
                 return false;
 
             zone.Board.UnlockCell(coord);
-            _pricingStrategy.OnPurchase(coord);
+            zone.PricingStrategy.OnPurchase(coord);
             
             
             _eventBus.Publish(new SlotUnlockedEvent(zone.ZoneId, coord));
@@ -48,7 +47,6 @@ namespace Game.Core
                 zone.CardInventory.Add(new CardInstance(cardDef));
 
             _eventBus.Publish(new PackOpenedEvent(zone.ZoneId, drawnCards));
-    
             _eventBus.Publish(new CurrencyChangedEvent(zone.ZoneId, zone.Wallet.Balance));
     
             return true;
@@ -56,16 +54,23 @@ namespace Game.Core
 
         public bool TryUnlockZone(Zone currentZone, ZoneDefinition nextZoneDefinition)
         {
+            Debug.Assert(currentZone != null);
+            Debug.Assert(nextZoneDefinition != null);
+
+            if (_zoneService.IsZoneUnlocked(nextZoneDefinition.Id))
+                return false;
+
             if (!currentZone.Wallet.TrySpend(nextZoneDefinition.UnlockPrice))
                 return false;
 
+            _eventBus.Publish(new CurrencyChangedEvent(currentZone.ZoneId, currentZone.Wallet.Balance));
             _zoneService.CreateAndActivateZone(nextZoneDefinition);
             return true;
         }
         
         public CurrencyValue GetSlotPrice(Zone zone, CellCoord coord)
         {
-            return _pricingStrategy.GetPrice(zone.Board, coord);
+            return zone.PricingStrategy.GetPrice(zone.Board, coord);
         }
     }
 }

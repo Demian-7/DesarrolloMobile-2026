@@ -27,6 +27,7 @@ namespace Game.Presentation
             _eventBus.Subscribe<CardPlacedEvent>(OnCardPlaced);
             _eventBus.Subscribe<PackOpenedEvent>(OnPackOpened);
             _eventBus.Subscribe<CardRemovedFromBoardEvent>(OnCardRemovedFromBoard);
+            _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             
             RenderInventory();
         }
@@ -37,6 +38,13 @@ namespace Game.Presentation
             _eventBus.Unsubscribe<CardPlacedEvent>(OnCardPlaced);
             _eventBus.Unsubscribe<PackOpenedEvent>(OnPackOpened);
             _eventBus.Unsubscribe<CardRemovedFromBoardEvent>(OnCardRemovedFromBoard);
+            _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+        }
+
+        private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
+        {
+            _activeZoneId = evt.ActiveZoneId;
+            RenderInventory();
         }
 
         private void OnCardPlaced(CardPlacedEvent evt)
@@ -46,10 +54,7 @@ namespace Game.Presentation
         
         private void OnCardRemovedFromBoard(CardRemovedFromBoardEvent evt)
         {
-            if (evt.ZoneId == _activeZoneId)
-            {
-                RenderInventory();
-            }
+            if (evt.ZoneId == _activeZoneId) RenderInventory();
         }
         
         private void OnPackOpened(PackOpenedEvent evt)
@@ -72,11 +77,8 @@ namespace Game.Presentation
             foreach (var card in zone.CardInventory)
             {
                 InventoryCardView uiInstance = Instantiate(_inventoryItemPrefab, _scrollRectContent);
-        
                 uiInstance.gameObject.SetActive(true);
-        
                 uiInstance.transform.localScale = Vector3.one; 
-        
                 uiInstance.Setup(card, _inputProvider, _eventBus);
                 _activeUIItems.Add(uiInstance);
             }

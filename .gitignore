@@ -104,3 +104,6 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Ignore Vuforia engine and other local package archives
+/[Pp]ackages/com.ptc.vuforia.engine*.tgz

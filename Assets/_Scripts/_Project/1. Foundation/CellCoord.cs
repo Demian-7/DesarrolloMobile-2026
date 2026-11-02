@@ -1,5 +1,6 @@
 using System;
 
+[Serializable]
 public struct CellCoord : IEquatable<CellCoord>
 {
     public int X;

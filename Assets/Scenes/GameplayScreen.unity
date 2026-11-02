@@ -3206,6 +3206,7 @@ Transform:
   - {fileID: 426563754}
   - {fileID: 1275524367}
   - {fileID: 499175213}
+  - {fileID: 1779730536}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &726932900 stripped
@@ -5377,14 +5378,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Bootstrap.GameBootstrapper
   _boardInputController: {fileID: 426563756}
   _shopController: {fileID: 499175214}
+  _zoneSelectorController: {fileID: 1779730537}
   _boardView: {fileID: 426563755}
   _cameraController: {fileID: 182194765}
   _inventoryView: {fileID: 876074203}
   _hudView: {fileID: 108573961}
   _gameStats: {fileID: 11400000, guid: f3aead5dc0202b34d99792012fc0aeb9, type: 2}
-  _basicPack: {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
-  _multiplierPack: {fileID: 11400000, guid: b78a9b832e373dc40acc9cc1c95dd54d, type: 2}
-  _bufferPack: {fileID: 11400000, guid: f8b159adf14a31242b030edab60b6f32, type: 2}
+  _zones:
+  - {fileID: 11400000, guid: 999a454d75dd89240a2e255704b2249d, type: 2}
 --- !u!1 &1297852419
 GameObject:
   m_ObjectHideFlags: 0
@@ -7371,6 +7372,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776211974}
   m_CullTransparentMesh: 1
+--- !u!1 &1779730535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1779730536}
+  - component: {fileID: 1779730537}
+  m_Layer: 0
+  m_Name: ZoneSelector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1779730536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779730535}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 696739484}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1779730537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779730535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0b4e32a0154bd18f13b2c727156b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Presentation.ZoneSelectorController
+  _zoneButtons: []
+  _zoneButtonTexts: []
 --- !u!1 &1783468509
 GameObject:
   m_ObjectHideFlags: 0
