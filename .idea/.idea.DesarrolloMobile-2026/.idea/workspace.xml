@@ -12,15 +12,11 @@
   <component name="ChangeListManager">
     <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ShopService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ShopService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ZoneService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/ZoneService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Zone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Zone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ResolutionTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ResolutionTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Zones/Board 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Zones/Board 1.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ShopController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ShopController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +72,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryCardView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ZoneSelectorController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Editor/EditorSceneSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Editor/SubclassSelectorDrawer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -168,7 +165,7 @@
       <workItem from="1791143359990" duration="13848000" />
       <workItem from="1791215697738" duration="2460000" />
       <workItem from="1791452843834" duration="8611000" />
-      <workItem from="1793622478537" duration="2242000" />
+      <workItem from="1793622478537" duration="5821000" />
     </task>
     <servers />
   </component>

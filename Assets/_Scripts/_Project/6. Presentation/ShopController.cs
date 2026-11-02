@@ -9,7 +9,15 @@ namespace Game.Presentation
 {
     public class ShopController : MonoBehaviour
     {
-        [Header("UI Buttons")]
+        [Header("Shop Panel & Navigation")]
+        [Tooltip("The parent GameObject containing the shop background, pack buttons, and the X button.")]
+        [SerializeField] private GameObject _shopPanel;
+        [Tooltip("The always-visible HUD button that toggles the shop open/closed.")]
+        [SerializeField] private Button _openShopButton;
+        [Tooltip("The 'X' button inside the shop panel that closes it.")]
+        [SerializeField] private Button _closeShopButton;
+
+        [Header("UI Pack Buttons")]
         [SerializeField] private Button _buyBasicButton;
         [SerializeField] private Button _buyMultiplierButton;
         [SerializeField] private Button _buyBufferButton;
@@ -43,6 +51,15 @@ namespace Game.Presentation
                 _buttons[i].onClick.AddListener(() => TryBuyPackAtIndex(packIndex));
             }
 
+            if (_openShopButton != null)
+                _openShopButton.onClick.AddListener(ToggleShop);
+
+            if (_closeShopButton != null)
+                _closeShopButton.onClick.AddListener(CloseShop);
+
+            if (_shopPanel != null)
+                _shopPanel.SetActive(false);
+
             _eventBus.Subscribe<CurrencyChangedEvent>(OnCurrencyChanged);
             _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             
@@ -56,6 +73,25 @@ namespace Game.Presentation
                 _eventBus.Unsubscribe<CurrencyChangedEvent>(OnCurrencyChanged);
                 _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             }
+        }
+
+        private void ToggleShop()
+        {
+            if (_shopPanel == null) return;
+
+            bool newState = !_shopPanel.activeSelf;
+            _shopPanel.SetActive(newState);
+
+            if (newState)
+            {
+                RefreshShopForActiveZone();
+            }
+        }
+
+        private void CloseShop()
+        {
+            if (_shopPanel != null)
+                _shopPanel.SetActive(false);
         }
 
         private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
