@@ -10,27 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
-  m_Name: Buff
+  m_Name: 06_PercentageForFlat
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: 
+  DisplayName: PercentageForFlat
   Tier: 0
   Family: {fileID: 0}
   Effects:
-  - rid: 8319706029854031944
-  IconColor: {r: 0, g: 0.10293555, b: 1, a: 1}
+  - rid: 1440128281414467584
+  IconColor: {r: 0.62661314, g: 0.2058027, b: 0.8867924, a: 0}
   references:
     version: 2
     RefIds:
-    - rid: 8319706029854031944
-      type: {class: BuffEffect, ns: Game.Core, asm: Assembly-CSharp}
+    - rid: 1440128281414467584
+      type: {class: PercentageGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:
-        TargetInteraction:
+        Interaction:
           Type: 0
-          Directions: 1
+          Directions: -1
           Range: 1
-          FilterType: 0
-          FilterByType: {fileID: 0}
+          FilterType: 1
+          FilterByType: {fileID: 11400000, guid: bdc6c6214fecb974ba9c76c5010de117, type: 2}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
-        Magnitude: 2
+        Mode: 1
+        Percentage: 3
+        FlatPerMatch:
+          <Mantissa>k__BackingField: 0
+          <Exponent>k__BackingField: 0

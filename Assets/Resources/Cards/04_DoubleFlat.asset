@@ -18,7 +18,7 @@ MonoBehaviour:
   Family: {fileID: 0}
   Effects:
   - rid: 8208896145699110912
-  IconColor: {r: 0.5712521, g: 0.7584905, b: 0.30196503, a: 0}
+  IconColor: {r: 0.9169811, g: 0.88400114, b: 0.21280874, a: 0}
   references:
     version: 2
     RefIds:
@@ -26,5 +26,5 @@ MonoBehaviour:
       type: {class: FlatGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:
         BaseAmount:
-          <Mantissa>k__BackingField: 20
+          <Mantissa>k__BackingField: 2
           <Exponent>k__BackingField: 0
