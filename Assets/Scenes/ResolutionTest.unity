@@ -5642,7 +5642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMin.x
@@ -5650,7 +5650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_SizeDelta.x
@@ -5690,11 +5690,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1152
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -766
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5934,7 +5934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6785,7 +6785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMin.x
@@ -6793,7 +6793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_SizeDelta.x
@@ -6833,11 +6833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1152
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1086
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10219,7 +10219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 2100000, guid: 8f1fdf5b66356804a9d414a429c2f83f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12497,7 +12497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12575,7 +12575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13031,7 +13031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMin.x
@@ -13039,7 +13039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_SizeDelta.x
@@ -13079,11 +13079,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1152
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -446
       objectReference: {fileID: 0}
     - target: {fileID: 1910619579418187329, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
