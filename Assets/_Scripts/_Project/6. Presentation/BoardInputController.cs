@@ -121,6 +121,10 @@ namespace Game.Presentation
                 _currentPointerPos = screenPosition;
                 _pointerDownTime = Time.time;
             }
+            else
+            {
+                _eventBus.Publish(new CardSelectedEvent(Guid.Empty));
+            }
         }
 
         private void HandleInteractMoved(Vector2 screenPosition)
