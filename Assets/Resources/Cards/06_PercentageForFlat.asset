@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: 06_PercentageForFlat
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: PercentageForFlat
+  DisplayName: Rock
   Tier: 0
   Family: {fileID: 0}
+  Icon: {fileID: 21300000, guid: a2ca28b0a7f5070448b5e5a3e9da0934, type: 3}
   Effects:
   - rid: 1440128281414467584
   IconColor: {r: 0.62661314, g: 0.2058027, b: 0.8867924, a: 0}
@@ -34,7 +35,7 @@ MonoBehaviour:
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
         Mode: 0
-        Percentage: 10
+        Percentage: 2
         FlatPerMatch:
           <Mantissa>k__BackingField: 0
           <Exponent>k__BackingField: 0

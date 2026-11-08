@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: 02_Percentage
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: Percent
+  DisplayName: Cookie
   Tier: 0
   Family: {fileID: 0}
+  Icon: {fileID: 21300000, guid: a79a2da1c56a96547bd6b810a2489b8b, type: 3}
   Effects:
   - rid: 7572652255065669697
   IconColor: {r: 0, g: 0, b: 1, a: 1}
@@ -26,15 +27,15 @@ MonoBehaviour:
       type: {class: PercentageGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:
         Interaction:
-          Type: 1
-          Directions: -1
+          Type: 0
+          Directions: 1
           Range: 1
           FilterType: 0
           FilterByType: {fileID: 0}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
         Mode: 0
-        Percentage: 2
+        Percentage: 1.25
         FlatPerMatch:
           <Mantissa>k__BackingField: 0
           <Exponent>k__BackingField: 0
