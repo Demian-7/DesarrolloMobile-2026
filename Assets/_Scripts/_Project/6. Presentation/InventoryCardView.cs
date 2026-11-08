@@ -11,7 +11,7 @@ namespace Game.Presentation
 {
     public class InventoryCardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
-        [SerializeField] private Image _backgroundImage;
+        [SerializeField] private Image _iconImage;
         [SerializeField] private TextMeshProUGUI _nameText;
         
         private IInputProvider _inputProvider; 
@@ -24,7 +24,7 @@ namespace Game.Presentation
         public void Setup(CardInstance card, IInputProvider inputProvider, IEventBus eventBus)
         {
             CardInstanceId = card.InstanceId;
-            _backgroundImage.color = card.Definition.IconColor;
+            _iconImage.sprite = card.Definition.Icon;
             _nameText.text = card.Definition.DisplayName;
             _inputProvider = inputProvider; 
             

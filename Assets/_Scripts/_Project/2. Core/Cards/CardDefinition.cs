@@ -15,6 +15,8 @@ namespace Game.Core
         public CardTier Tier;
         [Tooltip("THe parent group this card belongs to. Links Tier 1, 2 and 3 variants of the same card together")]
         public CardFamilyDefinition Family;
+        [Tooltip("The visual icon displayed on the board and in the inventory")]
+        public Sprite Icon;
         [Tooltip("The list of Main Behaviours (Flat Gen, % Gen, Buff, Debuff) this card executes.")]
         [SerializeReference, SubclassSelector]
         public List<CardEffect> Effects = new();
