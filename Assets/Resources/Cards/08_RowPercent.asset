@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
-  m_Name: 06_PercentageForFlat
+  m_Name: 08_RowPercent
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: Rock
+  DisplayName: RowPercent3
   Tier: 0
   Family: {fileID: 0}
-  Icon: {fileID: 21300000, guid: a2ca28b0a7f5070448b5e5a3e9da0934, type: 3}
+  Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   Effects:
   - rid: 1440128281414467584
   IconColor: {r: 0.62661314, g: 0.2058027, b: 0.8867924, a: 0}
@@ -27,15 +27,15 @@ MonoBehaviour:
       type: {class: PercentageGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
       data:
         Interaction:
-          Type: 0
+          Type: 2
           Directions: -1
-          Range: 1
-          FilterType: 1
-          FilterByType: {fileID: 11400000, guid: bdc6c6214fecb974ba9c76c5010de117, type: 2}
+          Range: 3
+          FilterType: 0
+          FilterByType: {fileID: 0}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
         Mode: 0
-        Percentage: 2
+        Percentage: 1
         FlatPerMatch:
           <Mantissa>k__BackingField: 0
           <Exponent>k__BackingField: 0

@@ -19,7 +19,7 @@ MonoBehaviour:
     <Exponent>k__BackingField: 0
   MinCards: 2
   MaxCards: 4
-  CardSet: {fileID: 11400000, guid: 27c6045c81a0ca644bceef8626df7643, type: 2}
+  CardSet: {fileID: 11400000, guid: bb4f27b0db80d844a8e1b21abb871725, type: 2}
   FilterType: 0
   FilterByType: {fileID: 0}
   FilterByTier: 0

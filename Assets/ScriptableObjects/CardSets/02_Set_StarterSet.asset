@@ -19,3 +19,7 @@ MonoBehaviour:
     Weight: 40
   - Card: {fileID: 11400000, guid: 548e40d210ddf1a4db8dd674b0367aab, type: 2}
     Weight: 60
+  - Card: {fileID: 11400000, guid: 5a5d9f7436cc77942abdeda9a51017b9, type: 2}
+    Weight: 30
+  - Card: {fileID: 11400000, guid: 581d1e8f6000f6d4ab5d58947ab65edf, type: 2}
+    Weight: 30
