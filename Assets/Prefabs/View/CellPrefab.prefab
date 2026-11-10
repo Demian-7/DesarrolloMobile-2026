@@ -356,8 +356,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 079a2650638fcd64788eda56c88bcf38, type: 3}
+  m_Color: {r: 0.18431373, g: 0.43529412, b: 0.47843137, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -381,5 +381,6 @@ MonoBehaviour:
   _renderer: {fileID: 6232463226042307903}
   _priceText: {fileID: 711427877040048371}
   _highlightRenderer: {fileID: 2695470062535165753}
-  _lockedColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.5}
-  _unlockedColor: {r: 1, g: 1, b: 1, a: 1}
+  _unlockedSprite: {fileID: 21300000, guid: 079a2650638fcd64788eda56c88bcf38, type: 3}
+  _lockedSprite: {fileID: 21300000, guid: 0a50dcc15b228d94190efa42dde6efbb, type: 3}
+  _lockedAlpha: 0.7

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: 03_Buff
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: X2 Buff
+  DisplayName: 
   Tier: 0
   Family: {fileID: 0}
+  Icon: {fileID: 21300000, guid: c51768c7e70653d4b9483a1c1550f234, type: 3}
   Effects:
   - rid: 8319706029854031944
   IconColor: {r: 0.06996775, g: 1, b: 0, a: 1}

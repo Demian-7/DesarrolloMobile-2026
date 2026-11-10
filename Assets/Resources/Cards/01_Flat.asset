@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 01_Flat
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 0
-  DisplayName: Flat
-  Tier: 0
+  DisplayName: 
+  Tier: 2
   Family: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 74f7458741373df4891c919ade85dc7e, type: 3}
+  Icon: {fileID: 21300000, guid: 437ffac7be6195148838a5d139f69cb1, type: 3}
   Effects:
   - rid: 7572652255065669632
   IconColor: {r: 1, g: 0, b: 0, a: 1}

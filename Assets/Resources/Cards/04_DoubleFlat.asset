@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: 04_DoubleFlat
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: DoubleFlat
+  DisplayName: 
   Tier: 0
   Family: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 279fcf5fb36f9ca4aa7122ae6ff1e25d, type: 3}
   Effects:
   - rid: 8208896145699110912
   IconColor: {r: 0.9169811, g: 0.88400114, b: 0.21280874, a: 0}
