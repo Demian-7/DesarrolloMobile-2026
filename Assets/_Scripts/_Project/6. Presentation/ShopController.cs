@@ -21,7 +21,7 @@ namespace Game.Presentation
         [SerializeField] private Button _buyBasicButton;
         [SerializeField] private Button _buyMultiplierButton;
         [SerializeField] private Button _buyBufferButton;
-        
+
         [Header("UI Price Texts")]
         [SerializeField] private TextMeshProUGUI _basicPriceText;
         [SerializeField] private TextMeshProUGUI _multiplierPriceText;
@@ -34,7 +34,7 @@ namespace Game.Presentation
 
         private Button[] _buttons;
         private TextMeshProUGUI[] _priceTexts;
-        
+
         public void Initialize(IEventBus eventBus, ZoneService zoneService, ShopService shopService, string activeZoneId)
         {
             _eventBus = eventBus;
@@ -62,7 +62,7 @@ namespace Game.Presentation
 
             _eventBus.Subscribe<CurrencyChangedEvent>(OnCurrencyChanged);
             _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
-            
+
             RefreshShopForActiveZone();
         }
 
@@ -73,6 +73,15 @@ namespace Game.Presentation
                 _eventBus.Unsubscribe<CurrencyChangedEvent>(OnCurrencyChanged);
                 _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             }
+
+            if (_buttons != null)
+            {
+                foreach (var button in _buttons)
+                    if (button != null) button.onClick.RemoveAllListeners();
+            }
+
+            if (_openShopButton != null) _openShopButton.onClick.RemoveListener(ToggleShop);
+            if (_closeShopButton != null) _closeShopButton.onClick.RemoveListener(CloseShop);
         }
 
         private void ToggleShop()
@@ -150,11 +159,20 @@ namespace Game.Presentation
             Zone zone = _zoneService.GetZone(_activeZoneId);
             if (zone == null || zone.Definition.AvailablePacks == null) return;
 
-            if (index >= 0 && index < zone.Definition.AvailablePacks.Count)
+            if (index < 0 || index >= zone.Definition.AvailablePacks.Count) return;
+
+            CardPackDefinition packDef = zone.Definition.AvailablePacks[index];
+            if (packDef == null) return;
+
+            if (!(zone.Wallet.Balance >= packDef.Price))
             {
-                CardPackDefinition packDef = zone.Definition.AvailablePacks[index];
-                _shopService.TryOpenPack(zone, packDef);
+                EvaluateButtonStates(zone.Wallet.Balance);
+                return;
             }
+
+            _shopService.TryOpenPack(zone, packDef);
+
+            RefreshShopForActiveZone();
         }
     }
 }

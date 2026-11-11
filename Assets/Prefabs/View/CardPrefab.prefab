@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 4547473013928870736}
   - component: {fileID: 6862017949686520960}
   - component: {fileID: 2046202752722415376}
+  - component: {fileID: -5978642562588893094}
   m_Layer: 0
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -152,7 +153,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: 5aab5198a7a9dd546acebdbcc1832786, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -201,6 +202,18 @@ MonoBehaviour:
   _nameText: {fileID: 8778094544673089175}
   _warningIcon: {fileID: 1115183476051018347}
   _lineRendererPrefab: {fileID: 7306728320046495080, guid: b439777bcd8acbb499a0d40e21d83154, type: 3}
+--- !u!114 &-5978642562588893094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821428842156563564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97bab25fe6f346688ac5e813d51deac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Presentation.SpriteCardFx
 --- !u!1 &9153069647106338917
 GameObject:
   m_ObjectHideFlags: 0

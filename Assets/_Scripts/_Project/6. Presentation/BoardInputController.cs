@@ -39,7 +39,7 @@ namespace Game.Presentation
         private Vector2 _pointerDownPos;
         private Vector2 _currentPointerPos;
 
-        private readonly float _cellSpacing = 1.2f;
+        private readonly float _cellSpacing = 1.375f;
         private readonly Vector2 _boardOrigin = Vector2.zero;
 
         public void Initialize(IEventBus eventBus, IInputProvider input, ZoneService zoneService,

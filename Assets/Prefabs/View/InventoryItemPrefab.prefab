@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4540301455811031889}
   - component: {fileID: 7752060958135689190}
   - component: {fileID: 3086295842662335239}
+  - component: {fileID: 6300498984318706489}
   m_Layer: 5
   m_Name: InventoryItemPrefab
   m_TagString: Untagged
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 7e26ddb20251dd84aa01258ae19edc8f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -91,6 +92,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Presentation.InventoryCardView
   _iconImage: {fileID: 7752060958135689190}
   _nameText: {fileID: 3512810250110088589}
+--- !u!114 &6300498984318706489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3535908384501867866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0607f95f544a9b1eaae47be676664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Presentation.UICardFx
+  artPixels: 16
 --- !u!1 &4624139942197410827
 GameObject:
   m_ObjectHideFlags: 0

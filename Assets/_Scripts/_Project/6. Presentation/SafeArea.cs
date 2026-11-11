@@ -1,52 +1,56 @@
 using UnityEngine;
 
-[RequireComponent(typeof(RectTransform))]
-public class SafeArea : MonoBehaviour
+namespace Game.Presentation
 {
-    private RectTransform rectTransform;
-
-    private Rect lastSafeArea;
-    private int lastScreenWidth;
-    private int lastScreenHeight;
-
-    private void Awake()
+    [RequireComponent(typeof(RectTransform))]
+    [DisallowMultipleComponent]
+    public class SafeArea : MonoBehaviour
     {
-        rectTransform = GetComponent<RectTransform>();
+        [SerializeField] private bool _applyLeft = true;
+        [SerializeField] private bool _applyRight = true;
+        [SerializeField] private bool _applyTop = true;
+        [SerializeField] private bool _applyBottom = true;
 
-        ApplySafeArea();
-    }
+        private RectTransform _rect;
+        private Rect _lastSafeArea;
+        private int _lastWidth;
+        private int _lastHeight;
 
-    private void Update()
-    {
-        if (Screen.safeArea != lastSafeArea ||
-            Screen.width != lastScreenWidth ||
-            Screen.height != lastScreenHeight)
+        private void Awake()
         {
-            ApplySafeArea();
+            _rect = GetComponent<RectTransform>();
+            Apply();
         }
-    }
 
-    private void ApplySafeArea()
-    {
-        Rect safeArea = Screen.safeArea;
+        private void Update()
+        {
+            if (Screen.safeArea != _lastSafeArea ||
+                Screen.width != _lastWidth ||
+                Screen.height != _lastHeight)
+            {
+                Apply();
+            }
+        }
 
-        Vector2 anchorMin = safeArea.position;
-        Vector2 anchorMax = safeArea.position + safeArea.size;
+        private void Apply()
+        {
+            if (Screen.width <= 0 || Screen.height <= 0) return;
 
-        anchorMin.x /= Screen.width;
-        anchorMin.y /= Screen.height;
+            Rect sa = Screen.safeArea;
 
-        anchorMax.x /= Screen.width;
-        anchorMax.y /= Screen.height;
+            float xMin = _applyLeft ? sa.xMin / Screen.width : 0f;
+            float xMax = _applyRight ? sa.xMax / Screen.width : 1f;
+            float yMin = _applyBottom ? sa.yMin / Screen.height : 0f;
+            float yMax = _applyTop ? sa.yMax / Screen.height : 1f;
 
-        rectTransform.anchorMin = anchorMin;
-        rectTransform.anchorMax = anchorMax;
+            _rect.anchorMin = new Vector2(xMin, yMin);
+            _rect.anchorMax = new Vector2(xMax, yMax);
+            _rect.offsetMin = Vector2.zero;
+            _rect.offsetMax = Vector2.zero;
 
-        rectTransform.offsetMin = Vector2.zero;
-        rectTransform.offsetMax = Vector2.zero;
-
-        lastSafeArea = safeArea;
-        lastScreenWidth = Screen.width;
-        lastScreenHeight = Screen.height;
+            _lastSafeArea = sa;
+            _lastWidth = Screen.width;
+            _lastHeight = Screen.height;
+        }
     }
 }

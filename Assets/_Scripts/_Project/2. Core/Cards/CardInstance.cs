@@ -14,6 +14,9 @@ namespace Game.Core
         public CurrencyValue EffectiveValue;
         public bool IsResolved;
 
+        /// <summary>0 = flat generators, 1+ = later passes of the chain, -1 = never resolved.</summary>
+        public int ResolvedPass = -1;
+
         public CardInstance(CardDefinition definition)
         {
             Definition = definition;

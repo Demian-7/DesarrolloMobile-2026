@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Game.Core;
 using Game.Foundation;
 using UnityEngine;
@@ -14,11 +15,29 @@ namespace Game.Presentation
 
         [SerializeField] private CellView _cellPrefab;
         [SerializeField] private CardView _cardPrefab;
+        [SerializeField] private ZoneBackground _background;
+
+        [Header("Layout")]
+        [Tooltip("20px tile + 2px gap = 22px = 1.375 units at PPU 16.")]
+        [SerializeField] private float _cellSpacing = 1.375f;
+
+        [Header("Chain pulse")]
+        [SerializeField] private float _pulseStepSeconds = 0.2f;
+        [SerializeField] private int _maxPulseSteps = 8;
+
+        [Header("Card transitions")]
+        [SerializeField] private float _removeSeconds = 0.3f;
+        [SerializeField] private float _zoneOutSeconds = 0.25f;
+        [SerializeField] private float _zoneInSeconds = 0.35f;
+        [Tooltip("Delay between neighbouring cells in the zone-switch wave.")]
+        [SerializeField] private float _zoneStaggerSeconds = 0.03f;
+        [Tooltip("New cards start appearing this long after the old ones start fading.")]
+        [SerializeField] private float _zoneInStartDelay = 0.2f;
 
         private Dictionary<CellCoord, CellView> _activeCells = new();
         private Dictionary<CellCoord, CardView> _activeCards = new();
+        private Sequence _pulseSequence;
 
-        private readonly float _cellSpacing = 1.2f;
         private readonly Vector2 _boardOrigin = Vector2.zero;
 
         public void Initialize(IEventBus eventBus, ZoneService zoneService, ShopService shopService,
@@ -35,11 +54,13 @@ namespace Game.Presentation
             _eventBus.Subscribe<BoardChangedEvent>(OnBoardChanged);
             _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
 
-            RenderFullBoard();
+            RenderFullBoard(false);
         }
 
         private void OnDestroy()
         {
+            KillPulse();
+
             if (_eventBus == null)
                 return;
 
@@ -50,11 +71,17 @@ namespace Game.Presentation
             _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
         }
 
+        private Color CurrentCellTint()
+            => _background != null ? _background.GetMidColor(_activeZoneId) : Color.white;
+
+        private float WaveDelay(CellCoord coord)
+            => Mathf.Clamp(coord.X + coord.Y, 0, 20) * _zoneStaggerSeconds;
+
         private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
         {
             _activeZoneId = evt.ActiveZoneId;
             ClearDragPreview();
-            RenderFullBoard();
+            RenderFullBoard(true);
         }
 
         public void ShowDragPreview(Zone zone, CardDefinition cardDef, CellCoord hoverCoord)
@@ -105,20 +132,29 @@ namespace Game.Presentation
             return hasInteraction ? targets : null;
         }
 
-        private void RenderFullBoard()
+        private void RenderFullBoard(bool animated)
         {
             Zone zone = _zoneService.GetZone(_activeZoneId);
             if (zone == null)
                 return;
 
+            KillPulse();
+
             foreach (var cell in _activeCells.Values)
                 Destroy(cell.gameObject);
 
-            foreach (var card in _activeCards.Values)
-                Destroy(card.gameObject);
+            foreach (var kvp in _activeCards)
+            {
+                if (animated)
+                    kvp.Value.PlayRemoval(_zoneOutSeconds, WaveDelay(kvp.Key));
+                else
+                    Destroy(kvp.Value.gameObject);
+            }
 
             _activeCells.Clear();
             _activeCards.Clear();
+
+            Color tint = CurrentCellTint();
 
             foreach (var kvp in zone.Board.Cells)
             {
@@ -134,12 +170,13 @@ namespace Game.Presentation
                     priceStr = $"${price}";
                 }
 
-                cellInstance.Setup(cell.IsUnlocked, priceStr);
+                cellInstance.Setup(cell.IsUnlocked, priceStr, tint);
                 _activeCells.Add(cell.Coordinate, cellInstance);
 
                 if (cell.OccupiedCard != null)
                 {
-                    SpawnCardVisual(cell.OccupiedCard, cell.Coordinate);
+                    SpawnCardVisual(cell.OccupiedCard, cell.Coordinate, animated,
+                        _zoneInStartDelay + WaveDelay(cell.Coordinate), _zoneInSeconds);
                 }
             }
 
@@ -153,7 +190,7 @@ namespace Game.Presentation
 
             if (_activeCells.TryGetValue(evt.Coord, out CellView cellView))
             {
-                cellView.Setup(true, "");
+                cellView.Setup(true, "", CurrentCellTint());
             }
         }
 
@@ -168,7 +205,7 @@ namespace Game.Presentation
 
             if (zone.Board.Cells.TryGetValue(evt.Coord, out Cell cell) && cell.OccupiedCard != null)
             {
-                SpawnCardVisual(cell.OccupiedCard, evt.Coord);
+                SpawnCardVisual(cell.OccupiedCard, evt.Coord, true, 0f, 0.5f);
             }
         }
 
@@ -179,12 +216,13 @@ namespace Game.Presentation
 
             if (_activeCards.TryGetValue(evt.Coord, out CardView cardView))
             {
-                Destroy(cardView.gameObject);
                 _activeCards.Remove(evt.Coord);
+                cardView.PlayRemoval(_removeSeconds);
             }
         }
 
-        private void SpawnCardVisual(CardInstance card, CellCoord coord)
+        private void SpawnCardVisual(CardInstance card, CellCoord coord, bool animateIn,
+            float delay, float duration)
         {
             Vector3 worldPos = GetWorldPosition(coord);
             worldPos.z -= 0.1f;
@@ -192,6 +230,9 @@ namespace Game.Presentation
             CardView cardInstance = Instantiate(_cardPrefab, worldPos, Quaternion.identity, transform);
             cardInstance.Setup(card, _eventBus);
             _activeCards[coord] = cardInstance;
+
+            if (animateIn)
+                cardInstance.Fx?.DissolveIn(duration, delay);
         }
 
         private Vector3 GetWorldPosition(CellCoord coord)
@@ -204,10 +245,71 @@ namespace Game.Presentation
 
         private void OnBoardChanged(BoardChangedEvent evt)
         {
-            if (evt.ZoneId == _activeZoneId)
+            if (evt.ZoneId != _activeZoneId)
+                return;
+
+            RefreshAllCardVisualizers();
+            PlayChainPulse();
+        }
+
+        private void PlayChainPulse()
+        {
+            KillPulse();
+
+            Zone zone = _zoneService.GetZone(_activeZoneId);
+            if (zone == null) return;
+
+            var pulses = new List<(int step, CardView view)>();
+            var valuePerStep = new SortedDictionary<int, CurrencyValue>();
+
+            foreach (var kvp in _activeCards)
             {
-                RefreshAllCardVisualizers();
+                if (!zone.Board.Cells.TryGetValue(kvp.Key, out Cell cell) || cell.OccupiedCard == null)
+                    continue;
+
+                int pass = cell.OccupiedCard.ResolvedPass;
+                if (pass < 0) continue;
+
+                int step = Mathf.Min(pass, _maxPulseSteps);
+                pulses.Add((step, kvp.Value));
+
+                CurrencyValue value = cell.OccupiedCard.EffectiveValue;
+                valuePerStep[step] = valuePerStep.TryGetValue(step, out var existing) ? existing + value : value;
             }
+
+            if (pulses.Count == 0) return;
+
+            _pulseSequence = DOTween.Sequence().SetLink(gameObject);
+
+            foreach (var p in pulses)
+            {
+                CardView view = p.view;
+                _pulseSequence.InsertCallback(p.step * _pulseStepSeconds, () =>
+                {
+                    if (view != null) view.Fx?.Pulse();
+                });
+            }
+
+            string zoneId = _activeZoneId;
+            int stepCount = valuePerStep.Count;
+            int index = 0;
+            CurrencyValue running = CurrencyValue.Zero;
+
+            foreach (var kvp in valuePerStep)
+            {
+                running += kvp.Value;
+                CurrencyValue total = running;
+                int stepIndex = index++;
+
+                _pulseSequence.InsertCallback(kvp.Key * _pulseStepSeconds,
+                    () => _eventBus.Publish(new ChainStepEvent(zoneId, total, stepIndex, stepCount)));
+            }
+        }
+
+        private void KillPulse()
+        {
+            _pulseSequence?.Kill();
+            _pulseSequence = null;
         }
 
         private void RefreshAllCardVisualizers()
@@ -233,7 +335,7 @@ namespace Game.Presentation
 
             if (targets == null)
             {
-                cardView.ShowWarning(false);
+                cardView.SetUnpowered(false);
                 cardView.DrawLinesToTargets(Vector3.zero, new List<Vector3>());
                 return;
             }
@@ -260,18 +362,18 @@ namespace Game.Presentation
                 }
             }
 
-            bool showWarning = false;
+            bool unpowered = false;
 
             if (validTargetPositions.Count == 0)
             {
-                showWarning = true;
+                unpowered = true;
             }
             else if (isPercentageGenerator && card.EffectiveValue.Equals(CurrencyValue.Zero))
             {
-                showWarning = true;
+                unpowered = true;
             }
 
-            cardView.ShowWarning(showWarning);
+            cardView.SetUnpowered(unpowered);
 
             if (validTargetPositions.Count == 0)
             {

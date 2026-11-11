@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Cards/06_PercentageForFlat 1.asset.meta
 guid: 581d1e8f6000f6d4ab5d58947ab65edf
 NativeFormatImporter:
+========
+guid: 37f4392b1f3c8764dbb4e0dda9b61453
+ShaderIncludeImporter:
+>>>>>>>> origin/feature/Art:Assets/Shaders/ZoneBackground.hlsl.meta
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Game.Core;
 using Game.Foundation;
 using Game.Input.Mobile;
@@ -17,6 +18,7 @@ namespace Game.Bootstrap
         [SerializeField] private BoardCameraController _cameraController;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private HUDView _hudView;
+        [SerializeField] private ZoneLook _zoneLook;
         
         [Header("Game Config & Zones")]
         [SerializeField] private GameStats _gameStats;
@@ -33,6 +35,8 @@ namespace Game.Bootstrap
                 return;
             }
 
+            DOTween.SetTweensCapacity(800, 200);
+            
             var eventBus = new EventBus();
             var mobileInput = gameObject.AddComponent<MobileTouchInputProvider>();
             IInputProvider inputProvider = mobileInput;
@@ -52,6 +56,12 @@ namespace Game.Bootstrap
             {
                 activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
                 eventBus.Publish(new CurrencyChangedEvent(activeZone.ZoneId, activeZone.Wallet.Balance));
+            }
+
+            if (_zoneLook != null)
+            {
+                _zoneLook.Init(eventBus);
+                _zoneLook.ShowZone(activeZone.ZoneId, 0f);
             }
 
             _cameraController.Initialize(inputProvider);
