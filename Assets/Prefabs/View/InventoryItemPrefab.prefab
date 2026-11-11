@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Presentation.InventoryCardView
   _iconImage: {fileID: 7752060958135689190}
-  _nameText: {fileID: 3512810250110088589}
+  _nameText: {fileID: 0}
 --- !u!114 &6300498984318706489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f0607f95f544a9b1eaae47be676664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Presentation.UICardFx
-  artPixels: 16
+  _artPixels: 16
 --- !u!1 &4624139942197410827
 GameObject:
   m_ObjectHideFlags: 0
