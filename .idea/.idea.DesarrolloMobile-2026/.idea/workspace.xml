@@ -10,7 +10,45 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="" />
+    <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Background/BGTexture.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Background/BGTexture.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ShopButton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ShopButton.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/View/CardPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/View/CardPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/View/CellPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/View/CellPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/View/InventoryItemPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/View/InventoryItemPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/01_Flat.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/01_Flat.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/02_Percentage.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/02_Percentage.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/03_Buff.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/03_Buff.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/04_DoubleFlat.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/04_DoubleFlat.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/05_GoodRightBadLeft 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/05_GoodRightBadLeft 1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/06_PercentageForFlat.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/06_PercentageForFlat.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ResolutionTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ResolutionTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Zones/Definitions/Zone_03.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Zones/Definitions/Zone_03.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Zones/OLD_InitialZoneStats.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Zones/OLD_InitialZoneStats.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Panning.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Panning.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/TMP Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/TMP Settings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/BoardEvaluationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/BoardEvaluationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Cards/CardInstance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardCameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardCameraController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardInputController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryCardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryCardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/SafeArea.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/SafeArea.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ShopController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ShopController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,12 +70,14 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardPlacedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardRemovedFromBoardEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CardSelectedEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/ChainStepEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/CurrencyChangedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/GlobalUpgradePurchasedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/PackOpenedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/SlotUnlockedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/EventbusEvents/ZoneUnlockedEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/GameStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/ICardFx.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/NotationType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/SubclassSelectorAttribute.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/TargetingData.cs" root0="FORCE_HIGHLIGHTING" />
@@ -58,15 +98,21 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Zones/ZoneDefinition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/4. Input/Desktop/DesktopInputProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/4. Input/Mobile/MobileTouchInputProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/Animations/AnimatedLabel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/Animations/PressableButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/Animations/UiPunch.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/BoardCameraController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CardView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/InventoryCardView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/SafeAreaMask.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ZoneBackground.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/ZoneSelectorController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Editor/EditorSceneSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/_Project/Editor/SubclassSelectorDrawer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@7a4e1a2a8194/InputSystem/Runtime/Actions/InputActionState.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -89,7 +135,7 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;DV&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/Art&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -159,7 +205,9 @@
       <workItem from="1791215697738" duration="2460000" />
       <workItem from="1791452843834" duration="8611000" />
       <workItem from="1793622478537" duration="6431000" />
-      <workItem from="1794062895698" duration="396000" />
+      <workItem from="1794062895698" duration="3740000" />
+      <workItem from="1794248289852" duration="22973000" />
+      <workItem from="1794313039313" duration="859000" />
     </task>
     <servers />
   </component>

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: 03_Buff
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 
-  DisplayName: X2 Buff
+  DisplayName: Bowl
   Tier: 0
   Family: {fileID: 0}
+  Icon: {fileID: 21300000, guid: af8004a0f0a58ae4e9fcb0cb28466b13, type: 3}
   Effects:
   - rid: 8319706029854031944
   IconColor: {r: 0.06996775, g: 1, b: 0, a: 1}

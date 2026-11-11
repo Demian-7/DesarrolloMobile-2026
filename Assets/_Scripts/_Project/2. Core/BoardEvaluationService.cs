@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Foundation;
-using UnityEngine;
 
 namespace Game.Core
 {
@@ -43,6 +42,7 @@ namespace Game.Core
                 card.BaseValue = CurrencyValue.Zero;
                 card.EffectiveValue = CurrencyValue.Zero;
                 card.IsResolved = false;
+                card.ResolvedPass = -1;
             }
 
             var context = new BoardEvaluationContext(board, _globalUpgrades);
@@ -54,24 +54,24 @@ namespace Game.Core
                 if (flatEffects.Count > 0)
                 {
                     CurrencyValue totalBase = CurrencyValue.Zero;
-                    foreach(var flat in flatEffects)
+                    foreach (var flat in flatEffects)
                         totalBase += flat.Evaluate(context, card.CurrentCell.Coordinate);
 
                     card.BaseValue = totalBase;
-                    
-                    // context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
-                    // context.TryGetEffectiveValue(card.CurrentCell.Coordinate, out card.EffectiveValue);
                     card.EffectiveValue = context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
 
                     card.IsResolved = true;
+                    card.ResolvedPass = 0;
                     resolvedCards.Add(card);
                 }
             }
 
+            int pass = 0;
             bool changed = true;
             while (changed)
             {
                 changed = false;
+                pass++;
                 
                 context.SnapshotForNextPass(); 
 
@@ -99,12 +99,10 @@ namespace Game.Core
                         if (canResolve)
                         {
                             card.BaseValue = totalBase;
-                            
-                            // context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
-                            // context.TryGetEffectiveValue(card.CurrentCell.Coordinate, out card.EffectiveValue);
                             card.EffectiveValue = context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
 
                             card.IsResolved = true;
+                            card.ResolvedPass = pass;
                             resolvedCards.Add(card);
                             changed = true;
                         }
@@ -114,8 +112,6 @@ namespace Game.Core
             
             foreach (var card in allCards.Where(c => !c.IsResolved))
             {
-                // context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, CurrencyValue.Zero);
-                // context.TryGetEffectiveValue(card.CurrentCell.Coordinate, out card.EffectiveValue);
                 card.EffectiveValue = context.FinalizeEffectiveValue(card.CurrentCell.Coordinate, card.BaseValue);
             }
 

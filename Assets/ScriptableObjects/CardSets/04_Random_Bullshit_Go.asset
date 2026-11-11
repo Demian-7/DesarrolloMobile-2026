@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2481a08884ea4e8d9adf3938383175cf, type: 3}
+  m_Name: 04_Random_Bullshit_Go
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardSetDefinition
+  Pool:
+  - Card: {fileID: 11400000, guid: a9e313f8eb18868448105bcfaace9ddc, type: 2}
+    Weight: 50
+  - Card: {fileID: 11400000, guid: 5a5d9f7436cc77942abdeda9a51017b9, type: 2}
+    Weight: 35
+  - Card: {fileID: 11400000, guid: 696cdddf714bc2d4c8faba69c7365813, type: 2}
+    Weight: 15
+  - Card: {fileID: 11400000, guid: 6138804c065c72946b572d52c3289ac0, type: 2}
+    Weight: 35

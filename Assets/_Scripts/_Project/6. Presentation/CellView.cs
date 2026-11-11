@@ -8,13 +8,19 @@ namespace Game.Presentation
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private TextMeshPro _priceText;
         [SerializeField] private SpriteRenderer _highlightRenderer;
-        
-        [SerializeField] private Color _lockedColor = new Color(0.3f, 0.3f, 0.3f, 0.5f);
-        [SerializeField] private Color _unlockedColor = Color.white;
 
-        public void Setup(bool isUnlocked, string priceString = "")
+        [Header("Tiles")]
+        [SerializeField] private Sprite _unlockedSprite;
+        [SerializeField] private Sprite _lockedSprite;
+        [SerializeField, Range(0f, 1f)] private float _lockedAlpha = 0.7f;
+
+        public void Setup(bool isUnlocked, string priceString, Color tint)
         {
-            _renderer.color = isUnlocked ? _unlockedColor : _lockedColor;
+            Sprite sprite = isUnlocked ? _unlockedSprite : _lockedSprite;
+            if (sprite != null) _renderer.sprite = sprite;
+
+            tint.a = isUnlocked ? 1f : _lockedAlpha;
+            _renderer.color = tint;
 
             if (_priceText != null)
             {
