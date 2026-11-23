@@ -26,6 +26,7 @@ namespace Game.Presentation
             _eventBus = eventBus;
             _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             _eventBus.Subscribe<ChainStepEvent>(OnChainStep);
+            _eventBus.Subscribe<BoostStateChangedEvent>(OnBoostStateChanged);
         }
 
         private void OnDestroy()
@@ -33,6 +34,7 @@ namespace Game.Presentation
             if (_eventBus == null) return;
             _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
             _eventBus.Unsubscribe<ChainStepEvent>(OnChainStep);
+            _eventBus.Unsubscribe<BoostStateChangedEvent>(OnBoostStateChanged);
         }
 
         private void OnActiveZoneChanged(ActiveZoneChangedEvent evt)
@@ -43,6 +45,11 @@ namespace Game.Presentation
         private void OnChainStep(ChainStepEvent evt)
         {
             if (_background != null) _background.Kick();
+        }
+        
+        private void OnBoostStateChanged(BoostStateChangedEvent evt)
+        {
+            SetBoon(evt.IsActive);
         }
 
         public void ShowZone(string zoneId)
