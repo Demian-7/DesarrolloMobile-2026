@@ -212,7 +212,7 @@ namespace Game.Presentation
 
                 CurrencyValue displayEffective = isInInventory ? CurrencyValue.Zero : selectedCard.EffectiveValue;
 
-                _infoText.text = $"Selected: {selectedCard.Definition.DisplayName}\nBase: {baseDesc.Trim()} | Effective: {displayEffective}";
+                _infoText.text = $"Selected: {selectedCard.Definition.DisplayName}\n{selectedCard.Definition.Description}\nBase: {baseDesc.Trim()} | Effective: {displayEffective}";
             }
             else
             {
