@@ -11,6 +11,8 @@ namespace Game.Core
         public string Id;
         [Tooltip("The localized name displayer to the player in-game.")]
         public string DisplayName;
+        [TextArea, Tooltip("The displayed description for the card.")]
+        public string Description;
         [Tooltip("Scales the card's numbers/intensity without changing its fundamental Effect or Interaction.")]
         public CardTier Tier;
         [Tooltip("THe parent group this card belongs to. Links Tier 1, 2 and 3 variants of the same card together")]

@@ -185,7 +185,7 @@ namespace Game.Foundation
 
             if (v.Exponent < 3 && notation != NotationType.OoM)
             {
-                return (v.Mantissa * Math.Pow(10, v.Exponent)).ToString("F0");
+                return (v.Mantissa * Math.Pow(10, v.Exponent)).ToString("F2");
             }
 
             switch (notation)
@@ -197,16 +197,16 @@ namespace Game.Foundation
 
                     if (suffixIndex < Suffixes.Length)
                     {
-                        return $"{displayMantissa:F0}{Suffixes[suffixIndex]}";
+                        return $"{displayMantissa:F2}{Suffixes[suffixIndex]}";
                     }
 
-                    return $"{v.Mantissa:F0}e{v.Exponent}"; // Fallback if out of suffixes
+                    return $"{v.Mantissa:F2}e{v.Exponent}"; // Fallback if out of suffixes
 
                 case NotationType.Engineering:
                     int engShift = v.Exponent % 3;
                     double engMantissa = v.Mantissa * Math.Pow(10, engShift);
                     int engExponent = v.Exponent - engShift;
-                    return $"{engMantissa:F0}e{engExponent}";
+                    return $"{engMantissa:F2}e{engExponent}";
 
                 case NotationType.OoM:
                     double logValue = v.Exponent + Math.Log10(v.Mantissa);
@@ -214,7 +214,7 @@ namespace Game.Foundation
 
                 case NotationType.Scientific:
                 default:
-                    return $"{v.Mantissa:F0}e{v.Exponent}";
+                    return $"{v.Mantissa:F2}e{v.Exponent}";
             }
         }
     }
