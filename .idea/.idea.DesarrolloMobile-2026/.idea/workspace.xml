@@ -12,14 +12,8 @@
   <component name="ChangeListManager">
     <list default="true" id="680b9968-9c3d-4b43-b0c5-74c5ec4ed0ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloMobile-2026/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Card_Icons.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Card_Icons.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Items.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Items.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Cards/06_PercentageForFlat 1.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Cards/06_PercentageForFlat 1.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/ZoneBackground.hlsl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/ZoneBackground.hlsl.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/CurrencyAccrualService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/2. Core/Services/CurrencyAccrualService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/Effects/ZoneLook.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/Effects/ZoneLook.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/HUDView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/Bootstrap/GameBootstrapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/1. Foundation/CurrencyValue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/_Project/6. Presentation/CellView.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
