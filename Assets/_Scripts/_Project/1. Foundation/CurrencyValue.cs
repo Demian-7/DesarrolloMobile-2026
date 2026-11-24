@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEngine;
 
 namespace Game.Foundation
@@ -17,6 +18,12 @@ namespace Game.Foundation
         {
             "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd",
             "Spd", "Ocd", "Nod", "Vg"
+        };
+        
+        private static readonly string[] SixDigitSuffixes =
+        {
+            "", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc",
+            "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod", "Vg"
         };
 
         public CurrencyValue(double mantissa, int exponent = 0)
@@ -172,20 +179,26 @@ namespace Game.Foundation
         }
 
         public override string ToString()
-        {
-            return ToString(NotationType.Standard);
-        }
+            => ToString(NotationType.SixDigit, 0);
 
-        public string ToString(NotationType notation)
+        public string ToString(int decimals)
+            => ToString(NotationType.SixDigit, decimals);
+
+        public string ToString(NotationType notation, int decimals = 0)
         {
             CurrencyValue v = Normalized();
+            string fixedFmt = $"F{decimals}";
 
             if (v.Mantissa == 0)
-                return "0";
+                return 0d.ToString(fixedFmt, CultureInfo.InvariantCulture);
+
+            if (notation == NotationType.SixDigit)
+                return FormatSixDigit(v, decimals);
 
             if (v.Exponent < 3 && notation != NotationType.OoM)
             {
-                return (v.Mantissa * Math.Pow(10, v.Exponent)).ToString("F2");
+                return (v.Mantissa * Math.Pow(10, v.Exponent))
+                    .ToString(fixedFmt, CultureInfo.InvariantCulture);
             }
 
             switch (notation)
@@ -195,27 +208,59 @@ namespace Game.Foundation
                     int shift = v.Exponent % 3;
                     double displayMantissa = v.Mantissa * Math.Pow(10, shift);
 
-                    if (suffixIndex < Suffixes.Length)
+                    if (Math.Round(displayMantissa, decimals) >= 1_000d)
                     {
-                        return $"{displayMantissa:F2}{Suffixes[suffixIndex]}";
+                        displayMantissa /= 1_000d;
+                        suffixIndex++;
                     }
 
-                    return $"{v.Mantissa:F2}e{v.Exponent}"; // Fallback if out of suffixes
+                    if (suffixIndex < Suffixes.Length)
+                        return $"{displayMantissa.ToString(fixedFmt, CultureInfo.InvariantCulture)}{Suffixes[suffixIndex]}";
+
+                    return $"{v.Mantissa.ToString(fixedFmt, CultureInfo.InvariantCulture)}e{v.Exponent}";
 
                 case NotationType.Engineering:
                     int engShift = v.Exponent % 3;
                     double engMantissa = v.Mantissa * Math.Pow(10, engShift);
                     int engExponent = v.Exponent - engShift;
-                    return $"{engMantissa:F2}e{engExponent}";
+                    return $"{engMantissa.ToString(fixedFmt, CultureInfo.InvariantCulture)}e{engExponent}";
 
                 case NotationType.OoM:
                     double logValue = v.Exponent + Math.Log10(v.Mantissa);
-                    return $"e{logValue:F3}";
+                    return $"e{logValue.ToString("F3", CultureInfo.InvariantCulture)}";
 
                 case NotationType.Scientific:
                 default:
-                    return $"{v.Mantissa:F2}e{v.Exponent}";
+                    return $"{v.Mantissa.ToString(fixedFmt, CultureInfo.InvariantCulture)}e{v.Exponent}";
             }
+        }
+
+        private static string FormatSixDigit(CurrencyValue v, int decimals)
+        {
+            string numFmt = $"N{decimals}";
+
+            if (v.Exponent < 0)
+            {
+                return (v.Mantissa * Math.Pow(10, v.Exponent))
+                    .ToString($"F{decimals}", CultureInfo.InvariantCulture);
+            }
+
+            int suffixIndex = v.Exponent / 6;
+            int shift = v.Exponent % 6;
+            double displayMantissa = v.Mantissa * Math.Pow(10, shift);
+
+            if (Math.Round(displayMantissa, decimals) >= 1_000_000d)
+            {
+                displayMantissa /= 1_000_000d;
+                suffixIndex++;
+            }
+
+            if (suffixIndex < SixDigitSuffixes.Length)
+            {
+                return $"{displayMantissa.ToString(numFmt, CultureInfo.InvariantCulture)}{SixDigitSuffixes[suffixIndex]}";
+            }
+
+            return $"{v.Mantissa.ToString($"F{decimals}", CultureInfo.InvariantCulture)}e{v.Exponent}";
         }
     }
 }
