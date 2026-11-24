@@ -122,7 +122,7 @@ namespace Game.Presentation
             _rateFallback?.Kill();
             _rateFallback = DOVirtual.DelayedCall(_chainWaitSeconds, () =>
             {
-                Show(_rateText, _rateLabel, FormatRate(_targetRate.ToString()));
+                Show(_rateText, _rateLabel, FormatRate(FormatRateNumber(_targetRate)));
                 _settledRate = _targetRate;
                 _rateChanged = false;
             }).SetLink(gameObject);
@@ -138,7 +138,7 @@ namespace Game.Presentation
 
             _rateFallback?.Kill();
 
-            string number = _targetRate.ToString();
+            string number = FormatRateNumber(_targetRate);
             int count = number.Length;
 
             if (!evt.IsFinal)
@@ -239,7 +239,7 @@ namespace Game.Presentation
             _rateIncreased = false;
 
             Show(_currencyText, _currencyLabel, FormatMoney(zone.Wallet.Balance));
-            Show(_rateText, _rateLabel, FormatRate(effectiveRate.ToString()));
+            Show(_rateText, _rateLabel, FormatRate(FormatRateNumber(effectiveRate)));
             UpdateInfoText();
         }
 
@@ -251,12 +251,13 @@ namespace Game.Presentation
             if (zone != null)
             {
                 CurrencyValue effectiveRate = zone.GenerationRate * _boostService.CurrentMultiplier;
-                Show(_rateText, _rateLabel, FormatRate(effectiveRate.ToString()));
+                Show(_rateText, _rateLabel, FormatRate(FormatRateNumber(effectiveRate)));
             }
         }
 
         private string FormatMoney(CurrencyValue value) => $"{_currencyPrefix}{value}";
         private static string FormatRate(string number) => $"+{number}/s";
+        private static string FormatRateNumber(CurrencyValue rate) => rate.ToString(2);
 
         private static bool IsGreater(CurrencyValue a, CurrencyValue b)
             => !a.Equals(b) && CurrencyValue.Max(a, b).Equals(a);
