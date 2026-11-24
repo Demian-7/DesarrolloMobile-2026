@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
   m_Name: 06_PercentageForFlat 1
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
-  Id: 
+  Id: 06
   DisplayName: Rock
   Tier: 0
   Family: {fileID: 0}

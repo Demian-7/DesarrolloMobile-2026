@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
   m_Name: 11_BetterFlatCancelRow
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
-  Id: 
+  Id: 11
   DisplayName: IronMedal
   Tier: 0
   Family: {fileID: 0}
@@ -46,9 +46,9 @@ MonoBehaviour:
         TargetInteraction:
           Type: 2
           Directions: 0
-          Range: 3
+          Range: 1
           FilterType: 0
           FilterByType: {fileID: 0}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
-        Magnitude: 0
+        Magnitude: 1

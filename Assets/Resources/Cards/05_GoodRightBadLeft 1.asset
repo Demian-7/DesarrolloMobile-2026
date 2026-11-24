@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
   m_Name: 05_GoodRightBadLeft 1
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
-  Id: 
-  DisplayName: Dlicate Flower
+  Id: 05
+  DisplayName: Delicate Flower
   Tier: 0
   Family: {fileID: 0}
   Icon: {fileID: 21300000, guid: 344f70990ffb6da4283268fa2968be33, type: 3}

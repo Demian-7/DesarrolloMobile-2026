@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
   m_Name: 01_Flat
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
-  Id: 0
+  Id: 01
   DisplayName: Wooden Pickaxe
   Description: Initial card. Generates $1 per second flat.
   Tier: 0
