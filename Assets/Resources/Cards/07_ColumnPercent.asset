@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
   m_Name: 07_ColumnPercent
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
-  Id: 
-  DisplayName: ColumnPercent3
+  Id: 07
+  DisplayName: Wooden Axe
   Tier: 0
   Family: {fileID: 0}
-  Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: c686cfb6e94b3d74eb83bbceb5839fe2, type: 3}
   Effects:
   - rid: 1440128281414467584
   IconColor: {r: 0.62661314, g: 0.2058027, b: 0.8867924, a: 0}
