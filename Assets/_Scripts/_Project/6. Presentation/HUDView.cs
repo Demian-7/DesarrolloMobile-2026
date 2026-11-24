@@ -13,6 +13,7 @@ namespace Game.Presentation
         [SerializeField] private TextMeshProUGUI _currencyText;
         [SerializeField] private TextMeshProUGUI _rateText;
         [SerializeField] private TextMeshProUGUI _infoText;
+        [SerializeField] private AdBoostButtonView _adBoostButton;
 
         [Header("Display")]
         [Tooltip("Text shown before the money amount. Leave empty when using the coin icon.")]
@@ -37,11 +38,13 @@ namespace Game.Presentation
         private bool _rateChanged;
         private bool _rateIncreased;
         private Tween _rateFallback;
+        private BoostService _boostService;
 
-        public void Initialize(IEventBus eventBus, ZoneService zoneService, string activeZoneId)
+        public void Initialize(IEventBus eventBus, ZoneService zoneService, BoostService boostService, string activeZoneId)
         {
             _eventBus = eventBus;
             _zoneService = zoneService;
+            _boostService = boostService;
             _activeZoneId = activeZoneId;
 
             _currencyLabel = _currencyText != null ? _currencyText.GetComponent<AnimatedLabel>() : null;
@@ -52,6 +55,10 @@ namespace Game.Presentation
             _eventBus.Subscribe<ChainStepEvent>(OnChainStep);
             _eventBus.Subscribe<CardSelectedEvent>(OnCardSelected);
             _eventBus.Subscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+            _eventBus.Subscribe<BoostStateChangedEvent>(OnBoostStateChanged);
+            
+            if (_adBoostButton != null)
+                _adBoostButton.Initialize(_boostService);
 
             RefreshUI();
         }
@@ -67,6 +74,7 @@ namespace Game.Presentation
                 _eventBus.Unsubscribe<ChainStepEvent>(OnChainStep);
                 _eventBus.Unsubscribe<CardSelectedEvent>(OnCardSelected);
                 _eventBus.Unsubscribe<ActiveZoneChangedEvent>(OnActiveZoneChanged);
+                _eventBus.Unsubscribe<BoostStateChangedEvent>(OnBoostStateChanged);
             }
         }
 
@@ -102,7 +110,7 @@ namespace Game.Presentation
             if (evt.ZoneId != _activeZoneId)
                 return;
 
-            _targetRate = evt.NewRate;
+            _targetRate = evt.NewRate * _boostService.CurrentMultiplier;
             _rateChanged = !_targetRate.Equals(_settledRate);
             _rateIncreased = _rateChanged && IsGreater(_targetRate, _settledRate);
 
@@ -220,17 +228,31 @@ namespace Game.Presentation
             if (zone == null) return;
 
             _rateFallback?.Kill();
+            
+            CurrencyValue effectiveRate = zone.GenerationRate * _boostService.CurrentMultiplier;
 
             _lastBalance = zone.Wallet.Balance;
             _hasLastBalance = true;
-            _targetRate = zone.GenerationRate;
-            _settledRate = zone.GenerationRate;
+            _targetRate = effectiveRate;
+            _settledRate = effectiveRate;
             _rateChanged = false;
             _rateIncreased = false;
 
             Show(_currencyText, _currencyLabel, FormatMoney(zone.Wallet.Balance));
-            Show(_rateText, _rateLabel, FormatRate(zone.GenerationRate.ToString()));
+            Show(_rateText, _rateLabel, FormatRate(effectiveRate.ToString()));
             UpdateInfoText();
+        }
+
+        private void OnBoostStateChanged(BoostStateChangedEvent evt)
+        {
+            SetBoost(evt.IsActive);
+            
+            Zone zone = _zoneService.GetZone(_activeZoneId);
+            if (zone != null)
+            {
+                CurrencyValue effectiveRate = zone.GenerationRate * _boostService.CurrentMultiplier;
+                Show(_rateText, _rateLabel, FormatRate(effectiveRate.ToString()));
+            }
         }
 
         private string FormatMoney(CurrencyValue value) => $"{_currencyPrefix}{value}";

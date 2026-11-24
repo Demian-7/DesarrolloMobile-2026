@@ -3,6 +3,7 @@ using DG.Tweening;
 using Game.Core;
 using Game.Foundation;
 using Game.Input.Mobile;
+using Game.Platform.Android;
 using Game.Presentation;
 using UnityEngine;
 
@@ -23,9 +24,15 @@ namespace Game.Bootstrap
         [Header("Game Config & Zones")]
         [SerializeField] private GameStats _gameStats;
         [SerializeField] private List<ZoneDefinition> _zones;
+        
+        [Header("Ad Boost")]
+        [SerializeField] private float _boostMultiplier = 2f;
+        [SerializeField] private float _boostDurationSeconds = 120f;
+        [SerializeField] private float _adCooldownSeconds = 60f;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
+        private BoostService _boostService;
 
         private void Awake()
         {
@@ -40,11 +47,20 @@ namespace Game.Bootstrap
             var eventBus = new EventBus();
             var mobileInput = gameObject.AddComponent<MobileTouchInputProvider>();
             IInputProvider inputProvider = mobileInput;
+            ITimeService timeService = new SystemTimeService();
+            IAdsService adsService = new MockAdsService();
 
+            _boostService = new BoostService(
+                adsService,
+                timeService,
+                eventBus,
+                _boostMultiplier,
+                _boostDurationSeconds,
+                _adCooldownSeconds);
             var globalUpgradeService = new GlobalUpgradeService(eventBus);
             _zoneService = new ZoneService(eventBus, globalUpgradeService);
             var boardEvaluationService = new BoardEvaluationService(eventBus, _zoneService, globalUpgradeService);
-            _currencyAccrualService = new CurrencyAccrualService(_zoneService, eventBus);
+            _currencyAccrualService = new CurrencyAccrualService(_zoneService, _boostService, eventBus);
             var packOpeningService = new PackOpeningService();
             var shopService = new ShopService(eventBus, packOpeningService, _zoneService);
 
@@ -68,7 +84,7 @@ namespace Game.Bootstrap
             _boardInputController.Initialize(eventBus, inputProvider, _zoneService, shopService, activeZone.ZoneId);
             _boardView.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId);
             _inventoryView.Initialize(eventBus, _zoneService, activeZone.ZoneId, inputProvider);
-            _hudView.Initialize(eventBus, _zoneService, activeZone.ZoneId);
+            _hudView.Initialize(eventBus, _zoneService, _boostService, activeZone.ZoneId);
             _shopController.Initialize(eventBus, _zoneService, shopService, activeZone.ZoneId);
 
             if (_zoneSelectorController != null)
@@ -85,6 +101,7 @@ namespace Game.Bootstrap
 
         private void Update()
         {
+            _boostService?.Tick();
             _currencyAccrualService?.Tick(Time.deltaTime);
         }
     }
