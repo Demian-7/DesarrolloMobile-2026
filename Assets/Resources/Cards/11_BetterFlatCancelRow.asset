@@ -46,9 +46,9 @@ MonoBehaviour:
         TargetInteraction:
           Type: 2
           Directions: 0
-          Range: 3
+          Range: 1
           FilterType: 0
           FilterByType: {fileID: 0}
           FilterByTier: 0
           FilterByFamily: {fileID: 0}
-        Magnitude: 0
+        Magnitude: 1
