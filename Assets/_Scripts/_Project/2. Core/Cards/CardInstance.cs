@@ -22,6 +22,13 @@ namespace Game.Core
             Definition = definition;
         }
 
+        /// <summary> Constructor for restored cards that need to keep their original InstanceId </summary>
+        public CardInstance(CardDefinition definition, Guid instanceId)
+        {
+            Definition = definition;
+            InstanceId = instanceId;
+        }
+
         public IEnumerable<T> GetEffects<T>() where T : CardEffect
         {
             foreach (var effect in Definition.Effects)
