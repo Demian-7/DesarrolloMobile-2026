@@ -12,7 +12,7 @@ namespace Game.Presentation
     public class InventoryCardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         [SerializeField] private Image _iconImage;
-        [SerializeField] private TextMeshProUGUI _nameText;
+        [SerializeField] private TextMeshProUGUI _countText;
 
         private IInputProvider _inputProvider;
         private IEventBus _eventBus;
@@ -25,11 +25,16 @@ namespace Game.Presentation
         public Guid CardInstanceId { get; private set; }
         public ICardFx Fx => _fx;
 
-        public void Setup(CardInstance card, IInputProvider inputProvider, IEventBus eventBus)
+        public void Setup(CardInstance card, int count, IInputProvider inputProvider, IEventBus eventBus)
         {
             CardInstanceId = card.InstanceId;
             _iconImage.sprite = card.Definition.Icon;
-            if (_nameText != null) _nameText.text = card.Definition.DisplayName;
+
+            if (_countText != null)
+            {
+                _countText.text = $"x{count}";
+            }
+
             _inputProvider = inputProvider;
 
             _fx = _iconImage.GetComponent<ICardFx>();

@@ -2,6 +2,7 @@ using UnityEngine;
 using Game.Foundation;
 using Game.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Presentation
 {
@@ -74,12 +75,17 @@ namespace Game.Presentation
             }
             _activeUIItems.Clear();
 
-            foreach (var card in zone.CardInventory)
+            var groupedCards = zone.CardInventory.GroupBy(card => card.Definition);
+
+            foreach (var group in groupedCards)
             {
+                CardInstance representative = group.First();
+                int count = group.Count();
+
                 InventoryCardView uiInstance = Instantiate(_inventoryItemPrefab, _scrollRectContent);
                 uiInstance.gameObject.SetActive(true);
                 uiInstance.transform.localScale = Vector3.one; 
-                uiInstance.Setup(card, _inputProvider, _eventBus);
+                uiInstance.Setup(representative, count, _inputProvider, _eventBus);
                 _activeUIItems.Add(uiInstance);
             }
         }
