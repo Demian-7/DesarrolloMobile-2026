@@ -29,10 +29,15 @@ namespace Game.Bootstrap
         [SerializeField] private float _boostMultiplier = 2f;
         [SerializeField] private float _boostDurationSeconds = 120f;
         [SerializeField] private float _adCooldownSeconds = 60f;
+        
+        [Header("Save")]
+        [SerializeField] private float _autoSaveIntervalSeconds = 60f;
 
         private ZoneService _zoneService;
         private CurrencyAccrualService _currencyAccrualService;
         private BoostService _boostService;
+        private GameSaveCoordinator _saveCoordinator;
+        private float _autoSaveTimer;
 
         private void Awake()
         {
@@ -49,7 +54,9 @@ namespace Game.Bootstrap
             IInputProvider inputProvider = mobileInput;
             ITimeService timeService = new SystemTimeService();
             IAdsService adsService = new MockAdsService();
-
+            ISaveService saveService = new LocalJsonSaveService();
+            CardDefinition[] allCards = Resources.LoadAll<CardDefinition>("Cards");
+            
             _boostService = new BoostService(
                 adsService,
                 timeService,
@@ -57,6 +64,7 @@ namespace Game.Bootstrap
                 _boostMultiplier,
                 _boostDurationSeconds,
                 _adCooldownSeconds);
+
             var globalUpgradeService = new GlobalUpgradeService(eventBus);
             _zoneService = new ZoneService(eventBus, globalUpgradeService);
             var boardEvaluationService = new BoardEvaluationService(eventBus, _zoneService, globalUpgradeService);
@@ -64,15 +72,30 @@ namespace Game.Bootstrap
             var packOpeningService = new PackOpeningService();
             var shopService = new ShopService(eventBus, packOpeningService, _zoneService);
 
-            ZoneDefinition startingZoneDef = _zones[0];
-            _zoneService.CreateAndActivateZone(startingZoneDef);
-            Zone activeZone = _zoneService.GetZone(startingZoneDef.Id);
+            _saveCoordinator = new GameSaveCoordinator(
+                saveService,
+                timeService,
+                _zoneService,
+                _boostService,
+                _zones,
+                allCards);
 
-            if (_gameStats != null && _gameStats.InitialMoney > 0)
+            bool loadedFromSave = _saveCoordinator.TryLoadGame();
+
+            if (!loadedFromSave)
             {
-                activeZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
-                eventBus.Publish(new CurrencyChangedEvent(activeZone.ZoneId, activeZone.Wallet.Balance));
+                ZoneDefinition startingZoneDef = _zones[0];
+                _zoneService.CreateAndActivateZone(startingZoneDef);
+                Zone startingZone = _zoneService.GetZone(startingZoneDef.Id);
+
+                if (_gameStats != null && _gameStats.InitialMoney > 0)
+                {
+                    startingZone.Wallet.Add(new CurrencyValue(_gameStats.InitialMoney));
+                    eventBus.Publish(new CurrencyChangedEvent(startingZone.ZoneId, startingZone.Wallet.Balance));
+                }
             }
+
+            Zone activeZone = _zoneService.GetZone(_zoneService.ActiveZoneId);
 
             if (_zoneLook != null)
             {
@@ -97,12 +120,55 @@ namespace Game.Bootstrap
                 var zone = _zoneService.GetZone(evt.ZoneId);
                 if (zone != null) zone.GenerationRate = evt.NewRate;
             });
+
+            if (loadedFromSave)
+            {
+                foreach (var zone in _zoneService.GetAllUnlockedZones())
+                    eventBus.Publish(new BoardChangedEvent(zone.ZoneId));
+
+                if (_boostService.IsBoostActive)
+                {
+                    eventBus.Publish(new BoostStateChangedEvent(
+                        true,
+                        _boostService.CurrentMultiplier,
+                        _boostService.RemainingSeconds));
+                }
+            }
+
+            eventBus.Subscribe<BoardChangedEvent>(_ => _saveCoordinator.SaveGame());
+            eventBus.Subscribe<ZoneUnlockedEvent>(_ => _saveCoordinator.SaveGame());
+            eventBus.Subscribe<BoostStateChangedEvent>(_ => _saveCoordinator.SaveGame());
         }
 
         private void Update()
         {
             _boostService?.Tick();
             _currencyAccrualService?.Tick(Time.deltaTime);
+            
+            _autoSaveTimer += Time.unscaledDeltaTime;
+            if (_autoSaveTimer >= _autoSaveIntervalSeconds)
+            {
+                _autoSaveTimer = 0f;
+                _saveCoordinator?.SaveGame();
+            }
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+                _saveCoordinator?.SaveGame();
+        }
+
+        private void OnApplicationQuit()
+        {
+            _saveCoordinator?.SaveGame();
+        }
+
+        [ContextMenu("Delete Save")]
+        private void DeleteSave()
+        {
+            new LocalJsonSaveService().DeleteSave();
+            Debug.Log("[GameBootstrapper] Save file deleted.");
         }
     }
 }

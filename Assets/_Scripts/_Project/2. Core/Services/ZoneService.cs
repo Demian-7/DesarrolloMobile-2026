@@ -8,6 +8,8 @@ namespace Game.Core
 {
     public class ZoneService
     {
+        public string ActiveZoneId => _activeZoneId;
+        
         private readonly IEventBus _eventBus;
         private readonly GlobalUpgradeService _globalUpgrades;
         private readonly Dictionary<string, Zone> _unlockedZones = new();
@@ -155,5 +157,32 @@ namespace Game.Core
 
             return true;
         }
+
+        public Zone RestoreZone(ZoneDefinition definition)
+        {
+            ISlotPricingStrategy pricingStrategy = definition.Mode == BoardGenerationMode.Fixed
+                ? new SequentialPricingStrategy(definition.Layout)
+                : new DoublingPricingStrategy(definition.EndlessBasePrice);
+
+            var zone = new Zone
+            {
+                ZoneId = definition.Id,
+                Definition = definition,
+                PricingStrategy = pricingStrategy
+            };
+
+            if (definition.Mode == BoardGenerationMode.Fixed &&
+                definition.Layout != null &&
+                definition.Layout.UnlockSequence != null)
+            {
+                foreach (var entry in definition.Layout.UnlockSequence)
+                    zone.Board.AddCell(entry.Coordinate.X, entry.Coordinate.Y);
+            }
+
+            _unlockedZones[zone.ZoneId] = zone;
+            return zone;
+        }
+        
+        public IReadOnlyCollection<Zone> GetAllUnlockedZones() => _unlockedZones.Values;
     }
 }

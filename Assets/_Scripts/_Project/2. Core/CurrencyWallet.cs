@@ -22,5 +22,14 @@ namespace Game.Foundation
 
             return false;
         }
+
+        /// <summary>
+        /// Used by loader to restore the wallet value
+        /// </summary>
+        /// <param name="amount"></param>
+        public void SetBalance(CurrencyValue amount)
+        {
+            Balance = amount.Mantissa > 0 ? amount : CurrencyValue.Zero;
+        }
     }
 }
