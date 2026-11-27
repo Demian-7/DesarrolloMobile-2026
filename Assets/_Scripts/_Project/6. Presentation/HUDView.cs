@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
@@ -20,6 +21,8 @@ namespace Game.Presentation
         [SerializeField] private string _currencyPrefix = "$";
         [Tooltip("If no chain step arrives within this time after a rate change, show the rate directly.")]
         [SerializeField] private float _chainWaitSeconds = 0.4f;
+        [Tooltip("Font size percentage for the top number in the rate label.")]
+        [SerializeField] private int _rateNumberSizePercent = 150;
 
         private IEventBus _eventBus;
         private ZoneService _zoneService;
@@ -256,7 +259,6 @@ namespace Game.Presentation
         }
 
         private string FormatMoney(CurrencyValue value) => $"{_currencyPrefix}{value}";
-        private static string FormatRate(string number) => $"+{number}/s";
         private static string FormatRateNumber(CurrencyValue rate) => rate.ToString(2);
 
         private static bool IsGreater(CurrencyValue a, CurrencyValue b)
@@ -267,6 +269,46 @@ namespace Game.Presentation
         {
             if (label != null) label.SetValue(value, flash);
             else if (text != null) text.text = value;
+        }
+        
+        private static readonly Dictionary<string, string> FullUnitNames = new()
+        {
+            { "K", "Thousand" },
+            { "M", "Million" },
+            { "B", "Billion" },
+            { "T", "Trillion" },
+            { "Qa", "Quadrillion" },
+            { "Qi", "Quintillion" },
+            { "Sx", "Sextillion" },
+            { "Sp", "Septillion" },
+            { "Oc", "Octillion" },
+            { "No", "Nonillion" },
+            { "Dc", "Decillion" },
+            { "Ud", "Undecillion" },
+            { "Dd", "Duodecillion" },
+            { "Td", "Tredecillion" },
+            { "Qad", "Quattuordecillion" },
+            { "Qid", "Quindecillion" },
+            { "Sxd", "Sexdecillion" },
+            { "Spd", "Septendecillion" },
+            { "Ocd", "Octodecillion" },
+            { "Nod", "Novemdecillion" },
+            { "Vg", "Vigintillion" }
+        };
+
+        private string FormatRate(string number)
+        {
+            int suffixStart = number.Length;
+            while (suffixStart > 0 && char.IsLetter(number[suffixStart - 1]))
+                suffixStart--;
+
+            string digits = number.Substring(0, suffixStart);
+            string suffix = number.Substring(suffixStart);
+            string fullUnit = suffix.Length > 0 && FullUnitNames.TryGetValue(suffix, out string name)
+                ? name
+                : suffix;
+
+            return $"<size={_rateNumberSizePercent}%>+{digits}</size>\n{fullUnit} per second";
         }
     }
 }

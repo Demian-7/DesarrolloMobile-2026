@@ -10194,6 +10194,7 @@ MonoBehaviour:
   _boostMultiplier: 2
   _boostDurationSeconds: 15
   _adCooldownSeconds: 3
+  _autoSaveIntervalSeconds: 60
 --- !u!1001 &1102302312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11839,6 +11840,7 @@ MonoBehaviour:
   _adBoostButton: {fileID: 1073662237}
   _currencyPrefix: $
   _chainWaitSeconds: 0.15
+  _rateNumberSizePercent: 135
 --- !u!1 &1534485023 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6045563387500616789, guid: f5f117ac63b85b9438d8bb92839feede, type: 3}
@@ -12833,8 +12835,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1300, y: -225}
-  m_SizeDelta: {x: 800, y: 50}
+  m_AnchoredPosition: {x: 1100, y: -225}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707568073
 MonoBehaviour:
@@ -15358,6 +15360,7 @@ MonoBehaviour:
   _adBoostButton: {fileID: 854614580}
   _currencyPrefix: 
   _chainWaitSeconds: 0.4
+  _rateNumberSizePercent: 135
 --- !u!1 &1963733399
 GameObject:
   m_ObjectHideFlags: 0

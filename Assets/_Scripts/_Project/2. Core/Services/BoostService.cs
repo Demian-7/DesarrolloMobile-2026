@@ -59,7 +59,6 @@ namespace Game.Core
         /// <summary> Called on load to restore an active boost in real time </summary>
         public void RestoreExpiryUtc(DateTime? expiresAtUtc)
         {
-            //TODO: call on load when save system is added.
             if (expiresAtUtc.HasValue && expiresAtUtc.Value > _timeService.UtcNow)
             {
                 _boostExpiresAtUtc = expiresAtUtc;

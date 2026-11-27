@@ -33,33 +33,33 @@ namespace Game.Presentation
         [SerializeField] float effectSeconds = 0.3f;
         [SerializeField] string boostColor = "#FFD24A";
 
-        RectTransform rect;
-        Color baseColor;
-        Sequence fx;
-        Vector3 restScale;
-        Vector2 restPos;
+        private RectTransform rect;
+        private Color baseColor;
+        private Sequence fx;
+        private Vector3 restScale;
+        private Vector2 restPos;
 
-        string plain = "";
-        string activeTag;
-        bool boost;
-        Tween tagTimer;
+        private string plain = "";
+        private string activeTag;
+        private bool boost;
+        private Tween tagTimer;
+        
+        private bool jumping;
+        private float jumpTime;
+        private Tween jumpTween;
 
-        bool jumping;
-        float jumpTime;
-        Tween jumpTween;
+        private void Reset() => label = GetComponent<TMP_Text>();
 
-        void Reset() => label = GetComponent<TMP_Text>();
+        private void Awake() => Setup();
 
-        void Awake() => Setup();
-
-        void OnDestroy()
+        private void OnDestroy()
         {
             fx?.Kill();
             tagTimer?.Kill();
             jumpTween?.Kill();
         }
 
-        void Setup()
+        private void Setup()
         {
             if (rect != null) return;
             rect = (RectTransform)transform;
@@ -104,11 +104,11 @@ namespace Game.Presentation
             Render();
         }
 
-        void StartCharJump()
+        private void StartCharJump()
         {
             if (jumping) return;
 
-            int n = Mathf.Max(1, plain.Length);
+            int n = Mathf.Max(1, CountJumpChars(plain));
             float total = jumpCharSeconds + (n - 1) * jumpStaggerSeconds;
 
             jumping = true;
@@ -127,14 +127,55 @@ namespace Game.Presentation
                 });
         }
 
-        string BuildJump(string s)
+        private static int CountJumpChars(string s)
         {
-            var sb = new StringBuilder(s.Length * 24);
-            float height = label.fontSize * jumpHeightEm;
+            int count = 0;
+            bool inTag = false;
 
             for (int i = 0; i < s.Length; i++)
             {
-                float u = (jumpTime - i * jumpStaggerSeconds) / jumpCharSeconds;
+                char c = s[i];
+                if (c == '\n') break;
+                if (c == '<') { inTag = true; continue; }
+                if (inTag) { if (c == '>') inTag = false; continue; }
+                count++;
+            }
+
+            return count;
+        }
+
+        private string BuildJump(string s)
+        {
+            var sb = new StringBuilder(s.Length * 24);
+            float height = label.fontSize * jumpHeightEm;
+            bool inTag = false;
+            int visibleIndex = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+
+                if (c == '\n')
+                {
+                    sb.Append(s, i, s.Length - i);
+                    break;
+                }
+
+                if (c == '<')
+                {
+                    inTag = true;
+                    sb.Append(c);
+                    continue;
+                }
+
+                if (inTag)
+                {
+                    sb.Append(c);
+                    if (c == '>') inTag = false;
+                    continue;
+                }
+
+                float u = (jumpTime - visibleIndex * jumpStaggerSeconds) / jumpCharSeconds;
                 int y = 0;
                 if (u > 0f && u < 1f)
                 {
@@ -143,15 +184,17 @@ namespace Game.Presentation
                 }
 
                 if (y != 0)
-                    sb.Append("<voffset=").Append(y).Append('>').Append(s[i]).Append("</voffset>");
+                    sb.Append("<voffset=").Append(y).Append('>').Append(c).Append("</voffset>");
                 else
-                    sb.Append(s[i]);
+                    sb.Append(c);
+
+                visibleIndex++;
             }
 
             return sb.ToString();
         }
 
-        void Play(LabelFlash flash)
+        private void Play(LabelFlash flash)
         {
             bool final = flash == LabelFlash.GainFinal;
             bool gain = flash == LabelFlash.Gain || final;
@@ -183,7 +226,7 @@ namespace Game.Presentation
             fx.Join(DOTween.To(() => label.color, c => label.color = c, baseColor, down));
         }
 
-        void Render()
+        private void Render()
         {
             string s = jumping ? BuildJump(plain) : plain;
             if (boost) s = $"<color={boostColor}><wave>{s}</wave></color>";
