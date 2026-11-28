@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zone_02
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.ZoneDefinition
   Id: Zone_02
-  DisplayName: 
+  DisplayName: Crimsonia
   Mode: 0
   Layout: {fileID: 11400000, guid: b4eb75c88be949340ae28d02bc062bc1, type: 2}
   EndlessBasePrice:
@@ -29,3 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
   - {fileID: 11400000, guid: f8b159adf14a31242b030edab60b6f32, type: 2}
   - {fileID: 11400000, guid: b78a9b832e373dc40acc9cc1c95dd54d, type: 2}
+  - {fileID: 11400000, guid: af84132d5b2192b4f987857ff51c0861, type: 2}
+  - {fileID: 11400000, guid: 6b18bc55e1fe02149917712461181c28, type: 2}

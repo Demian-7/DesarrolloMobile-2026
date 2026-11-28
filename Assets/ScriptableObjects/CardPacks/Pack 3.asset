@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pack 3
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardPackDefinition
   Id: 
-  DisplayName: Special Pack
+  DisplayName: Better Tools Pack
   Price:
     <Mantissa>k__BackingField: 1000
     <Exponent>k__BackingField: 0

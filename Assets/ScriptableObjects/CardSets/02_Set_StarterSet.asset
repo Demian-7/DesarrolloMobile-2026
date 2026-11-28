@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardSetDefinition
   Pool:
   - Card: {fileID: 11400000, guid: 3875f02f37b51b540b7453e1ccc4f8d2, type: 2}
-    Weight: 40
+    Weight: 50
   - Card: {fileID: 11400000, guid: 0c2a5146318f4564cbb6558766333578, type: 2}
     Weight: 40
   - Card: {fileID: 11400000, guid: 548e40d210ddf1a4db8dd674b0367aab, type: 2}
-    Weight: 60
+    Weight: 30
   - Card: {fileID: 11400000, guid: 5a5d9f7436cc77942abdeda9a51017b9, type: 2}
     Weight: 30
-  - Card: {fileID: 11400000, guid: 581d1e8f6000f6d4ab5d58947ab65edf, type: 2}
+  - Card: {fileID: 11400000, guid: 7e89a6268ea6abe478e3db1889cf2ffe, type: 2}
     Weight: 30

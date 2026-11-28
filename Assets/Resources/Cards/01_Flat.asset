@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 01
   DisplayName: Wooden Pickaxe
-  Description: Initial card. Generates $1 per second flat.
+  Description: Initial card. Generates 1 per second flat.
   Tier: 0
-  Family: {fileID: 0}
+  Family: {fileID: 11400000, guid: d09254dd3bf22fc4abeee107ad39cc48, type: 2}
   Icon: {fileID: 21300000, guid: bc54cdb13e5ed984197c31152e9493cf, type: 3}
   Effects:
   - rid: 7572652255065669632

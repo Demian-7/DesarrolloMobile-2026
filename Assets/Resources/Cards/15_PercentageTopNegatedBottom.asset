@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a89016fb83479c80edd5d693f9d1e7, type: 3}
+  m_Name: 15_PercentageTopNegatedBottom
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
+  Id: 15
+  DisplayName: Wooden Sword
+  Description: Generates 150% of the card above. Negates the card below.
+  Tier: 0
+  Family: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 77a0df70ffd348b47b355109a34c5a11, type: 3}
+  Effects:
+  - rid: 1440128879998009349
+  - rid: 1440128879998009351
+  IconColor: {r: 0.9169811, g: 0.88400114, b: 0.21280874, a: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1440128879998009349
+      type: {class: PercentageGenerationEffect, ns: Game.Core, asm: Assembly-CSharp}
+      data:
+        Interaction:
+          Type: 0
+          Directions: 4
+          Range: 1
+          FilterType: 0
+          FilterByType: {fileID: 0}
+          FilterByTier: 0
+          FilterByFamily: {fileID: 0}
+        Mode: 0
+        Percentage: 1.5
+        FlatPerMatch:
+          <Mantissa>k__BackingField: 0
+          <Exponent>k__BackingField: 0
+    - rid: 1440128879998009351
+      type: {class: DebuffEffect, ns: Game.Core, asm: Assembly-CSharp}
+      data:
+        TargetInteraction:
+          Type: 0
+          Directions: 8
+          Range: 1
+          FilterType: 0
+          FilterByType: {fileID: 0}
+          FilterByTier: 0
+          FilterByFamily: {fileID: 0}
+        Magnitude: 1

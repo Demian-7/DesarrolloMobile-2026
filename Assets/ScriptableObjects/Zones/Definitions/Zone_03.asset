@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zone_03
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.ZoneDefinition
   Id: Zone_03
-  DisplayName: 
+  DisplayName: Purpleia
   Mode: 0
   Layout: {fileID: 11400000, guid: cc03ee93764946e4fafa593046037414, type: 2}
   EndlessBasePrice:
@@ -21,11 +21,14 @@ MonoBehaviour:
     <Exponent>k__BackingField: 0
   EndlessPriceDoublingFactor: 0
   UnlockPrice:
-    <Mantissa>k__BackingField: 2.5
-    <Exponent>k__BackingField: 0
+    <Mantissa>k__BackingField: 1
+    <Exponent>k__BackingField: 5
   StartingCards:
   - {fileID: 11400000, guid: bdc6c6214fecb974ba9c76c5010de117, type: 2}
   AvailablePacks:
-  - {fileID: 11400000, guid: fb557d69fc903664fb2c0ec516321906, type: 2}
+  - {fileID: 11400000, guid: 191d8e2f0191cd441b1ed29133ded114, type: 2}
   - {fileID: 11400000, guid: f8b159adf14a31242b030edab60b6f32, type: 2}
   - {fileID: 11400000, guid: b78a9b832e373dc40acc9cc1c95dd54d, type: 2}
+  - {fileID: 11400000, guid: af84132d5b2192b4f987857ff51c0861, type: 2}
+  - {fileID: 11400000, guid: 6b18bc55e1fe02149917712461181c28, type: 2}
+  - {fileID: 11400000, guid: dd0274b09b1454a4ea530f7314553d0d, type: 2}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2481a08884ea4e8d9adf3938383175cf, type: 3}
+  m_Name: 05_Set_StarterSpecial
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardSetDefinition
+  Pool:
+  - Card: {fileID: 11400000, guid: e74c69b0a1e093f4c80cd04d20b1f1b4, type: 2}
+    Weight: 50
+  - Card: {fileID: 11400000, guid: 2adf15b3db9c715469a98b9b59cddd2f, type: 2}
+    Weight: 15
+  - Card: {fileID: 11400000, guid: 0fd99098eb7af644db7aa32be0d1d67e, type: 2}
+    Weight: 35
+  - Card: {fileID: 11400000, guid: 9c85f1d95558d5e42b08ba14e087fc0c, type: 2}
+    Weight: 35

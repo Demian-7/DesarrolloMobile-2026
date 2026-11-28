@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.CardDefinition
   Id: 04
   DisplayName: Stone Pickaxe
+  Description: Generates 1.25 per second flat.
   Tier: 0
-  Family: {fileID: 0}
+  Family: {fileID: 11400000, guid: d09254dd3bf22fc4abeee107ad39cc48, type: 2}
   Icon: {fileID: 21300000, guid: 524455bd49d8b114e8a30db4ef77315f, type: 3}
   Effects:
   - rid: 8208896145699110912
